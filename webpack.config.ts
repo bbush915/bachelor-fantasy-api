@@ -1,3 +1,4 @@
+import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
 import { Configuration } from "webpack";
 import nodeExternals from "webpack-node-externals";
 
@@ -10,13 +11,14 @@ const configuration: Configuration = {
     rules: [
       {
         test: /\.ts$/,
-        use: "awesome-typescript-loader",
+        use: "ts-loader",
       },
     ],
   },
 
   resolve: {
     extensions: [".ts", ".js"],
+    plugins: [new TsconfigPathsPlugin()],
   },
 
   target: "node",
