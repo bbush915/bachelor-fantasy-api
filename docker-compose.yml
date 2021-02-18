@@ -1,0 +1,18 @@
+services:
+  api:
+    build: .
+    working_dir: /app
+    command: yarn start:dev
+    volumes:
+      - .:/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+    env_file: .env
+
+  postgres:
+    image: postgres:13.2-alpine
+    ports:
+      - 5432:5432
+    env_file: .env

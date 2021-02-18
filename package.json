@@ -1,0 +1,39 @@
+{
+  "name": "bachelor-fantasy-api",
+  "version": "0.0.1",
+  "main": "server.ts",
+  "repository": "https://github.com/bbush915/bachelor-fantasy-api.git",
+  "author": "Bryan Bush <bryan@dialexa.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack",
+    "start": "node ./dist/main.js",
+    "start:dev": "ts-node-dev --require tsconfig-paths/register src/server.ts",
+    "migrate:make": "ts-node-dev node_modules/.bin/knex migrate:make --knexfile db/knexfile.ts",
+    "migrate:up": "ts-node-dev node_modules/.bin/knex migrate:latest --knexfile db/knexfile.ts",
+    "migrate:down": "ts-node-dev node_modules/.bin/knex migrate:rollback --knexfile db/knexfile.ts"
+  },
+  "dependencies": {
+    "apollo-server-koa": "^2.21.0",
+    "class-validator": "^0.13.1",
+    "graphql": "^15.5.0",
+    "knex": "^0.21.17",
+    "koa": "^2.13.1",
+    "pg": "^8.5.1",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^1.1.1"
+  },
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.1",
+    "@types/koa": "^2.11.8",
+    "@types/webpack": "^4.41.26",
+    "@types/webpack-node-externals": "^2.5.0",
+    "awesome-typescript-loader": "^5.2.1",
+    "ts-node-dev": "^1.1.1",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^4.1.5",
+    "webpack": "^5.22.0",
+    "webpack-cli": "^4.5.0",
+    "webpack-node-externals": "^2.5.2"
+  }
+}
