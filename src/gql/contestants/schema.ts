@@ -25,4 +25,10 @@ export class Contestant {
 
   @Field()
   hometown: string;
+
+  @Field()
+  bio: string;
+
+  @Field(() => [String])
+  trivia: string[];
 }

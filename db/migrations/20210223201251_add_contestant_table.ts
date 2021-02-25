@@ -14,6 +14,8 @@ export async function up(knex: Knex): Promise<void> {
     tableBuilder.integer("age").notNullable();
     tableBuilder.string("occupation").notNullable();
     tableBuilder.string("hometown").notNullable();
+    tableBuilder.text("bio").notNullable();
+    tableBuilder.jsonb("trivia").notNullable();
   });
 }
 
