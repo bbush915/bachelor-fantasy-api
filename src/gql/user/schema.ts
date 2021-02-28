@@ -12,7 +12,7 @@ export class User {
   username: string;
 
   @Field()
-  hashed_password: string;
+  hashedPassword: string;
 }
 
 @ArgsType()

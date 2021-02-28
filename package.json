@@ -21,6 +21,7 @@
     "graphql": "^15.5.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.18",
+    "knex-stringcase": "^1.4.5",
     "koa": "^2.13.1",
     "pg": "^8.5.1",
     "reflect-metadata": "^0.1.13",

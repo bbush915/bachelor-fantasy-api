@@ -25,7 +25,7 @@ class UserResolver {
 
     const hashedPassword = await hash(password, 12);
 
-    const records = await knex("users").insert({ email, username, hashed_password: hashedPassword }).returning("*");
+    const records = await knex("users").insert({ email, username, hashedPassword }).returning("*");
     return records[0];
   }
 
@@ -33,7 +33,7 @@ class UserResolver {
   async login(@Args() { email, password }: LoginInput): Promise<LoginResponse> {
     const user: User = await knex("users").where({ email }).first();
 
-    if (!user || !(await compare(password, user.hashed_password))) {
+    if (!user || !(await compare(password, user.hashedPassword))) {
       throw new Error("Invalid credentials. The email or password are incorrect");
     }
 

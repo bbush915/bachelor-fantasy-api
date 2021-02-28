@@ -5,6 +5,9 @@ export async function up(knex: Knex): Promise<void> {
     tableBuilder.uuid("id").notNullable().primary().defaultTo(knex.raw("gen_random_uuid()"));
 
     tableBuilder.timestamps(true, true);
+
+    tableBuilder.string("series").notNullable();
+    tableBuilder.integer("season_number").notNullable();
   });
 }
 

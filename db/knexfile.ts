@@ -1,4 +1,6 @@
 import { Config } from "knex";
+// @ts-ignore
+import knexStringcase from "knex-stringcase";
 
 const configuration: Config = {
   client: "pg",
@@ -18,4 +20,4 @@ const configuration: Config = {
   },
 };
 
-export default configuration;
+export default knexStringcase(configuration);

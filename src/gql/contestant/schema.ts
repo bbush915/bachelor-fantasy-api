@@ -6,16 +6,13 @@ export class Contestant {
   id: string;
 
   @Field()
-  season_id: string;
+  seasonId: string;
 
   @Field()
   name: string;
 
   @Field()
-  image_lg_url: string;
-
-  @Field()
-  image_sm_url: string;
+  imageUrl: string;
 
   @Field()
   age: number;

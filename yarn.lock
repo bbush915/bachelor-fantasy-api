@@ -2763,6 +2763,13 @@ kind-of@^6.0.0, kind-of@^6.0.2:
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.3.tgz#07c05034a6c349fa06e24fa35aa76db4580ce4dd"
   integrity sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
 
+knex-stringcase@^1.4.5:
+  version "1.4.5"
+  resolved "https://registry.yarnpkg.com/knex-stringcase/-/knex-stringcase-1.4.5.tgz#47761c1ca4fffd1d276cab7bc3c1265e3669972a"
+  integrity sha512-dO8CzBAfxX6HeZ6BP+5KCMn3450MRoz3xsUascogE3OucUIyv/ki/W30YQz15EuAbHr03s9DfgiNlKfAvD+PvQ==
+  dependencies:
+    stringcase "^4.3.1"
+
 knex@^0.21.18:
   version "0.21.18"
   resolved "https://registry.yarnpkg.com/knex/-/knex-0.21.18.tgz#ca16e95b8b5c0891a6b012fb3fb34185e067b0e2"
@@ -4295,6 +4302,11 @@ string_decoder@~1.1.1:
   integrity sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==
   dependencies:
     safe-buffer "~5.1.0"
+
+stringcase@^4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/stringcase/-/stringcase-4.3.1.tgz#54279c9dd7379ff50f4e47d50d036b2ac888d34b"
+  integrity sha512-Ov7McNX1sFaEX9NWijD1hIOVDDhKdnFzN9tvoa1N8xgrclouhsO4kBPVrTPhjO/zP5mn1Ww03uZ2SThNMXS7zg==
 
 strip-bom@^2.0.0:
   version "2.0.0"

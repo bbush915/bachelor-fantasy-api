@@ -9,8 +9,7 @@ export async function up(knex: Knex): Promise<void> {
     tableBuilder.uuid("season_id").notNullable().references("id").inTable("seasons");
 
     tableBuilder.string("name").notNullable();
-    tableBuilder.string("image_lg_url").notNullable();
-    tableBuilder.string("image_sm_url").notNullable();
+    tableBuilder.string("image_url").notNullable();
     tableBuilder.integer("age").notNullable();
     tableBuilder.string("occupation").notNullable();
     tableBuilder.string("hometown").notNullable();
