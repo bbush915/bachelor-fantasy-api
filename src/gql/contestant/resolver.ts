@@ -6,7 +6,7 @@ import { Contestant } from "./schema";
 @Resolver(Contestant)
 class ContestantResolver {
   @Query(() => [Contestant])
-  async contestants(): Promise<Contestant[]> {
+  contestants(): Promise<Contestant[]> {
     return knex("contestants");
   }
 }

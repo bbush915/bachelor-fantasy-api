@@ -1,6 +1,7 @@
 import { NonEmptyArray } from "type-graphql";
+
+import { ContestantResolver } from "./contestant";
 import { UserResolver } from "./user";
-import { ContestantResolver } from "./contestants";
 
 const resolvers: NonEmptyArray<Function> = [ContestantResolver, UserResolver];
 

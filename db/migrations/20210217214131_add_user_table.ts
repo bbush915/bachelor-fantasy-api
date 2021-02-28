@@ -7,6 +7,10 @@ export async function up(knex: Knex): Promise<void> {
     tableBuilder.timestamps(true, true);
 
     tableBuilder.string("email").notNullable();
+
+    tableBuilder.string("username").notNullable();
+
+    tableBuilder.string("hashed_password").notNullable();
   });
 }
 
