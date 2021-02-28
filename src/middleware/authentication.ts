@@ -10,7 +10,7 @@ const authentication: MiddlewareFn<IContext> = async ({ context }, next) => {
     throw new Error("Missing header: Authorization");
   }
 
-  context.identity = decode(token);
+  context.identity = decode(token) as any;
 
   return next();
 };
