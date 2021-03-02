@@ -1,6 +1,6 @@
 import { Field, ID, ObjectType } from "type-graphql";
 
-import { LineupContestant } from "gql/lineup-contestants";
+import { LineupContestant } from "gql/lineup-contestant";
 
 @ObjectType()
 export class Lineup {

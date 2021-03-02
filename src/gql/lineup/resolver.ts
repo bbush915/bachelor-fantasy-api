@@ -1,7 +1,7 @@
 import { Arg, Ctx, FieldResolver, Query, Resolver, Root, UseMiddleware } from "type-graphql";
 
 import { IContext } from "gql/context";
-import { LineupContestant } from "gql/lineup-contestants";
+import { LineupContestant } from "gql/lineup-contestant";
 import knex from "lib/knex";
 import { authentication } from "middleware";
 import { Lineup } from "./schema";
@@ -10,7 +10,7 @@ import { Lineup } from "./schema";
 class LineupResolver {
   @Query(() => Lineup, { nullable: true })
   @UseMiddleware(authentication)
-  async myLineup(@Arg("leagueId") leagueId: string, @Ctx() { identity }: IContext): Promise<Lineup> {
+  async currentLineup(@Arg("leagueId") leagueId: string, @Ctx() { identity }: IContext): Promise<Lineup> {
     const leagueMember = await knex("league_members").where({ leagueId, userId: identity!.id }).first();
 
     if (!leagueMember) {

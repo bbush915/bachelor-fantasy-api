@@ -7,7 +7,7 @@ export async function up(knex: Knex): Promise<void> {
     tableBuilder.timestamps(true, true);
 
     tableBuilder.uuid("league_member_id").notNullable().references("id").inTable("league_members");
-    tableBuilder.uuid("week_id").notNullable().references("id").inTable("weeks");
+    tableBuilder.uuid("season_week_id").notNullable().references("id").inTable("season_weeks");
 
     tableBuilder.integer("weekly_score");
   });

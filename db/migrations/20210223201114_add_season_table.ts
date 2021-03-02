@@ -8,6 +8,7 @@ export async function up(knex: Knex): Promise<void> {
 
     tableBuilder.string("series").notNullable();
     tableBuilder.integer("season_number").notNullable();
+    tableBuilder.integer("current_week_number").defaultTo(1).notNullable();
   });
 }
 

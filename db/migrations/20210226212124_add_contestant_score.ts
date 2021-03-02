@@ -7,7 +7,7 @@ export async function up(knex: Knex): Promise<void> {
     tableBuilder.timestamps(true, true);
 
     tableBuilder.uuid("contestant_id").notNullable().references("id").inTable("contestants");
-    tableBuilder.uuid("week_id").notNullable().references("id").inTable("weeks");
+    tableBuilder.uuid("season_week_id").notNullable().references("id").inTable("season_weeks");
 
     tableBuilder.boolean("rose");
     tableBuilder.boolean("special_rose");
