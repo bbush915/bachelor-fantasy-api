@@ -1,9 +1,7 @@
 import { Field, ID, ObjectType } from "type-graphql";
 
-import { User } from "gql/user";
-
 @ObjectType()
-export class LeagueMember {
+export class UserFavorite {
   @Field(() => ID)
   id: string;
 
@@ -14,14 +12,8 @@ export class LeagueMember {
   updatedAt?: Date;
 
   @Field(() => ID)
-  leagueId: string;
-
-  @Field(() => ID)
   userId: string;
 
-  @Field(() => User)
-  user?: User;
-
-  @Field()
-  totalScore: number;
+  @Field(() => ID)
+  contestantId: string;
 }

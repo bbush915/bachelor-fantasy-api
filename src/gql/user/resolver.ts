@@ -1,5 +1,5 @@
 import { compare, hash } from "bcryptjs";
-import { Args, Ctx, Mutation, Query, Resolver, UseMiddleware } from "type-graphql";
+import { Arg, Ctx, Mutation, Query, Resolver, UseMiddleware } from "type-graphql";
 
 import { IContext } from "gql/context";
 import { encode } from "lib/jwt";
@@ -16,7 +16,7 @@ class UserResolver {
   }
 
   @Mutation(() => User)
-  async register(@Args() { email, username, password }: RegisterInput): Promise<User> {
+  async register(@Arg("input") { email, username, password }: RegisterInput): Promise<User> {
     const existingUser: User = await knex("users").where({ email }).first();
 
     if (existingUser) {
@@ -30,7 +30,7 @@ class UserResolver {
   }
 
   @Mutation(() => LoginResponse)
-  async login(@Args() { email, password }: LoginInput): Promise<LoginResponse> {
+  async login(@Arg("input") { email, password }: LoginInput): Promise<LoginResponse> {
     const user: User = await knex("users").where({ email }).first();
 
     if (!user || !(await compare(password, user.hashedPassword))) {

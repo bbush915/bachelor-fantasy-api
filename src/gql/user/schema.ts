@@ -1,9 +1,15 @@
-import { ArgsType, Field, ID, ObjectType } from "type-graphql";
+import { ArgsType, Field, ID, InputType, ObjectType } from "type-graphql";
 
 @ObjectType()
 export class User {
   @Field(() => ID)
   id: string;
+
+  @Field()
+  createdAt?: Date;
+
+  @Field()
+  updatedAt?: Date;
 
   @Field()
   email: string;
@@ -15,7 +21,7 @@ export class User {
   hashedPassword: string;
 }
 
-@ArgsType()
+@InputType()
 export class RegisterInput {
   @Field()
   email: string;
@@ -27,7 +33,7 @@ export class RegisterInput {
   password: string;
 }
 
-@ArgsType()
+@InputType()
 export class LoginInput {
   @Field()
   email: string;

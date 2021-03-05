@@ -6,9 +6,10 @@ export async function up(knex: Knex): Promise<void> {
 
     tableBuilder.timestamps(true, true);
 
+    tableBuilder.integer("current_week_number").nullable();
+
     tableBuilder.string("series").notNullable();
     tableBuilder.integer("season_number").notNullable();
-    tableBuilder.integer("current_week_number").defaultTo(1).notNullable();
   });
 }
 

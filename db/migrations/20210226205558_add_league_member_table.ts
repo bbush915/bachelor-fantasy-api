@@ -9,7 +9,7 @@ export async function up(knex: Knex): Promise<void> {
     tableBuilder.uuid("league_id").notNullable().references("id").inTable("leagues");
     tableBuilder.uuid("user_id").notNullable().references("id").inTable("users");
 
-    tableBuilder.integer("total_score").notNullable().defaultTo(0);
+    tableBuilder.integer("total_score").notNullable();
   });
 }
 

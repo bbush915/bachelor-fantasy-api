@@ -6,6 +6,12 @@ export class Contestant {
   id: string;
 
   @Field()
+  createdAt?: Date;
+
+  @Field()
+  updatedAt?: Date;
+
+  @Field(() => ID)
   seasonId: string;
 
   @Field()

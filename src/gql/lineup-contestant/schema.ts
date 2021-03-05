@@ -7,6 +7,12 @@ export class LineupContestant {
   @Field(() => ID)
   id: string;
 
+  @Field()
+  createdAt?: Date;
+
+  @Field()
+  updatedAt?: Date;
+
   @Field(() => ID)
   lineupId: string;
 

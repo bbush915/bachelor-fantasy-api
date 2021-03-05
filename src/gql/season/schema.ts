@@ -8,14 +8,20 @@ export class Season {
   id: string;
 
   @Field()
+  createdAt?: Date;
+
+  @Field()
+  updatedAt?: Date;
+
+  @Field({ nullable: true })
+  currentWeekNumber?: number;
+
+  @Field(() => SeasonWeek, { nullable: true })
+  currentSeasonWeek?: SeasonWeek;
+
+  @Field()
   series: string;
 
   @Field()
-  seasonNumber: string;
-
-  @Field()
-  currentWeekNumber: number;
-
-  @Field(() => SeasonWeek)
-  currentWeek?: SeasonWeek;
+  seasonNumber: number;
 }
