@@ -1,8 +1,8 @@
-import { Config } from "knex";
+import { Knex } from "knex";
 // @ts-ignore
 import knexStringcase from "knex-stringcase";
 
-const configuration: Config = {
+const configuration: Knex.Config = {
   client: "pg",
   connection: {
     host: process.env.POSTGRES_HOST,
