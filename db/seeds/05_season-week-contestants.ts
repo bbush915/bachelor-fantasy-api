@@ -1,4 +1,4 @@
-import * as Knex from "knex";
+import { Knex } from "knex";
 
 import seasonWeekContestants from "./data/season-week-contestants";
 
