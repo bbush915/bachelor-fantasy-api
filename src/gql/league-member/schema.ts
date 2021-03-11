@@ -24,4 +24,7 @@ export class LeagueMember {
 
   @Field()
   totalScore: number;
+
+  @Field({ nullable: true })
+  weeklyScore?: number;
 }

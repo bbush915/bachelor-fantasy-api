@@ -1,4 +1,14 @@
-import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root, UseMiddleware } from "type-graphql";
+import {
+  Arg,
+  Args,
+  Ctx,
+  FieldResolver,
+  Mutation,
+  Query,
+  Resolver,
+  Root,
+  UseMiddleware,
+} from "type-graphql";
 
 import { IContext } from "gql/context";
 import { LeagueMember } from "gql/league-member";
@@ -11,8 +21,13 @@ import { Lineup, LineupInput, SaveLineupInput } from "./schema";
 class LineupResolver {
   @Query(() => Lineup, { nullable: true })
   @UseMiddleware(authentication)
-  async lineup(@Args() { leagueId, seasonWeekId }: LineupInput, @Ctx() { identity }: IContext): Promise<Lineup> {
-    const leagueMember: LeagueMember = await knex("league_members").where({ leagueId, userId: identity!.id }).first();
+  async lineup(
+    @Args() { leagueId, seasonWeekId }: LineupInput,
+    @Ctx() { identity }: IContext
+  ): Promise<Lineup> {
+    const leagueMember: LeagueMember = await knex("league_members")
+      .where({ leagueId, userId: identity!.id })
+      .first();
 
     if (!leagueMember) {
       throw new Error("You are not a member of this league");
@@ -21,9 +36,23 @@ class LineupResolver {
     return knex("lineups").where({ leagueMemberId: leagueMember.id, seasonWeekId }).first();
   }
 
+  @Query(() => [Lineup])
+  async leaderboard(@Args() { leagueId, seasonWeekId }: LineupInput): Promise<Lineup[]> {
+    return knex()
+      .select("lineups.*")
+      .from("lineups")
+      .join("league_members", "league_members.id", "=", "lineups.league_member_id")
+      .where("league_members.league_id", "=", leagueId)
+      .andWhere("lineups.season_week_id", "=", seasonWeekId)
+      .orderBy("lineups.weekly_score", "desc");
+  }
+
   @Query(() => Lineup, { nullable: true })
   @UseMiddleware(authentication)
-  async currentLineup(@Arg("leagueId") leagueId: string, @Ctx() context: IContext): Promise<Lineup> {
+  async currentLineup(
+    @Arg("leagueId") leagueId: string,
+    @Ctx() context: IContext
+  ): Promise<Lineup> {
     const { rows } = await knex.raw(
       `
         SELECT
@@ -40,6 +69,11 @@ class LineupResolver {
     return this.lineup({ leagueId, seasonWeekId }, context);
   }
 
+  @FieldResolver(() => LeagueMember)
+  leagueMember(@Root() { leagueMemberId }: Lineup): Promise<LeagueMember> {
+    return knex().select("*").first().from("league_members").where({ id: leagueMemberId });
+  }
+
   @FieldResolver(() => [LineupContestant])
   lineupContestants(@Root() { id }: Lineup): Promise<LineupContestant[]> {
     return knex("lineup_contestants").where({ lineupId: id });
@@ -51,13 +85,17 @@ class LineupResolver {
     @Arg("input") { leagueId, seasonWeekId, contestantIds }: SaveLineupInput,
     @Ctx() { identity }: IContext
   ): Promise<Lineup> {
-    const leagueMember: LeagueMember = await knex("league_members").where({ leagueId, userId: identity!.id }).first();
+    const leagueMember: LeagueMember = await knex("league_members")
+      .where({ leagueId, userId: identity!.id })
+      .first();
 
     if (!leagueMember) {
       throw new Error("You are not a member of this league");
     }
 
-    let lineup: Lineup = await knex("lineups").where({ leagueMemberId: leagueMember.id, seasonWeekId }).first();
+    let lineup: Lineup = await knex("lineups")
+      .where({ leagueMemberId: leagueMember.id, seasonWeekId })
+      .first();
 
     if (lineup) {
       await knex("lineup_contestants").where({ lineupId: lineup.id }).delete();

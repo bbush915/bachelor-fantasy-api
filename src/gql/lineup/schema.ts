@@ -1,5 +1,6 @@
 import { ArgsType, Field, ID, InputType, ObjectType } from "type-graphql";
 
+import { LeagueMember } from "gql/league-member";
 import { LineupContestant } from "gql/lineup-contestant";
 
 @ObjectType()
@@ -15,6 +16,9 @@ export class Lineup {
 
   @Field(() => ID)
   leagueMemberId: string;
+
+  @Field(() => LeagueMember)
+  leagueMember?: LeagueMember;
 
   @Field(() => ID)
   seasonWeekId: string;

@@ -19,6 +19,9 @@ export class User {
 
   @Field()
   hashedPassword: string;
+
+  @Field()
+  avatarUrl: string;
 }
 
 @InputType()
