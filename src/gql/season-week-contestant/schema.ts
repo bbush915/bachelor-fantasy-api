@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from "type-graphql";
+import { Field, ID, Int, ObjectType } from "type-graphql";
 
 import { Contestant } from "gql/contestant";
 
@@ -40,6 +40,6 @@ export class SeasonWeekContestant {
   @Field({ nullable: true })
   sentHome?: boolean;
 
-  @Field({ nullable: true })
+  @Field(() => Int, { nullable: true })
   score?: number;
 }

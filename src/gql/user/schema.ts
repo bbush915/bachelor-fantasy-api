@@ -15,13 +15,16 @@ export class User {
   email: string;
 
   @Field()
-  username: string;
-
-  @Field()
   hashedPassword: string;
 
   @Field()
+  verifiedEmail: boolean;
+
+  @Field()
   avatarUrl: string;
+
+  @Field()
+  displayName: string;
 }
 
 @InputType()
@@ -30,7 +33,7 @@ export class RegisterInput {
   email: string;
 
   @Field()
-  username: string;
+  displayName: string;
 
   @Field()
   password: string;

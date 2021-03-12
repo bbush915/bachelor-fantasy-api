@@ -23,9 +23,6 @@ export class Lineup {
   @Field(() => ID)
   seasonWeekId: string;
 
-  @Field({ nullable: true })
-  weeklyScore?: number;
-
   @Field(() => [LineupContestant])
   lineupContestants?: LineupContestant[];
 }

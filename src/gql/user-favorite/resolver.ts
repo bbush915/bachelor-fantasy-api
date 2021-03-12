@@ -10,7 +10,7 @@ class UserFavoriteResolver {
   @Query(() => [UserFavorite])
   @UseMiddleware(authentication)
   myFavorites(@Ctx() { identity }: IContext): Promise<UserFavorite[]> {
-    return knex("user_favorites").where({ userId: identity!.id });
+    return knex.select().from<UserFavorite>("user_favorites").where({ userId: identity!.id });
   }
 }
 

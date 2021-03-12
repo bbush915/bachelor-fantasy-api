@@ -1,18 +1,18 @@
 import { Knex } from "knex";
 
-export async function up(knex: Knex): Promise<void> {
-  await knex.schema.createTable("seasons", (tableBuilder) => {
-    tableBuilder.uuid("id").notNullable().primary().defaultTo(knex.raw("gen_random_uuid()"));
+export function up(knex: Knex) {
+  return knex.schema.createTable("seasons", (tableBuilder) => {
+    tableBuilder.uuid("id").primary().notNullable().defaultTo(knex.raw("gen_random_uuid()"));
 
     tableBuilder.timestamps(true, true);
 
     tableBuilder.integer("current_week_number").nullable();
-
-    tableBuilder.string("series").notNullable();
+    tableBuilder.text("series_name").notNullable();
     tableBuilder.integer("season_number").notNullable();
+    tableBuilder.boolean("is_active").notNullable().defaultTo(false);
   });
 }
 
-export async function down(knex: Knex): Promise<void> {
-  await knex.schema.dropTable("seasons");
+export async function down(knex: Knex) {
+  return knex.schema.dropTable("seasons");
 }

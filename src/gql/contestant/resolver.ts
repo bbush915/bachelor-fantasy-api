@@ -2,12 +2,19 @@ import { Query, Resolver } from "type-graphql";
 
 import knex from "lib/knex";
 import { Contestant } from "./schema";
+import { Season } from "gql/season";
 
 @Resolver(Contestant)
 class ContestantResolver {
   @Query(() => [Contestant])
-  contestants(): Promise<Contestant[]> {
-    return knex("contestants");
+  async contestants(): Promise<Contestant[]> {
+    const activeSeason = await knex
+      .select()
+      .from<Season>("seasons")
+      .where({ isActive: true })
+      .first();
+
+    return knex.select().from<Contestant>("contestants").where({ seasonId: activeSeason!.id });
   }
 }
 

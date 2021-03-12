@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from "type-graphql";
+import { Field, ID, Int, ObjectType } from "type-graphql";
 
 @ObjectType()
 export class Contestant {
@@ -18,9 +18,9 @@ export class Contestant {
   name: string;
 
   @Field()
-  imageUrl: string;
+  headshotUrl: string;
 
-  @Field()
+  @Field(() => Int)
   age: number;
 
   @Field()

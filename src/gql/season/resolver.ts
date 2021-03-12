@@ -7,8 +7,14 @@ import { Season } from "./schema";
 @Resolver(Season)
 class SeasonResolver {
   @FieldResolver(() => SeasonWeek, { nullable: true })
-  currentSeasonWeek(@Root() { id: seasonId, currentWeekNumber }: Season): Promise<SeasonWeek> {
-    return knex("season_weeks").where({ seasonId, weekNumber: currentWeekNumber }).first();
+  currentSeasonWeek(
+    @Root() { id: seasonId, currentWeekNumber }: Season
+  ): Promise<SeasonWeek | undefined> {
+    return knex
+      .select()
+      .from<SeasonWeek>("season_weeks")
+      .where({ seasonId, weekNumber: currentWeekNumber })
+      .first();
   }
 }
 

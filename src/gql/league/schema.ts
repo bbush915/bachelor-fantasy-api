@@ -2,7 +2,6 @@ import { Field, ID, ObjectType } from "type-graphql";
 
 import { LeagueMember } from "gql/league-member";
 import { Season } from "gql/season";
-import { User } from "gql/user";
 
 @ObjectType()
 export class League {
@@ -21,12 +20,6 @@ export class League {
   @Field(() => Season)
   season?: Season;
 
-  @Field(() => ID)
-  commissionerId: string;
-
-  @Field(() => User)
-  commissioner?: User;
-
   @Field()
   name: string;
 
@@ -34,7 +27,7 @@ export class League {
   description: string;
 
   @Field()
-  imageUrl: string;
+  logoUrl: string;
 
   @Field()
   isPublic: boolean;

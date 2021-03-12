@@ -8,12 +8,15 @@ import { SeasonWeek } from "./schema";
 class SeasonWeekResolver {
   @Query(() => [SeasonWeek])
   seasonWeeks(@Arg("seasonId") seasonId: string): Promise<SeasonWeek[]> {
-    return knex("season_weeks").where("season_id", "=", seasonId);
+    return knex.select().from<SeasonWeek>("season_weeks").where({ seasonId });
   }
 
   @FieldResolver(() => [SeasonWeekContestant])
   seasonWeekContestants(@Root() { id: seasonWeekId }: SeasonWeek): Promise<SeasonWeekContestant[]> {
-    return knex("season_week_contestants").where({ seasonWeekId });
+    return knex
+      .select()
+      .from<SeasonWeekContestant>("season_week_contestants")
+      .where({ seasonWeekId });
   }
 }
 

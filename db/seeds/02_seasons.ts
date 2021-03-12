@@ -2,6 +2,6 @@ import { Knex } from "knex";
 
 import seasons from "./data/seasons";
 
-export function seed(knex: Knex): Promise<any> {
-  return knex("seasons").insert(seasons);
+export async function seed(knex: Knex) {
+  await knex.insert(seasons).into("seasons");
 }

@@ -1,8 +1,8 @@
 import { Knex } from "knex";
 
-export async function up(knex: Knex): Promise<void> {
-  await knex.schema.createTable("season_weeks", (tableBuilder) => {
-    tableBuilder.uuid("id").notNullable().primary().defaultTo(knex.raw("gen_random_uuid()"));
+export async function up(knex: Knex) {
+  return knex.schema.createTable("season_weeks", (tableBuilder) => {
+    tableBuilder.uuid("id").primary().notNullable().defaultTo(knex.raw("gen_random_uuid()"));
 
     tableBuilder.timestamps(true, true);
 
@@ -14,6 +14,6 @@ export async function up(knex: Knex): Promise<void> {
   });
 }
 
-export async function down(knex: Knex): Promise<void> {
-  await knex.schema.dropTable("season_weeks");
+export function down(knex: Knex) {
+  return knex.schema.dropTable("season_weeks");
 }

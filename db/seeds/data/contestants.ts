@@ -1,11 +1,11 @@
-import { Contestant } from "../../../src/gql/contestant";
+import { Contestant } from "gql/contestant";
 
 const contestants: Contestant[] = [
   {
     id: "0b0cd44f-9035-4dce-b3cf-ebd7b295d632",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Abigail",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3604012/229c71e1f6eff0cad1cde61c2fb9fc0c/330x330-Q90_229c71e1f6eff0cad1cde61c2fb9fc0c.jpg",
     age: 25,
     occupation: "Client Financial Manager",
@@ -22,7 +22,7 @@ const contestants: Contestant[] = [
     id: "36b90f67-6587-4d24-b645-aa009365aca0",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Alana",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3604024/2fea3f5c32175c1a508bb76d3365261f/330x330-Q90_2fea3f5c32175c1a508bb76d3365261f.jpg",
     age: 26,
     occupation: "Photographer",
@@ -39,7 +39,7 @@ const contestants: Contestant[] = [
     id: "0755ec4f-a368-4462-8b3c-6a47a2664920",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Alicia",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3604960/5e91b008b46219f9ef7d89baff264511/330x330-Q90_5e91b008b46219f9ef7d89baff264511.jpg",
     age: 24,
     occupation: "Professional Ballerina",
@@ -56,7 +56,7 @@ const contestants: Contestant[] = [
     id: "985c8d11-79dc-4c7e-97c3-45a6f54998a7",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Amber",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3604969/b9c2b495822d3fcca136f61892b13e8e/330x330-Q90_b9c2b495822d3fcca136f61892b13e8e.jpg",
     age: 30,
     occupation: "Nursing Student",
@@ -73,7 +73,7 @@ const contestants: Contestant[] = [
     id: "642ff7e3-09c0-4d84-8258-dac8e6aec0a9",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Anna",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3604981/59161557992449173390b567a3fdf24b/330x330-Q90_59161557992449173390b567a3fdf24b.jpg",
     age: 24,
     occupation: "Copywriter",
@@ -90,7 +90,7 @@ const contestants: Contestant[] = [
     id: "c1facca8-eaa8-4b1a-b527-22a20ce14850",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Bri",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3604994/0162fa3620e62be540779416de9d8ec2/330x330-Q90_0162fa3620e62be540779416de9d8ec2.jpg",
     age: 24,
     occupation: "Communications Manager",
@@ -107,7 +107,7 @@ const contestants: Contestant[] = [
     id: "89e1aa3d-68d1-47cb-b192-d968713a7274",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Brittany",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3636952/a713163a0c29bf040d2cbb4fc56b328f/330x330-Q90_a713163a0c29bf040d2cbb4fc56b328f.jpg",
     age: 23,
     occupation: "Model",
@@ -124,7 +124,7 @@ const contestants: Contestant[] = [
     id: "bfb1a65d-251d-4425-97f1-436116cffe29",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Carolyn",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605005/5f2a9d1b0bf59c720e083a1a5aea6493/330x330-Q90_5f2a9d1b0bf59c720e083a1a5aea6493.jpg",
     age: 30,
     occupation: "Journalist",
@@ -141,7 +141,7 @@ const contestants: Contestant[] = [
     id: "2b8d815e-303d-44f8-a001-3f8722f2aa3f",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Casandra",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605011/5286e2c60094cf67ddabb24f88082119/330x330-Q90_5286e2c60094cf67ddabb24f88082119.jpg",
     age: 25,
     occupation: "Social Worker",
@@ -158,7 +158,7 @@ const contestants: Contestant[] = [
     id: "bc552bf4-17f5-44fe-9b4e-9310a21789ba",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Catalina",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3636958/605544b6829cafc3b536fd61a6a48b13/330x330-Q90_605544b6829cafc3b536fd61a6a48b13.jpg",
     age: 29,
     occupation: "Former Miss Puerto Rico",
@@ -175,7 +175,7 @@ const contestants: Contestant[] = [
     id: "954e8729-22b9-43d9-89fd-38deacb32d16",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Chelsea",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605027/8a7e1652977dc8c7496aef5b9a9b766a/330x330-Q90_8a7e1652977dc8c7496aef5b9a9b766a.jpg",
     age: 28,
     occupation: "Runway Model",
@@ -192,7 +192,7 @@ const contestants: Contestant[] = [
     id: "78a39758-0cab-4a42-acfe-9098555271c9",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Corrinne",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605033/c509d4a5b387ea91ad7f9ec8e8e29ed0/330x330-Q90_c509d4a5b387ea91ad7f9ec8e8e29ed0.jpg",
     age: 22,
     occupation: "Marketing Manager",
@@ -209,7 +209,7 @@ const contestants: Contestant[] = [
     id: "c4401f47-c3eb-4728-9b62-5e131fb4c539",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Emani",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605038/cad96d4426862db2f3df0170594c15d5/330x330-Q90_cad96d4426862db2f3df0170594c15d5.jpg",
     age: 25,
     occupation: "Realtor",
@@ -226,7 +226,7 @@ const contestants: Contestant[] = [
     id: "cabef514-12c6-4f7d-99e8-6cadc7fa7e1d",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Illeana",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605061/5966e9aa289c31135fd7f8e3acac908d/330x330-Q90_5966e9aa289c31135fd7f8e3acac908d.jpg",
     age: 25,
     occupation: "Health Food Developer",
@@ -243,7 +243,7 @@ const contestants: Contestant[] = [
     id: "a47d65f7-ffd8-46f0-817c-388e1310157e",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Jessenia",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605573/bc35e87b284a5efb030b154e83488505/330x330-Q90_bc35e87b284a5efb030b154e83488505.jpg",
     age: 27,
     occupation: "Social Media Marketer",
@@ -260,7 +260,7 @@ const contestants: Contestant[] = [
     id: "4e9d8e51-4b6d-45a5-a97c-a7a76fabba82",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Kaili",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605588/5c406dca169c7e6d9ee29b59ea43a2c7/330x330-Q90_5c406dca169c7e6d9ee29b59ea43a2c7.jpg",
     age: 26,
     occupation: "Hostess",
@@ -277,7 +277,7 @@ const contestants: Contestant[] = [
     id: "a0b7fec4-2d02-46a8-9e8b-64b34e662b97",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Katie",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605610/38638c4ba57e2941770f138a19eb52f7/330x330-Q90_38638c4ba57e2941770f138a19eb52f7.jpg",
     age: 29,
     occupation: "Bank Marketing Manager",
@@ -294,7 +294,7 @@ const contestants: Contestant[] = [
     id: "068d8b1b-1daf-4d54-9bef-62819c34b14f",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Khaylah",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605618/881352a7d35868b96d554fea7d6a69bd/330x330-Q90_881352a7d35868b96d554fea7d6a69bd.jpg",
     age: 28,
     occupation: "Healthcare Advocate",
@@ -311,7 +311,7 @@ const contestants: Contestant[] = [
     id: "6950c31c-96e7-4988-8d10-5847dbf01b18",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Kim",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3636966/493c3711ad2ea31aa732ed460cbc6d92/330x330-Q90_493c3711ad2ea31aa732ed460cbc6d92.jpg",
     age: 28,
     occupation: "ICU Nurse",
@@ -328,7 +328,7 @@ const contestants: Contestant[] = [
     id: "f6109088-7462-4f02-b179-65ad7de2f76a",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Kimberly",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605623/e0c247eb5688b546a90f8d67d0e94179/330x330-Q90_e0c247eb5688b546a90f8d67d0e94179.jpg",
     age: 28,
     occupation: "Airline Recruiter",
@@ -345,7 +345,7 @@ const contestants: Contestant[] = [
     id: "de63712e-f67f-46b1-bcf0-33be74afe070",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Kit",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605628/fa393ecf3cae92207f7b38ac91c5e039/330x330-Q90_fa393ecf3cae92207f7b38ac91c5e039.jpg",
     age: 21,
     occupation: "Fashion Entrepreneur",
@@ -362,7 +362,7 @@ const contestants: Contestant[] = [
     id: "77248841-13e0-40d3-96ee-4d17620b1f58",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Kristin",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605633/c0738bd6513a4e515ca32b2d405a74de/330x330-Q90_c0738bd6513a4e515ca32b2d405a74de.jpg",
     age: 27,
     occupation: "Attorney",
@@ -379,7 +379,7 @@ const contestants: Contestant[] = [
     id: "4b03ab55-ac88-49ba-895a-a6298747616e",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Lauren",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605641/a7d288e2d4daa440a4693f490006d39a/330x330-Q90_a7d288e2d4daa440a4693f490006d39a.jpg",
     age: 29,
     occupation: "Corporate Attorney",
@@ -396,7 +396,7 @@ const contestants: Contestant[] = [
     id: "cd384aaa-91ff-434e-9b1c-da0c25189d73",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Magi",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605647/5a68b530bec80931f3be6dae08ba3aaf/330x330-Q90_5a68b530bec80931f3be6dae08ba3aaf.jpg",
     age: 32,
     occupation: "Pharmacist",
@@ -413,7 +413,7 @@ const contestants: Contestant[] = [
     id: "8a4093e6-ed88-4078-91ba-22034d8041d3",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Mari",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605656/986265f0eea1b5ef33032f3d4b4c21a1/330x330-Q90_986265f0eea1b5ef33032f3d4b4c21a1.jpg",
     age: 24,
     occupation: "Marketing Director",
@@ -430,7 +430,7 @@ const contestants: Contestant[] = [
     id: "60b9bc32-0471-4407-b410-1b604eadd5b5",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Marylynn",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605661/8116b071c4ae2116172f22c21fcb9cac/330x330-Q90_8116b071c4ae2116172f22c21fcb9cac.jpg",
     age: 28,
     occupation: "Event Coordinator",
@@ -447,7 +447,7 @@ const contestants: Contestant[] = [
     id: "b3758556-d9c3-47e1-9fc7-0b0fb0c76e46",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Michelle",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3636972/93c0693d9e66060367ff420f85f99122/330x330-Q90_93c0693d9e66060367ff420f85f99122.jpg",
     age: 27,
     occupation: "Teacher",
@@ -464,7 +464,7 @@ const contestants: Contestant[] = [
     id: "88e27dd2-9f96-4ece-813c-0775991985e3",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "MJ",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605665/1fe58b64b7b2a431435b7c8b4fb7dc61/330x330-Q90_1fe58b64b7b2a431435b7c8b4fb7dc61.jpg",
     age: 23,
     occupation: "Hair Stylist",
@@ -481,7 +481,7 @@ const contestants: Contestant[] = [
     id: "871522f5-9e15-43b4-b266-f4f2127a8543",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Pieper",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605673/0a1aa4c2957b146a4507135d34906b3d/330x330-Q90_0a1aa4c2957b146a4507135d34906b3d.jpg",
     age: 23,
     occupation: "Graduate Student",
@@ -498,7 +498,7 @@ const contestants: Contestant[] = [
     id: "c59e964e-fcf3-44e2-926d-3eb3c586e736",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Rachael",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605725/2776a9463e9ba55653a76ba12bdb0582/330x330-Q90_2776a9463e9ba55653a76ba12bdb0582.jpg",
     age: 24,
     occupation: "Graphic Designer",
@@ -515,7 +515,7 @@ const contestants: Contestant[] = [
     id: "479ed2fb-1c0a-42ca-950f-0675cd1be934",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Ryan",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3637003/2ca9b88d48e09932dc344d3cceb0eef8/330x330-Q90_2ca9b88d48e09932dc344d3cceb0eef8.jpg",
     age: 26,
     occupation: "Dancer/Choreographer",
@@ -532,7 +532,7 @@ const contestants: Contestant[] = [
     id: "a7051749-c156-442e-969c-164101b71e1d",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Saneh",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605732/0c515b858de5fbb6cc0d5edebd05dd8d/330x330-Q90_0c515b858de5fbb6cc0d5edebd05dd8d.jpg",
     age: 25,
     occupation: "IT Consultant",
@@ -549,7 +549,7 @@ const contestants: Contestant[] = [
     id: "b2f6fe2c-dcde-404a-b102-c892507052c7",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Sarah",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605739/a2d786d49c974e3e48a915919c95543e/330x330-Q90_a2d786d49c974e3e48a915919c95543e.jpg",
     age: 24,
     occupation: "Broadcast Journalist",
@@ -566,7 +566,7 @@ const contestants: Contestant[] = [
     id: "1baed9f6-96f2-4e0f-a4c4-bdcbd0a965b1",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Serena C.",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605748/102fb19b11c8f30bbae44b2f2831ef5b/330x330-Q90_102fb19b11c8f30bbae44b2f2831ef5b.jpg",
     age: 24,
     occupation: "Flight Attendant",
@@ -583,7 +583,7 @@ const contestants: Contestant[] = [
     id: "b199123f-ea17-43d4-9cb7-4cb0a6a3e126",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Serena P.",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605756/1f057708b50653e45217302005e3ed67/330x330-Q90_1f057708b50653e45217302005e3ed67.jpg",
     age: 22,
     occupation: "Publicist",
@@ -600,7 +600,7 @@ const contestants: Contestant[] = [
     id: "967fc33b-e6af-43bd-aade-eb3e5cfd28f9",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Sydney",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605762/b3e40de34b02a3ff4d0a2e5b1bb0e341/330x330-Q90_b3e40de34b02a3ff4d0a2e5b1bb0e341.jpg",
     age: 28,
     occupation: "Marketing Specialist",
@@ -617,7 +617,7 @@ const contestants: Contestant[] = [
     id: "9d2713d9-6827-434c-bf30-c9c9c30ce28b",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     name: "Victoria",
-    imageUrl:
+    headshotUrl:
       "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelor/person/3605766/086bb4c690c511cb5e50247ad17252b9/330x330-Q90_086bb4c690c511cb5e50247ad17252b9.jpg",
     age: 27,
     occupation: "Queen",

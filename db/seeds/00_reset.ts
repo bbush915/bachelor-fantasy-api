@@ -1,6 +1,6 @@
 import { Knex } from "knex";
 
-export async function seed(knex: Knex): Promise<any> {
+export async function seed(knex: Knex) {
   const { rows: tables } = await knex.raw(
     `
 			SELECT
@@ -10,9 +10,8 @@ export async function seed(knex: Knex): Promise<any> {
 			WHERE 
 				1 = 1
 				AND (schemaname='public')
-				AND (tablename NOT IN (?))
-		`,
-    [["knex_migrations", "knex_migrations_lock"]]
+				AND (tablename NOT IN ( 'knex_migrations', 'knex_migrations_lock' ))
+		`
   );
 
   if (tables.length === 0) {

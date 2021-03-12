@@ -7,8 +7,14 @@ import { LineupContestant } from "./schema";
 @Resolver(LineupContestant)
 class LineupContestantResolver {
   @FieldResolver(() => Contestant)
-  contestant(@Root() { contestantId }: LineupContestant): Promise<Contestant> {
-    return knex("contestants").where({ id: contestantId }).first();
+  async contestant(@Root() { contestantId }: LineupContestant): Promise<Contestant> {
+    const contestant = await knex
+      .select()
+      .from<Contestant>("contestants")
+      .where({ id: contestantId })
+      .first();
+
+    return contestant!;
   }
 }
 

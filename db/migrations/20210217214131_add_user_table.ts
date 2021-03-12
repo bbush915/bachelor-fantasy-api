@@ -1,18 +1,19 @@
 import { Knex } from "knex";
 
-export async function up(knex: Knex): Promise<void> {
-  await knex.schema.createTable("users", (tableBuilder) => {
-    tableBuilder.uuid("id").notNullable().primary().defaultTo(knex.raw("gen_random_uuid()"));
+export function up(knex: Knex) {
+  return knex.schema.createTable("users", (tableBuilder) => {
+    tableBuilder.uuid("id").primary().notNullable().defaultTo(knex.raw("gen_random_uuid()"));
 
     tableBuilder.timestamps(true, true);
 
-    tableBuilder.string("email").notNullable();
-    tableBuilder.string("username").notNullable();
-    tableBuilder.string("hashed_password").notNullable();
-    tableBuilder.text("avatar_url").notNullable();
+    tableBuilder.text("email").notNullable();
+    tableBuilder.text("hashed_password").notNullable();
+    tableBuilder.boolean("verified_email").notNullable().defaultTo(false);
+    tableBuilder.text("avatar_url").nullable();
+    tableBuilder.text("display_name").notNullable();
   });
 }
 
-export async function down(knex: Knex): Promise<void> {
-  await knex.schema.dropTable("users");
+export function down(knex: Knex) {
+  return knex.schema.dropTable("users");
 }

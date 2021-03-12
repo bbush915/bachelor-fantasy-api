@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from "type-graphql";
+import { Field, ID, Int, ObjectType } from "type-graphql";
 
 @ObjectType()
 export class SeasonWeek {
@@ -14,12 +14,12 @@ export class SeasonWeek {
   @Field(() => ID)
   seasonId: string;
 
-  @Field()
+  @Field(() => Int)
   weekNumber: number;
 
   @Field()
   episodeAirDate: Date;
 
-  @Field()
+  @Field(() => Int)
   lineupSpotsAvailable: number;
 }

@@ -7,8 +7,14 @@ import { SeasonWeekContestant } from "./schema";
 @Resolver(SeasonWeekContestant)
 class SeasonWeekContestantResolver {
   @FieldResolver(() => Contestant)
-  contestant(@Root() { contestantId }: SeasonWeekContestant): Promise<Contestant> {
-    return knex("contestants").where({ id: contestantId }).first();
+  async contestant(@Root() { contestantId }: SeasonWeekContestant): Promise<Contestant> {
+    const contestant = await knex
+      .select()
+      .from<Contestant>("contestants")
+      .where({ id: contestantId })
+      .first();
+
+    return contestant!;
   }
 }
 
