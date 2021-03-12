@@ -1,6 +1,7 @@
-import { FieldResolver, Resolver, Root } from "type-graphql";
+import { Arg, FieldResolver, Int, Resolver, Root } from "type-graphql";
 
 import { Contestant } from "gql/contestant";
+import { SeasonWeekContestant } from "gql/season-week-contestant";
 import knex from "lib/knex";
 import { LineupContestant } from "./schema";
 
@@ -15,6 +16,20 @@ class LineupContestantResolver {
       .first();
 
     return contestant!;
+  }
+
+  @FieldResolver(() => Int, { nullable: true })
+  async score(
+    @Arg("seasonWeekId") seasonWeekId: string,
+    @Root() { contestantId }: LineupContestant
+  ): Promise<number | undefined> {
+    const seasonWeekContestant = await knex
+      .select()
+      .from<SeasonWeekContestant>("season_week_contestants")
+      .where({ seasonWeekId, contestantId })
+      .first();
+
+    return seasonWeekContestant?.score;
   }
 }
 

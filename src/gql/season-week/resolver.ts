@@ -1,6 +1,5 @@
-import { Arg, FieldResolver, Query, Resolver, Root } from "type-graphql";
+import { Arg, Query, Resolver } from "type-graphql";
 
-import { SeasonWeekContestant } from "gql/season-week-contestant";
 import knex from "lib/knex";
 import { SeasonWeek } from "./schema";
 
@@ -9,14 +8,6 @@ class SeasonWeekResolver {
   @Query(() => [SeasonWeek])
   seasonWeeks(@Arg("seasonId") seasonId: string): Promise<SeasonWeek[]> {
     return knex.select().from<SeasonWeek>("season_weeks").where({ seasonId });
-  }
-
-  @FieldResolver(() => [SeasonWeekContestant])
-  seasonWeekContestants(@Root() { id: seasonWeekId }: SeasonWeek): Promise<SeasonWeekContestant[]> {
-    return knex
-      .select()
-      .from<SeasonWeekContestant>("season_week_contestants")
-      .where({ seasonWeekId });
   }
 }
 

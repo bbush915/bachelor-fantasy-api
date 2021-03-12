@@ -1,16 +1,17 @@
-import { Args, FieldResolver, Query, Resolver, Root, UseMiddleware } from "type-graphql";
+import { Arg, Args, FieldResolver, Query, Resolver, Root, UseMiddleware } from "type-graphql";
 
+import { Lineup } from "gql/lineup";
 import { User } from "gql/user";
 import knex, { camelCase } from "lib/knex";
 import { authentication } from "middleware";
-import { LeaderboardDetailsInput, LeagueMember, WeeklyScoreDetailsInput } from "./schema";
+import { LeagueMember, OverallScoreDetailsInput, WeeklyScoreDetailsInput } from "./schema";
 
 @Resolver(LeagueMember)
 class LeagueMemberResolver {
   @Query(() => [LeagueMember], { nullable: true })
   @UseMiddleware(authentication)
-  async leaderboardDetails(
-    @Args() { leagueId, weekNumber }: LeaderboardDetailsInput
+  async overallScoreDetails(
+    @Args() { leagueId, weekNumber }: OverallScoreDetailsInput
   ): Promise<LeagueMember[]> {
     const { rows } = await knex.raw(
       `
@@ -88,6 +89,18 @@ class LeagueMemberResolver {
     );
 
     return camelCase(rows);
+  }
+
+  @FieldResolver(() => Lineup, { nullable: true })
+  async lineup(
+    @Arg("seasonWeekId") seasonWeekId: string,
+    @Root() { id }: LeagueMember
+  ): Promise<Lineup | undefined> {
+    return knex
+      .select()
+      .from<Lineup>("lineups")
+      .where({ leagueMemberId: id, seasonWeekId })
+      .first();
   }
 
   @FieldResolver(() => User)

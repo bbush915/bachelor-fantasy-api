@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from "type-graphql";
+import { Field, ID, Int, ObjectType } from "type-graphql";
 
 import { Contestant } from "gql/contestant";
 
@@ -21,4 +21,7 @@ export class LineupContestant {
 
   @Field(() => Contestant)
   contestant?: Contestant;
+
+  @Field(() => Int, { nullable: true })
+  score?: number;
 }

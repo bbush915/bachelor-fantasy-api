@@ -33,7 +33,7 @@ export class LeagueMember {
 }
 
 @ArgsType()
-export class LeaderboardDetailsInput {
+export class OverallScoreDetailsInput {
   @Field()
   leagueId: string;
 
