@@ -28,9 +28,18 @@ export class Lineup {
 }
 
 @ArgsType()
-export class LineupInput {
+export class MyLineupInput {
   @Field()
   leagueId: string;
+
+  @Field()
+  seasonWeekId: string;
+}
+
+@ArgsType()
+export class LineupInput {
+  @Field()
+  leagueMemberId: string;
 
   @Field()
   seasonWeekId: string;

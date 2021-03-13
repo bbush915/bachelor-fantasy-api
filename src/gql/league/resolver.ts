@@ -34,6 +34,19 @@ class LeagueResolver {
   leagueMembers(@Root() { id }: League): Promise<LeagueMember[]> {
     return knex.select().from<LeagueMember>("league_members").where({ leagueId: id });
   }
+
+  @FieldResolver(() => LeagueMember, { nullable: true })
+  @UseMiddleware(authentication)
+  async myLeagueMember(
+    @Root() { id }: League,
+    @Ctx() { identity }: IContext
+  ): Promise<LeagueMember | undefined> {
+    return knex
+      .select()
+      .from<LeagueMember>("league_members")
+      .where({ leagueId: id, userId: identity!.id })
+      .first();
+  }
 }
 
 export default LeagueResolver;

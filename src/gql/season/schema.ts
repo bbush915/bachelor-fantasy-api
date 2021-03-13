@@ -19,6 +19,9 @@ export class Season {
   @Field(() => SeasonWeek, { nullable: true })
   currentSeasonWeek?: SeasonWeek;
 
+  @Field(() => SeasonWeek, { nullable: true })
+  previousSeasonWeek?: SeasonWeek;
+
   @Field()
   seriesName: string;
 

@@ -16,6 +16,21 @@ class SeasonResolver {
       .where({ seasonId, weekNumber: currentWeekNumber })
       .first();
   }
+
+  @FieldResolver(() => SeasonWeek, { nullable: true })
+  async previousSeasonWeek(
+    @Root() { id: seasonId, currentWeekNumber }: Season
+  ): Promise<SeasonWeek | undefined> {
+    if (!currentWeekNumber || currentWeekNumber < 2) {
+      return;
+    }
+
+    return knex
+      .select()
+      .from<SeasonWeek>("season_weeks")
+      .where({ seasonId, weekNumber: currentWeekNumber - 1 })
+      .first();
+  }
 }
 
 export default SeasonResolver;

@@ -37,4 +37,7 @@ export class League {
 
   @Field(() => [LeagueMember])
   leagueMembers?: LeagueMember[];
+
+  @Field(() => LeagueMember, { nullable: true })
+  myLeagueMember?: LeagueMember;
 }

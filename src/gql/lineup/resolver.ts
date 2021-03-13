@@ -15,14 +15,14 @@ import { LeagueMember } from "gql/league-member";
 import { LineupContestant } from "gql/lineup-contestant";
 import knex from "lib/knex";
 import { authentication } from "middleware";
-import { Lineup, LineupInput, SaveLineupInput } from "./schema";
+import { Lineup, LineupInput, MyLineupInput, SaveLineupInput } from "./schema";
 
 @Resolver(Lineup)
 class LineupResolver {
   @Query(() => Lineup, { nullable: true })
   @UseMiddleware(authentication)
   async myLineup(
-    @Args() { leagueId, seasonWeekId }: LineupInput,
+    @Args() { leagueId, seasonWeekId }: MyLineupInput,
     @Ctx() { identity }: IContext
   ): Promise<Lineup | undefined> {
     const leagueMember = await knex
@@ -40,6 +40,12 @@ class LineupResolver {
       .from<Lineup>("lineups")
       .where({ leagueMemberId: leagueMember.id, seasonWeekId })
       .first();
+  }
+
+  @Query(() => Lineup, { nullable: true })
+  @UseMiddleware(authentication)
+  async lineup(@Args() { leagueMemberId, seasonWeekId }: LineupInput): Promise<Lineup | undefined> {
+    return knex.select().from<Lineup>("lineups").where({ leagueMemberId, seasonWeekId }).first();
   }
 
   @FieldResolver(() => LeagueMember)
