@@ -30,6 +30,12 @@ export class LeagueMember {
 
   @Field(() => Int, { nullable: true })
   cumulativeScore?: number;
+
+  @Field(() => Int, { nullable: true })
+  place?: number;
+
+  @Field()
+  isLineupSet?: boolean;
 }
 
 @ArgsType()
