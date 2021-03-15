@@ -5,7 +5,7 @@ import { User } from "gql/user";
 @ObjectType()
 export class LeagueMember {
   @Field(() => ID)
-  id: string;
+  id?: string;
 
   @Field()
   createdAt?: Date;

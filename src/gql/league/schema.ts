@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from "type-graphql";
+import { Field, ID, InputType, ObjectType } from "type-graphql";
 
 import { LeagueMember } from "gql/league-member";
 import { Season } from "gql/season";
@@ -40,4 +40,22 @@ export class League {
 
   @Field(() => LeagueMember, { nullable: true })
   myLeagueMember?: LeagueMember;
+}
+
+@InputType()
+export class CreateLeagueInput {
+  @Field()
+  name: string;
+
+  @Field()
+  description: string;
+
+  @Field()
+  logo: string;
+
+  @Field()
+  isPublic: boolean;
+
+  @Field()
+  isShareable: boolean;
 }
