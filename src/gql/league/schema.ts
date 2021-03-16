@@ -50,3 +50,21 @@ export class JoinLeagueInput {
   @Field()
   leagueId: string;
 }
+
+@InputType()
+export class CreateLeagueInput {
+  @Field()
+  name: string;
+
+  @Field()
+  description: string;
+
+  @Field()
+  logo: string;
+
+  @Field()
+  isPublic: boolean;
+
+  @Field()
+  isShareable: boolean;
+}

@@ -93,9 +93,12 @@ class LeagueMemberResolver {
     );
 
     return (
-      overallScoreDetails
-        .sort((x, y) => Number(y.cumulativeScore) - Number(x.cumulativeScore))
-        .findIndex((x) => x.id === id) + 1
+      Math.max(
+        overallScoreDetails
+          .sort((x, y) => Number(y.cumulativeScore) - Number(x.cumulativeScore))
+          .findIndex((x) => x.id === id),
+        0
+      ) + 1
     );
   }
 
@@ -112,7 +115,7 @@ class LeagueMemberResolver {
       .select("lineups.*")
       .from("lineups")
       .join("season_weeks", "season_weeks.id", "=", "lineups.season_week_id")
-      .where("lineups.league_member_id", "=", id)
+      .where("lineups.league_member_id", "=", id!)
       .andWhere("season_weeks.week_number", "=", season.currentWeekNumber!)
       .first();
 

@@ -14,7 +14,7 @@ import { LeagueMember } from 'gql/league-member';
 import { Season } from 'gql/season';
 import knex from 'lib/knex';
 import { authentication } from 'middleware';
-import { JoinLeagueInput, League } from './schema';
+import { CreateLeagueInput, JoinLeagueInput, League } from './schema';
 
 @Resolver(League)
 class LeagueResolver {
@@ -107,6 +107,44 @@ class LeagueResolver {
       .first();
     console.log(id, commissioner);
     return commissioner!;
+  }
+
+  @Mutation(() => League)
+  @UseMiddleware(authentication)
+  async createLeague(
+    @Arg('input')
+    { name, description, logo, isPublic, isShareable }: CreateLeagueInput,
+    @Ctx() { identity }: IContext
+  ): Promise<League> {
+    const activeSeason = await knex
+      .select()
+      .from<Season>('seasons')
+      .where({ isActive: true })
+      .first();
+
+    const league: League = (
+      await knex
+        .insert({
+          seasonId: activeSeason!.id,
+          name,
+          description,
+          logoUrl: logo,
+          isPublic,
+          isShareable,
+        })
+        .into('leagues')
+        .returning('*')
+    )[0];
+
+    const commissioner: LeagueMember = {
+      leagueId: league.id,
+      userId: identity!.id,
+      isCommissioner: true,
+    };
+
+    await knex.insert(commissioner).into('league_members');
+
+    return league;
   }
 }
 
