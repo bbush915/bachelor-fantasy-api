@@ -38,7 +38,7 @@ class LeagueResolver {
     return knex
       .select()
       .from<League>('leagues')
-      .whereRaw(`leagues.name LIKE '%${query}%'`);
+      .whereRaw(`LOWER(leagues.name) LIKE '%${query.toLowerCase()}%'`);
   }
 
   @Mutation(() => LeagueMember)
@@ -53,7 +53,9 @@ class LeagueResolver {
       .where({ leagueId, userId: identity!.id })
       .first();
 
-    if (!leagueMember) {
+    if (leagueMember) {
+      throw new Error('You are already a member of this league');
+    } else {
       leagueMember = (
         await knex
           .insert({
