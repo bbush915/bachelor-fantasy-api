@@ -21,6 +21,12 @@ import { Lineup, LineupInput, MyLineupInput, SaveLineupInput } from "./schema";
 class LineupResolver {
   @Query(() => Lineup, { nullable: true })
   @UseMiddleware(authentication)
+  async lineup(@Args() { leagueMemberId, seasonWeekId }: LineupInput): Promise<Lineup | undefined> {
+    return knex.select().from<Lineup>("lineups").where({ leagueMemberId, seasonWeekId }).first();
+  }
+
+  @Query(() => Lineup, { nullable: true })
+  @UseMiddleware(authentication)
   async myLineup(
     @Args() { leagueId, seasonWeekId }: MyLineupInput,
     @Ctx() { identity }: IContext
@@ -35,28 +41,7 @@ class LineupResolver {
       throw new Error("You are not a member of this league");
     }
 
-    return knex
-      .select()
-      .from<Lineup>("lineups")
-      .where({ leagueMemberId: leagueMember.id, seasonWeekId })
-      .first();
-  }
-
-  @Query(() => Lineup, { nullable: true })
-  @UseMiddleware(authentication)
-  async lineup(@Args() { leagueMemberId, seasonWeekId }: LineupInput): Promise<Lineup | undefined> {
-    return knex.select().from<Lineup>("lineups").where({ leagueMemberId, seasonWeekId }).first();
-  }
-
-  @FieldResolver(() => LeagueMember)
-  async leagueMember(@Root() { leagueMemberId }: Lineup): Promise<LeagueMember> {
-    const leagueMember = await knex
-      .select()
-      .from<LeagueMember>("league_members")
-      .where({ id: leagueMemberId })
-      .first();
-
-    return leagueMember!;
+    return this.lineup({ leagueMemberId: leagueMember.id, seasonWeekId });
   }
 
   @FieldResolver(() => [LineupContestant])
@@ -80,37 +65,39 @@ class LineupResolver {
       throw new Error("You are not a member of this league");
     }
 
-    let lineup = await knex
+    let existingLineup = await knex
       .select()
       .from<Lineup>("lineups")
       .where({ leagueMemberId: leagueMember.id, seasonWeekId })
       .first();
 
-    if (lineup) {
-      await knex
-        .delete()
-        .from<LineupContestant>("lineup_contestants")
-        .where({ lineupId: lineup.id });
-    } else {
-      lineup = (
-        await knex
-          .insert({
-            leagueMemberId: leagueMember.id,
-            seasonWeekId,
-          })
-          .into("lineups")
-          .returning("*")
-      )[0];
-    }
+    return knex.transaction(async (trx) => {
+      if (existingLineup) {
+        await trx
+          .delete()
+          .from<LineupContestant>("lineup_contestants")
+          .where({ lineupId: existingLineup.id });
+      } else {
+        existingLineup = (
+          await trx
+            .insert({
+              leagueMemberId: leagueMember.id,
+              seasonWeekId,
+            })
+            .into("lineups")
+            .returning("*")
+        )[0];
+      }
 
-    const lineupContestants: Partial<LineupContestant>[] = contestantIds.map((contestantId) => ({
-      lineupId: lineup!.id,
-      contestantId,
-    }));
+      const lineupContestants: Partial<LineupContestant>[] = contestantIds.map((contestantId) => ({
+        lineupId: existingLineup!.id,
+        contestantId,
+      }));
 
-    await knex.insert(lineupContestants).into("lineup_contestants");
+      await trx.insert(lineupContestants).into("lineup_contestants");
 
-    return lineup!;
+      return existingLineup!;
+    });
   }
 }
 

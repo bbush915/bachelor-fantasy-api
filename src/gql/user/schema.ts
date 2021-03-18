@@ -1,4 +1,4 @@
-import { ArgsType, Field, ID, InputType, ObjectType } from "type-graphql";
+import { Field, ID, InputType, ObjectType } from "type-graphql";
 
 @ObjectType()
 export class User {
@@ -6,10 +6,10 @@ export class User {
   id: string;
 
   @Field()
-  createdAt?: Date;
+  createdAt: Date;
 
   @Field()
-  updatedAt?: Date;
+  updatedAt: Date;
 
   @Field()
   email: string;
@@ -18,10 +18,10 @@ export class User {
   hashedPassword: string;
 
   @Field()
-  verifiedEmail: boolean;
+  isEmailVerified: boolean;
 
-  @Field()
-  avatarUrl: string;
+  @Field({ nullable: true })
+  avatarUrl?: string;
 
   @Field()
   displayName: string;

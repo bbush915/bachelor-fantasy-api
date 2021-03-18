@@ -1,7 +1,7 @@
-import { Field, ID, InputType, ObjectType } from 'type-graphql';
+import { Field, ID, InputType, ObjectType } from "type-graphql";
 
-import { LeagueMember } from 'gql/league-member';
-import { Season } from 'gql/season';
+import { LeagueMember } from "gql/league-member";
+import { Season } from "gql/season";
 
 @ObjectType()
 export class League {
@@ -9,16 +9,13 @@ export class League {
   id: string;
 
   @Field()
-  createdAt?: Date;
+  createdAt: Date;
 
   @Field()
-  updatedAt?: Date;
+  updatedAt: Date;
 
   @Field(() => ID)
   seasonId: string;
-
-  @Field(() => Season)
-  season?: Season;
 
   @Field()
   name: string;
@@ -35,20 +32,17 @@ export class League {
   @Field()
   isShareable: boolean;
 
+  @Field(() => Season)
+  season?: Season;
+
   @Field(() => [LeagueMember])
   leagueMembers?: LeagueMember[];
 
-  @Field(() => LeagueMember, { nullable: true })
-  myLeagueMember?: LeagueMember;
-
   @Field(() => LeagueMember)
   commissioner?: LeagueMember;
-}
 
-@InputType()
-export class JoinLeagueInput {
-  @Field()
-  leagueId: string;
+  @Field(() => LeagueMember, { nullable: true })
+  myLeagueMember?: LeagueMember;
 }
 
 @InputType()

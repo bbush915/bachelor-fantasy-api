@@ -1,6 +1,6 @@
 import { SeasonWeekContestant } from "gql/season-week-contestant";
 
-export const seasonWeekContestants: SeasonWeekContestant[] = [
+export const seasonWeekContestants: Partial<SeasonWeekContestant>[] = [
   // Abigail
   {
     id: "63dd0368-2032-4a16-8d13-a792ec23cd62",

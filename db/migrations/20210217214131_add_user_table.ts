@@ -8,7 +8,7 @@ export function up(knex: Knex) {
 
     tableBuilder.text("email").notNullable();
     tableBuilder.text("hashed_password").notNullable();
-    tableBuilder.boolean("verified_email").notNullable().defaultTo(false);
+    tableBuilder.boolean("is_email_verified").notNullable().defaultTo(false);
     tableBuilder.text("avatar_url").nullable();
     tableBuilder.text("display_name").notNullable();
   });

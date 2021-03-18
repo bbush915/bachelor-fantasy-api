@@ -1,8 +1,8 @@
 import { Arg, Query, Resolver } from "type-graphql";
 
+import { Season } from "gql/season";
 import knex from "lib/knex";
 import { Contestant } from "./schema";
-import { Season } from "gql/season";
 
 @Resolver(Contestant)
 class ContestantResolver {

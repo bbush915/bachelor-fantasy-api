@@ -7,29 +7,35 @@ import { Season } from "./schema";
 @Resolver(Season)
 class SeasonResolver {
   @FieldResolver(() => SeasonWeek, { nullable: true })
-  currentSeasonWeek(
+  async currentSeasonWeek(
     @Root() { id: seasonId, currentWeekNumber }: Season
   ): Promise<SeasonWeek | undefined> {
-    return knex
-      .select()
-      .from<SeasonWeek>("season_weeks")
-      .where({ seasonId, weekNumber: currentWeekNumber })
-      .first();
+    if (!currentWeekNumber) {
+      return;
+    }
+
+    return this._getSeasonWeek(seasonId, currentWeekNumber);
   }
 
   @FieldResolver(() => SeasonWeek, { nullable: true })
   async previousSeasonWeek(
     @Root() { id: seasonId, currentWeekNumber }: Season
   ): Promise<SeasonWeek | undefined> {
-    if (!currentWeekNumber || currentWeekNumber < 2) {
+    if (!currentWeekNumber || currentWeekNumber === 1) {
       return;
     }
 
-    return knex
+    return this._getSeasonWeek(seasonId, currentWeekNumber - 1);
+  }
+
+  private async _getSeasonWeek(seasonId: string, weekNumber: number): Promise<SeasonWeek> {
+    const seasonWeek = await knex
       .select()
       .from<SeasonWeek>("season_weeks")
-      .where({ seasonId, weekNumber: currentWeekNumber - 1 })
+      .where({ seasonId, weekNumber })
       .first();
+
+    return seasonWeek!;
   }
 }
 

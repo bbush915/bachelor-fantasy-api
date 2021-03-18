@@ -8,10 +8,10 @@ export class LineupContestant {
   id: string;
 
   @Field()
-  createdAt?: Date;
+  createdAt: Date;
 
   @Field()
-  updatedAt?: Date;
+  updatedAt: Date;
 
   @Field(() => ID)
   lineupId: string;

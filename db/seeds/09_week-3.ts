@@ -12,7 +12,7 @@ export async function seed(knex: Knex) {
   }
 
   // Set random lineups for previous week.
-  await seedRandomLineups(knex, leagues[0].id, 2);
+  await seedRandomLineups(knex, leagues[0].id!, 2);
 
   // Create new week.
   await knex.insert(seasonWeeks).into("season_weeks");

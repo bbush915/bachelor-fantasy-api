@@ -1,17 +1,19 @@
-import { ArgsType, Field, ID, Int, ObjectType } from "type-graphql";
+import { Field, ID, InputType, ObjectType } from "type-graphql";
 
+import { LeagueMemberScore } from "gql/league-member-score";
+import { Lineup } from "gql/lineup";
 import { User } from "gql/user";
 
 @ObjectType()
 export class LeagueMember {
   @Field(() => ID)
-  id?: string;
+  id: string;
 
   @Field()
-  createdAt?: Date;
+  createdAt: Date;
 
   @Field()
-  updatedAt?: Date;
+  updatedAt: Date;
 
   @Field(() => ID)
   leagueId: string;
@@ -20,38 +22,32 @@ export class LeagueMember {
   userId: string;
 
   @Field()
-  isCommissioner?: boolean;
+  isActive: boolean;
+
+  @Field()
+  isCommissioner: boolean;
 
   @Field(() => User)
   user?: User;
 
-  @Field(() => Int, { nullable: true })
-  weeklyScore?: number;
-
-  @Field(() => Int, { nullable: true })
-  cumulativeScore?: number;
-
-  @Field(() => Int, { nullable: true })
-  place?: number;
+  @Field(() => Lineup, { nullable: true })
+  lineup?: Lineup;
 
   @Field()
   isLineupSet?: boolean;
+
+  @Field(() => LeagueMemberScore)
+  leagueMemberScore?: LeagueMemberScore;
 }
 
-@ArgsType()
-export class OverallScoreDetailsInput {
-  @Field()
+@InputType()
+export class JoinLeagueInput {
+  @Field(() => ID)
   leagueId: string;
-
-  @Field(() => Int)
-  weekNumber: number;
 }
 
-@ArgsType()
-export class WeeklyScoreDetailsInput {
-  @Field()
+@InputType()
+export class QuitLeagueInput {
+  @Field(() => ID)
   leagueId: string;
-
-  @Field()
-  seasonWeekId: string;
 }
