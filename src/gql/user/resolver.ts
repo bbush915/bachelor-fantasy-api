@@ -5,7 +5,8 @@ import { IContext } from "gql/context";
 import { encode } from "lib/jwt";
 import knex from "lib/knex";
 import { authentication } from "middleware";
-import { LoginInput, LoginResponse, RegisterInput, User } from "./schema";
+import { LoginInput, LoginResponse, RegisterInput, User, UpdateProfileInput } from "./schema";
+import { KnownTypeNamesRule } from "graphql";
 
 @Resolver(User)
 class UserResolver {
@@ -41,6 +42,20 @@ class UserResolver {
 
     const token = encode({ id: user.id });
     return { token };
+  }
+
+  @Mutation(() => User)
+  @UseMiddleware(authentication)
+  async updateProfile(
+    @Arg("input") { email, displayName, avatarUrl }: UpdateProfileInput,
+    @Ctx() { identity }: IContext
+  ): Promise<User> {
+    return (
+      await knex("users")
+        .update({ email, displayName, avatarUrl })
+        .where({ id: identity!.id })
+        .returning("*")
+    )[0];
   }
 }
 
