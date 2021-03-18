@@ -51,10 +51,9 @@ class UserResolver {
     @Ctx() { identity }: IContext
   ): Promise<User> {
     return (
-      await knex
+      await knex("users")
         .update({ email, displayName, avatarUrl })
         .where({ id: identity!.id })
-        .first()
         .returning("*")
     )[0];
   }
