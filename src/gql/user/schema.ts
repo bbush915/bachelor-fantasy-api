@@ -53,3 +53,15 @@ export class LoginResponse {
   @Field()
   token: string;
 }
+
+@InputType()
+export class UpdateProfileInput {
+  @Field()
+  email: string;
+
+  @Field()
+  displayName: string;
+
+  @Field()
+  avatarUrl: string;
+}
