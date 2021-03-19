@@ -2,10 +2,10 @@ import { SeasonWeek } from "gql/season-week";
 
 export const seasonWeeks: SeasonWeek[] = [
   {
-    id: "b221c822-a357-4c2a-88b3-fb6d30efa622",
+    id: "0fdf480a-9121-45eb-aa4b-e04d7919199e",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
-    weekNumber: 2,
-    episodeAirDate: new Date("2021-01-11T01:00:00.000Z"),
-    lineupSpotsAvailable: 18,
+    weekNumber: 5,
+    episodeAirDate: new Date("2021-01-25T01:00:00.000Z"),
+    lineupSpotsAvailable: 15,
   },
 ];
