@@ -2,6 +2,7 @@ import {
   Arg,
   Ctx,
   FieldResolver,
+  ID,
   Mutation,
   Query,
   Resolver,
@@ -34,7 +35,7 @@ class LeagueResolver {
   }
 
   @Query(() => League)
-  async league(@Arg("id") id: string): Promise<League> {
+  async league(@Arg("id", () => ID) id: string): Promise<League> {
     const league = await knex.select().from<League>("leagues").where({ id }).first();
 
     if (!league) {

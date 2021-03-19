@@ -1,4 +1,4 @@
-import { FieldResolver, Resolver, Root } from "type-graphql";
+import { FieldResolver, Query, Resolver, Root } from "type-graphql";
 
 import { SeasonWeek } from "gql/season-week";
 import knex from "lib/knex";
@@ -6,6 +6,12 @@ import { Season } from "./schema";
 
 @Resolver(Season)
 class SeasonResolver {
+  @Query(() => Season)
+  async activeSeason(): Promise<Season> {
+    const season = await knex.select().from<Season>("seasons").where({ isActive: true }).first();
+    return season!;
+  }
+
   @FieldResolver(() => SeasonWeek, { nullable: true })
   async currentSeasonWeek(
     @Root() { id: seasonId, currentWeekNumber }: Season

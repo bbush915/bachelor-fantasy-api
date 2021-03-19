@@ -1,4 +1,4 @@
-import { Arg, Ctx, FieldResolver, Mutation, Resolver, Root, UseMiddleware } from "type-graphql";
+import { Arg, Ctx, FieldResolver, ID, Mutation, Resolver, Root, UseMiddleware } from "type-graphql";
 
 import { IContext } from "gql/context";
 import { LeagueMemberScore } from "gql/league-member-score";
@@ -21,7 +21,7 @@ class LeagueMemberResolver {
   @FieldResolver(() => Lineup, { nullable: true })
   @UseMiddleware(authentication)
   async lineup(
-    @Arg("seasonWeekId") seasonWeekId: string,
+    @Arg("seasonWeekId", () => ID) seasonWeekId: string,
     @Root() { id }: LeagueMember
   ): Promise<Lineup | undefined> {
     return knex
@@ -55,7 +55,7 @@ class LeagueMemberResolver {
   @FieldResolver(() => LeagueMemberScore)
   @UseMiddleware(authentication)
   async leagueMemberScore(
-    @Arg("seasonWeekId") seasonWeekId: string,
+    @Arg("seasonWeekId", () => ID) seasonWeekId: string,
     @Root() { id, leagueId }: LeagueMember
   ): Promise<LeagueMemberScore> {
     const seasonWeek = await knex

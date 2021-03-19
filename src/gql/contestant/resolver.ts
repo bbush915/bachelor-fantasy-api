@@ -1,4 +1,4 @@
-import { Arg, Query, Resolver } from "type-graphql";
+import { Arg, ID, Query, Resolver } from "type-graphql";
 
 import { Season } from "gql/season";
 import knex from "lib/knex";
@@ -18,7 +18,9 @@ class ContestantResolver {
   }
 
   @Query(() => [Contestant])
-  async weeklyContestants(@Arg("seasonWeekId") seasonWeekId: string): Promise<Contestant[]> {
+  async weeklyContestants(
+    @Arg("seasonWeekId", () => ID) seasonWeekId: string
+  ): Promise<Contestant[]> {
     const activeSeason = await knex
       .select()
       .from<Season>("seasons")
