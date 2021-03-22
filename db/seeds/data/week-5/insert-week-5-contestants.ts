@@ -92,3 +92,5 @@ export const seasonWeekContestants: SeasonWeekContestant[] = [
     contestantId: "b199123f-ea17-43d4-9cb7-4cb0a6a3e126",
   },
 ];
+
+export default seasonWeekContestants;
