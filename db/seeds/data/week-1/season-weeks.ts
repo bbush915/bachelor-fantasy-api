@@ -6,7 +6,7 @@ const seasonWeeks: SeasonWeek[] = [
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     weekNumber: 1,
     episodeAirDate: new Date("2021-01-05T01:00:00.000Z"),
-    lineupSpotsAvailable: 16,
+    lineupSpotsAvailable: 24,
   },
 ];
 
