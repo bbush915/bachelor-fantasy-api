@@ -9,6 +9,7 @@ export function up(knex: Knex) {
     tableBuilder.uuid("league_id").notNullable().references("id").inTable("leagues");
     tableBuilder.uuid("user_id").notNullable().references("id").inTable("users");
 
+    tableBuilder.boolean("is_active").notNullable().defaultTo(true);
     tableBuilder.boolean("is_commissioner").notNullable().defaultTo(false);
   });
 }

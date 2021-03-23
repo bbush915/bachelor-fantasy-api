@@ -1,4 +1,4 @@
-import { Arg, FieldResolver, Query, Resolver, Root } from "type-graphql";
+import { Arg, FieldResolver, ID, Query, Resolver, Root } from "type-graphql";
 
 import { Contestant } from "gql/contestant";
 import knex from "lib/knex";
@@ -8,7 +8,7 @@ import { SeasonWeekContestant } from "./schema";
 class SeasonWeekContestantResolver {
   @Query(() => [SeasonWeekContestant])
   seasonWeekContestants(
-    @Arg("seasonWeekId") seasonWeekId: string
+    @Arg("seasonWeekId", () => ID) seasonWeekId: string
   ): Promise<SeasonWeekContestant[]> {
     return knex
       .select()

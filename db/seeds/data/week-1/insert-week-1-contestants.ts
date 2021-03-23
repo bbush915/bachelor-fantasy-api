@@ -1,6 +1,6 @@
 import { SeasonWeekContestant } from "gql/season-week-contestant";
 
-const seasonWeekContestants: SeasonWeekContestant[] = [
+const seasonWeekContestants: Partial<SeasonWeekContestant>[] = [
   // Initial contestants
   // Abigail
   {

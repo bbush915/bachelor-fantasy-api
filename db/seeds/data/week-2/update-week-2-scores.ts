@@ -1,6 +1,6 @@
 import { SeasonWeekContestant } from "gql/season-week-contestant";
 
-export const seasonWeekContestantsScored: SeasonWeekContestant[] = [
+export const seasonWeekContestantsScored: Partial<SeasonWeekContestant>[] = [
   // Week 2 scores
   // Abigail
   {

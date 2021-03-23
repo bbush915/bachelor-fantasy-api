@@ -1,6 +1,5 @@
 import { ArgsType, Field, ID, InputType, ObjectType } from "type-graphql";
 
-import { LeagueMember } from "gql/league-member";
 import { LineupContestant } from "gql/lineup-contestant";
 
 @ObjectType()
@@ -9,16 +8,13 @@ export class Lineup {
   id: string;
 
   @Field()
-  createdAt?: Date;
+  createdAt: Date;
 
   @Field()
-  updatedAt?: Date;
+  updatedAt: Date;
 
   @Field(() => ID)
   leagueMemberId: string;
-
-  @Field(() => LeagueMember)
-  leagueMember?: LeagueMember;
 
   @Field(() => ID)
   seasonWeekId: string;
@@ -29,30 +25,30 @@ export class Lineup {
 
 @ArgsType()
 export class MyLineupInput {
-  @Field()
+  @Field(() => ID)
   leagueId: string;
 
-  @Field()
+  @Field(() => ID)
   seasonWeekId: string;
 }
 
 @ArgsType()
 export class LineupInput {
-  @Field()
+  @Field(() => ID)
   leagueMemberId: string;
 
-  @Field()
+  @Field(() => ID)
   seasonWeekId: string;
 }
 
 @InputType()
 export class SaveLineupInput {
-  @Field()
+  @Field(() => ID)
   leagueId: string;
 
-  @Field()
+  @Field(() => ID)
   seasonWeekId: string;
 
-  @Field(() => [String])
+  @Field(() => [ID])
   contestantIds: string[];
 }

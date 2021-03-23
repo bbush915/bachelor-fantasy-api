@@ -6,10 +6,10 @@ export class SeasonWeek {
   id: string;
 
   @Field()
-  createdAt?: Date;
+  createdAt: Date;
 
   @Field()
-  updatedAt?: Date;
+  updatedAt: Date;
 
   @Field(() => ID)
   seasonId: string;

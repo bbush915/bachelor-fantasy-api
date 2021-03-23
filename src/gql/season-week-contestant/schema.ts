@@ -8,19 +8,16 @@ export class SeasonWeekContestant {
   id: string;
 
   @Field()
-  createdAt?: Date;
+  createdAt: Date;
 
   @Field()
-  updatedAt?: Date;
+  updatedAt: Date;
 
   @Field(() => ID)
   seasonWeekId: string;
 
   @Field(() => ID)
   contestantId: string;
-
-  @Field(() => Contestant)
-  contestant?: Contestant;
 
   @Field({ nullable: true })
   rose?: boolean;
@@ -42,4 +39,7 @@ export class SeasonWeekContestant {
 
   @Field(() => Int, { nullable: true })
   score?: number;
+
+  @Field(() => Contestant)
+  contestant?: Contestant;
 }

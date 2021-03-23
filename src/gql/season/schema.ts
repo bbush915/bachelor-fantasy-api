@@ -8,19 +8,13 @@ export class Season {
   id: string;
 
   @Field()
-  createdAt?: Date;
+  createdAt: Date;
 
   @Field()
-  updatedAt?: Date;
+  updatedAt: Date;
 
   @Field(() => Int, { nullable: true })
   currentWeekNumber?: number;
-
-  @Field(() => SeasonWeek, { nullable: true })
-  currentSeasonWeek?: SeasonWeek;
-
-  @Field(() => SeasonWeek, { nullable: true })
-  previousSeasonWeek?: SeasonWeek;
 
   @Field()
   seriesName: string;
@@ -29,5 +23,11 @@ export class Season {
   seasonNumber: number;
 
   @Field()
-  isActive?: boolean;
+  isActive: boolean;
+
+  @Field(() => SeasonWeek, { nullable: true })
+  currentSeasonWeek?: SeasonWeek;
+
+  @Field(() => SeasonWeek, { nullable: true })
+  previousSeasonWeek?: SeasonWeek;
 }
