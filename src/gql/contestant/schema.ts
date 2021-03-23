@@ -34,4 +34,7 @@ export class Contestant {
 
   @Field(() => [String])
   trivia: string[];
+
+  @Field(() => Boolean)
+  isFavorite: boolean;
 }

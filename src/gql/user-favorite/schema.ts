@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from "type-graphql";
+import { Field, ID, InputType, ObjectType } from "type-graphql";
 
 @ObjectType()
 export class UserFavorite {
@@ -14,6 +14,12 @@ export class UserFavorite {
   @Field(() => ID)
   userId: string;
 
+  @Field(() => ID)
+  contestantId: string;
+}
+
+@InputType()
+export class UserFavoriteInput {
   @Field(() => ID)
   contestantId: string;
 }
