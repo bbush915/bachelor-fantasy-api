@@ -40,6 +40,24 @@ export class RegisterInput {
 }
 
 @InputType()
+export class VerifyInput {
+  @Field()
+  token: string;
+}
+
+@ObjectType()
+export class TokenResponse {
+  @Field()
+  token: string;
+}
+
+@ObjectType()
+export class VerifyResponse extends TokenResponse {
+  @Field()
+  email: string;
+}
+
+@InputType()
 export class LoginInput {
   @Field()
   email: string;
@@ -48,10 +66,13 @@ export class LoginInput {
   password: string;
 }
 
-@ObjectType()
-export class LoginResponse {
+@InputType()
+export class ResetPasswordInput {
   @Field()
   token: string;
+
+  @Field()
+  password: string;
 }
 
 @InputType()
