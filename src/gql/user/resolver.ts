@@ -140,7 +140,8 @@ class UserResolver {
   @Mutation(() => User)
   @UseMiddleware(authentication)
   async updateProfile(
-    @Arg("input") { email, displayName, avatarUrl }: UpdateProfileInput,
+    @Arg("input")
+    { email, displayName, avatarUrl, sendLineupReminders, sendScoringRecaps }: UpdateProfileInput,
     @Ctx() { identity }: IContext
   ): Promise<User> {
     const existingUser = await knex
@@ -159,7 +160,7 @@ class UserResolver {
 
     return (
       await knex<User>("users")
-        .update({ email, displayName, avatarUrl })
+        .update({ email, displayName, avatarUrl, sendLineupReminders, sendScoringRecaps })
         .where({ id: identity!.id })
         .returning("*")
     )[0];

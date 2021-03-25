@@ -11,6 +11,8 @@ export function up(knex: Knex) {
     tableBuilder.boolean("is_email_verified").notNullable().defaultTo(false);
     tableBuilder.text("avatar_url").nullable();
     tableBuilder.text("display_name").notNullable();
+    tableBuilder.boolean("send_lineup_reminders").notNullable().defaultTo(false);
+    tableBuilder.boolean("send_scoring_recaps").notNullable().defaultTo(false);
   });
 }
 
