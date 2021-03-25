@@ -151,7 +151,7 @@ class LeagueMemberResolver {
         throw new Error("You are already a member of this league");
       } else {
         leagueMember = (
-          await knex("league_members")
+          await knex<LeagueMember>("league_members")
             .update({ isActive: true })
             .where({ id: existingLeagueMember.id })
             .returning("*")
@@ -184,7 +184,7 @@ class LeagueMemberResolver {
     if (existingLeagueMember?.isActive) {
       return (
         await knex("league_members")
-          .update({ isActive: false })
+          .update<LeagueMember>({ isActive: false })
           .where({ id: existingLeagueMember.id })
           .returning("*")
       )[0];

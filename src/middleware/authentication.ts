@@ -1,7 +1,7 @@
+import { MiddlewareFn } from "type-graphql";
+
 import { IContext } from "gql/context";
 import { decode } from "lib/jwt";
-
-import { MiddlewareFn } from "type-graphql";
 
 const authentication: MiddlewareFn<IContext> = async ({ context }, next) => {
   const token = context.auth?.split(" ")[1];

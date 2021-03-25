@@ -25,6 +25,12 @@ export class User {
 
   @Field()
   displayName: string;
+
+  @Field()
+  sendLineupReminders: boolean;
+
+  @Field()
+  sendScoringRecaps: boolean;
 }
 
 @InputType()
@@ -40,6 +46,24 @@ export class RegisterInput {
 }
 
 @InputType()
+export class VerifyInput {
+  @Field()
+  token: string;
+}
+
+@ObjectType()
+export class TokenResponse {
+  @Field()
+  token: string;
+}
+
+@ObjectType()
+export class VerifyResponse extends TokenResponse {
+  @Field()
+  email: string;
+}
+
+@InputType()
 export class LoginInput {
   @Field()
   email: string;
@@ -48,20 +72,38 @@ export class LoginInput {
   password: string;
 }
 
-@ObjectType()
-export class LoginResponse {
+@InputType()
+export class ResetPasswordInput {
   @Field()
   token: string;
+
+  @Field()
+  password: string;
+}
+
+@InputType()
+export class ChangePasswordInput {
+  @Field()
+  currentPassword: string;
+
+  @Field()
+  newPassword: string;
 }
 
 @InputType()
 export class UpdateProfileInput {
   @Field()
-  email: string;
+  avatarUrl: string;
 
   @Field()
   displayName: string;
 
   @Field()
-  avatarUrl: string;
+  email: string;
+
+  @Field()
+  sendLineupReminders: boolean;
+
+  @Field()
+  sendScoringRecaps: boolean;
 }
