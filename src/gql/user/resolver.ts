@@ -10,6 +10,7 @@ import knex from "lib/knex";
 import { EmailTemplates, sendEmail } from "lib/send-grid";
 import { authentication } from "middleware";
 import {
+  ChangePasswordInput,
   LoginInput,
   RegisterInput,
   ResetPasswordInput,
@@ -131,6 +132,29 @@ class UserResolver {
 
     const hashedPassword = await hash(password, 12);
     await knex<User>("users").update({ hashedPassword }).where({ id: userId });
+
+    return {
+      success: true,
+    };
+  }
+
+  @Mutation(() => OperationResponse)
+  @UseMiddleware(authentication)
+  async changePassword(
+    @Arg("input") { newPassword, currentPassword }: ChangePasswordInput,
+    @Ctx() { identity }: IContext
+  ): Promise<OperationResponse> {
+    const user = await knex.select().from<User>("users").where({ id: identity!.id }).first();
+
+    if (!(await compare(currentPassword, user!.hashedPassword))) {
+      throw new ApolloError(
+        "Invalid credentials. The email or password are incorrect",
+        "INVALID_CREDENTIALS"
+      );
+    }
+
+    const hashedPassword = await hash(newPassword, 12);
+    await knex<User>("users").update({ hashedPassword }).where({ id: user!.id });
 
     return {
       success: true,

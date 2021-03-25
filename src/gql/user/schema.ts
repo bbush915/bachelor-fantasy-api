@@ -82,6 +82,15 @@ export class ResetPasswordInput {
 }
 
 @InputType()
+export class ChangePasswordInput {
+  @Field()
+  currentPassword: string;
+
+  @Field()
+  newPassword: string;
+}
+
+@InputType()
 export class UpdateProfileInput {
   @Field()
   avatarUrl: string;
