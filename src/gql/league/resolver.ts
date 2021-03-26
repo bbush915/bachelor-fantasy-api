@@ -15,7 +15,7 @@ import { LeagueMember } from "gql/league-member";
 import { Season } from "gql/season";
 import knex from "lib/knex";
 import { authentication } from "middleware";
-import { CreateLeagueInput, League } from "./schema";
+import { CreateLeagueInput, UpdateLeagueInput, DeleteLeagueInput, League } from "./schema";
 
 @Resolver(League)
 class LeagueResolver {
@@ -88,6 +88,38 @@ class LeagueResolver {
       .from<LeagueMember>("league_members")
       .where({ leagueId: id, userId: identity!.id })
       .first();
+  }
+
+  @Mutation(() => Number)
+  @UseMiddleware(authentication)
+  async deleteLeague(
+    @Arg("input")
+    { id }: DeleteLeagueInput
+  ): Promise<number | undefined> {
+    // TODO: verify the user is the league commissioner
+    return await knex.delete().from("leagues").where({ id }).first();
+  }
+
+  @Mutation(() => League)
+  @UseMiddleware(authentication)
+  async updateLeague(
+    @Arg("input")
+    { id, name, description, logo, isPublic, isShareable }: UpdateLeagueInput,
+    @Ctx() { identity }: IContext
+  ): Promise<League> {
+    const logoUrl = logo;
+    return (
+      await knex
+        .update({
+          name,
+          description,
+          logoUrl,
+          isPublic,
+          isShareable,
+        })
+        .where({ id })
+        .returning("*")
+    )[0];
   }
 
   @Mutation(() => League)

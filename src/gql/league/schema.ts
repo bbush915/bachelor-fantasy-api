@@ -46,6 +46,33 @@ export class League {
 }
 
 @InputType()
+export class DeleteLeagueInput {
+  @Field(() => ID)
+  id: string;
+}
+
+@InputType()
+export class UpdateLeagueInput {
+  @Field(() => ID)
+  id: string;
+
+  @Field()
+  name: string;
+
+  @Field()
+  description: string;
+
+  @Field()
+  logo: string;
+
+  @Field()
+  isPublic: boolean;
+
+  @Field()
+  isShareable: boolean;
+}
+
+@InputType()
 export class CreateLeagueInput {
   @Field()
   name: string;
