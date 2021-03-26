@@ -19,7 +19,7 @@ export class UserFavorite {
 }
 
 @InputType()
-export class UserFavoriteInput {
+export class ToggleUserFavoriteInput {
   @Field(() => ID)
   contestantId: string;
 }

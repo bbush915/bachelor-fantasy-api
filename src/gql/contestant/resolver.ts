@@ -40,18 +40,6 @@ class ContestantResolver {
       )
       .where({ seasonId: activeSeason!.id });
   }
-
-  @FieldResolver(() => Boolean)
-  @UseMiddleware(authentication)
-  async isFavorite(@Root() { id }: Contestant, @Ctx() { identity }: IContext): Promise<boolean> {
-    const userFavorite = await knex
-      .select()
-      .from<UserFavorite>("user_favorites")
-      .where({ userId: identity!.id, contestantId: id })
-      .first();
-
-    return userFavorite ? true : false;
-  }
 }
 
 export default ContestantResolver;
