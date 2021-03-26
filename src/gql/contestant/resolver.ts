@@ -1,8 +1,11 @@
-import { Arg, ID, Query, Resolver } from "type-graphql";
+import { Arg, Ctx, FieldResolver, ID, Query, Resolver, Root, UseMiddleware } from "type-graphql";
 
 import { Season } from "gql/season";
 import knex from "lib/knex";
 import { Contestant } from "./schema";
+import { UserFavorite } from "gql/user-favorite";
+import { IContext } from "gql/context";
+import { authentication } from "middleware";
 
 @Resolver(Contestant)
 class ContestantResolver {

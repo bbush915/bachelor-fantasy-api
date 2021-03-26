@@ -25,6 +25,12 @@ export class User {
 
   @Field()
   displayName: string;
+
+  @Field()
+  sendLineupReminders: boolean;
+
+  @Field()
+  sendScoringRecaps: boolean;
 }
 
 @InputType()
@@ -76,13 +82,28 @@ export class ResetPasswordInput {
 }
 
 @InputType()
+export class ChangePasswordInput {
+  @Field()
+  currentPassword: string;
+
+  @Field()
+  newPassword: string;
+}
+
+@InputType()
 export class UpdateProfileInput {
   @Field()
-  email: string;
+  avatarUrl: string;
 
   @Field()
   displayName: string;
 
   @Field()
-  avatarUrl: string;
+  email: string;
+
+  @Field()
+  sendLineupReminders: boolean;
+
+  @Field()
+  sendScoringRecaps: boolean;
 }

@@ -10,6 +10,7 @@ import knex from "lib/knex";
 import { EmailTemplates, sendEmail } from "lib/send-grid";
 import { authentication } from "middleware";
 import {
+  ChangePasswordInput,
   LoginInput,
   RegisterInput,
   ResetPasswordInput,
@@ -137,10 +138,34 @@ class UserResolver {
     };
   }
 
+  @Mutation(() => OperationResponse)
+  @UseMiddleware(authentication)
+  async changePassword(
+    @Arg("input") { newPassword, currentPassword }: ChangePasswordInput,
+    @Ctx() { identity }: IContext
+  ): Promise<OperationResponse> {
+    const user = await knex.select().from<User>("users").where({ id: identity!.id }).first();
+
+    if (!(await compare(currentPassword, user!.hashedPassword))) {
+      throw new ApolloError(
+        "Invalid credentials. The email or password are incorrect",
+        "INVALID_CREDENTIALS"
+      );
+    }
+
+    const hashedPassword = await hash(newPassword, 12);
+    await knex<User>("users").update({ hashedPassword }).where({ id: user!.id });
+
+    return {
+      success: true,
+    };
+  }
+
   @Mutation(() => User)
   @UseMiddleware(authentication)
   async updateProfile(
-    @Arg("input") { email, displayName, avatarUrl }: UpdateProfileInput,
+    @Arg("input")
+    { email, displayName, avatarUrl, sendLineupReminders, sendScoringRecaps }: UpdateProfileInput,
     @Ctx() { identity }: IContext
   ): Promise<User> {
     const existingUser = await knex
@@ -159,7 +184,7 @@ class UserResolver {
 
     return (
       await knex<User>("users")
-        .update({ email, displayName, avatarUrl })
+        .update({ email, displayName, avatarUrl, sendLineupReminders, sendScoringRecaps })
         .where({ id: identity!.id })
         .returning("*")
     )[0];
