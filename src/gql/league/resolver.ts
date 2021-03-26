@@ -109,7 +109,7 @@ class LeagueResolver {
   ): Promise<League> {
     const logoUrl = logo;
     return (
-      await knex
+      await knex("leagues")
         .update({
           name,
           description,
