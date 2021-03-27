@@ -12,7 +12,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 6,
   },
   // Alana
   {
@@ -25,7 +24,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 1,
   },
   // Alicia
   {
@@ -38,7 +36,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 0,
   },
   // Amber
   {
@@ -51,7 +48,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 0,
   },
   // Anna
   {
@@ -64,7 +60,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 1,
   },
   // Bri
   {
@@ -77,7 +72,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 1,
   },
   // Carolyn
   {
@@ -90,7 +84,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 0,
   },
   // Casandra
   {
@@ -103,7 +96,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 0,
   },
   // Chelsea
   {
@@ -116,7 +108,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 1,
   },
   // Corrinne
   {
@@ -129,7 +120,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 0,
   },
   // Emani
   {
@@ -142,7 +132,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 0,
   },
   // Illeana
   {
@@ -155,7 +144,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 1,
   },
   // Jessenia
   {
@@ -168,7 +156,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 1,
   },
   // Kaili
   {
@@ -181,7 +168,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 1,
   },
   // Katie
   {
@@ -194,7 +180,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 1,
   },
   // Khaylah
   {
@@ -207,7 +192,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 1,
   },
   // Kimberly
   {
@@ -220,7 +204,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 0,
   },
   // Kit
   {
@@ -233,7 +216,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 1,
   },
   // Kristin
   {
@@ -246,7 +228,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 1,
   },
   // Lauren
   {
@@ -259,7 +240,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 1,
   },
   // MJ
   {
@@ -272,7 +252,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 1,
   },
   // Magi
   {
@@ -285,7 +264,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 1,
   },
   // Mari
   {
@@ -298,7 +276,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 1,
   },
   // Marylynn
   {
@@ -311,7 +288,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 1,
   },
   // Pieper
   {
@@ -324,7 +300,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 1,
   },
   // Rachael
   {
@@ -337,7 +312,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 1,
   },
   // Saneh
   {
@@ -350,7 +324,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 0,
   },
   // Sarah
   {
@@ -363,7 +336,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 1,
   },
   // Serena C.
   {
@@ -376,7 +348,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 1,
   },
   // Serena P.
   {
@@ -389,7 +360,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 1,
   },
   // Sydney
   {
@@ -402,7 +372,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 1,
   },
   // Victoria
   {
@@ -415,6 +384,5 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 1,
   },
 ];

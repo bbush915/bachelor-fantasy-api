@@ -1,6 +1,6 @@
 import { LeagueMember } from "gql/league-member";
 
-const leagueMembers: Partial<LeagueMember>[] = [
+export const leagueMembers: Partial<LeagueMember>[] = [
   {
     id: "79dfc25e-d4df-4325-9a6a-e8fd18924f64",
     leagueId: "4266654e-0849-4774-8b20-a1a805b21fca",
@@ -53,5 +53,3 @@ const leagueMembers: Partial<LeagueMember>[] = [
     userId: "d07ae552-70a9-4c3d-bce8-e1a87c17c931",
   },
 ];
-
-export default leagueMembers;

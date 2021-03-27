@@ -12,7 +12,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 9,
   },
   // Anna
   {
@@ -25,7 +24,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: true,
-    score: -1,
   },
   // Bri
   {
@@ -38,7 +36,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 14,
   },
   // Brittany
   {
@@ -51,7 +48,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 9,
   },
   // Catalina
   {
@@ -64,7 +60,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 5,
   },
   // Chelsea
   {
@@ -77,7 +72,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 9,
   },
   // Jessenia
   {
@@ -90,7 +84,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 9,
   },
   // Katie
   {
@@ -103,7 +96,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 9,
   },
   // Kit
   {
@@ -116,7 +108,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 9,
   },
   // Lauren
   {
@@ -129,7 +120,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 5,
   },
   // MJ
   {
@@ -142,7 +132,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 9,
   },
   // Magi
   {
@@ -155,7 +144,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 9,
   },
   // Mari
   {
@@ -168,7 +156,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 5,
   },
   // Michelle
   {
@@ -181,7 +168,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: true,
     twoOnOneDate: false,
     sentHome: false,
-    score: 19,
   },
   // Pieper
   {
@@ -194,7 +180,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 14,
   },
   // Rachael
   {
@@ -207,7 +192,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 9,
   },
   // Ryan
   {
@@ -220,7 +204,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 9,
   },
   // Serena C.
   {
@@ -233,7 +216,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 9,
   },
   // Serena P.
   {
@@ -246,7 +228,6 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 9,
   },
   // Victoria
   {
@@ -259,6 +240,5 @@ export const scoredSeasonWeekContestants: Partial<SeasonWeekContestant>[] = [
     oneOnOneDate: false,
     twoOnOneDate: false,
     sentHome: false,
-    score: 5,
   },
 ];

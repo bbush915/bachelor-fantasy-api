@@ -10,6 +10,7 @@ export function up(knex: Knex) {
     tableBuilder.text("series_name").notNullable();
     tableBuilder.integer("season_number").notNullable();
     tableBuilder.boolean("is_active").notNullable().defaultTo(false);
+    tableBuilder.boolean("is_complete").notNullable().defaultTo(false);
   });
 }
 

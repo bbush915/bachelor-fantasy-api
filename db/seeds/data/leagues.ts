@@ -1,6 +1,6 @@
 import { League } from "gql/league";
 
-const leagues: Partial<League>[] = [
+export const leagues: Partial<League>[] = [
   {
     id: "4266654e-0849-4774-8b20-a1a805b21fca",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
@@ -12,5 +12,3 @@ const leagues: Partial<League>[] = [
     isShareable: true,
   },
 ];
-
-export default leagues;
