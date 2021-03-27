@@ -22,7 +22,7 @@ export async function seed(knex: Knex) {
     return;
   }
 
-  for (let weekNumber = 2; weekNumber <= Math.min(seedWeekNumber, 10); weekNumber++) {
+  for (let weekNumber = 2; weekNumber <= seedWeekNumber; weekNumber++) {
     await seedRandomLineups(knex, leagues[0].id!, weekNumber - 1);
 
     const {
