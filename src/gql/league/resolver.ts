@@ -16,6 +16,7 @@ import { Season } from "gql/season";
 import knex from "lib/knex";
 import { authentication } from "middleware";
 import { CreateLeagueInput, UpdateLeagueInput, DeleteLeagueInput, League } from "./schema";
+import { OperationResponse } from "gql/utils";
 
 @Resolver(League)
 class LeagueResolver {
@@ -90,14 +91,69 @@ class LeagueResolver {
       .first();
   }
 
-  @Mutation(() => Number)
+  @Mutation(() => OperationResponse)
   @UseMiddleware(authentication)
   async deleteLeague(
     @Arg("input")
     { id }: DeleteLeagueInput
-  ): Promise<number | undefined> {
+  ): Promise<OperationResponse> {
     // TODO: verify the user is the league commissioner
-    return await knex.delete().from("leagues").where({ id }).first();
+    await knex.transaction(async (trx) => {
+      await knex.raw(
+        `
+          WITH src AS (
+            SELECT
+              LC.id
+            FROM
+              lineup_contestants LC
+              JOIN lineups L ON (L.id = LC.lineup_id)
+              JOIN league_members LM ON (LM.id = L.league_member_id)
+            WHERE
+              1 = 1
+              AND (LM.league_id = ?)
+          )
+          DELETE FROM
+            lineup_contestants LC
+          USING
+            src
+          WHERE
+            1 = 1
+            AND (src.id = LC.id)
+        `,
+        [id]
+      );
+
+      await knex.raw(
+        `
+          WITH src AS (
+            SELECT
+              L.id
+            FROM
+              lineups L
+              JOIN league_members LM ON (LM.id = L.league_member_id)
+            WHERE
+              1 = 1
+              AND (LM.league_id = ?)
+          )
+          DELETE FROM
+            lineups L
+          USING
+            src
+          WHERE
+            1 = 1
+            AND (src.id = L.id)
+        `,
+        [id]
+      );
+
+      await knex("league_members").where("league_id", "=", id).delete();
+
+      await knex("leagues").where("id", "=", id).delete();
+    });
+
+    return {
+      success: true,
+    };
   }
 
   @Mutation(() => League)
