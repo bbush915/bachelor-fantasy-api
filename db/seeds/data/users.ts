@@ -1,6 +1,6 @@
 import { User } from "gql/user";
 
-const users: Partial<User>[] = [
+export const users: Partial<User>[] = [
   {
     id: "7efc3bc3-30d0-4923-a684-f4aaf9f692b2",
     email: "kim@dialexa.com",
@@ -94,5 +94,3 @@ const users: Partial<User>[] = [
     displayName: "Christian A.",
   },
 ];
-
-export default users;

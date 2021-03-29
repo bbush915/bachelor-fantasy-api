@@ -1,6 +1,6 @@
 import { Season } from "gql/season";
 
-const seasons: Partial<Season>[] = [
+export const seasons: Partial<Season>[] = [
   {
     id: "5506347a-ab6c-4860-9d98-117dcc8e5879",
     currentWeekNumber: 1,
@@ -9,5 +9,3 @@ const seasons: Partial<Season>[] = [
     isActive: true,
   },
 ];
-
-export default seasons;

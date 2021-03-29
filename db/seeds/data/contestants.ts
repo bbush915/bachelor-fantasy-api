@@ -1,6 +1,6 @@
 import { Contestant } from "gql/contestant";
 
-const contestants: Partial<Contestant>[] = [
+export const contestants: Partial<Contestant>[] = [
   {
     id: "0b0cd44f-9035-4dce-b3cf-ebd7b295d632",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
@@ -631,5 +631,3 @@ const contestants: Partial<Contestant>[] = [
     ]) as any,
   },
 ];
-
-export default contestants;

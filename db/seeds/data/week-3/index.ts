@@ -1,3 +1,3 @@
-export * from "./insert-week-3-contestants";
-export * from "./update-week-3-scores";
+export * from "./scored-season-week-contestants";
+export * from "./season-week-contestants";
 export * from "./season-weeks";

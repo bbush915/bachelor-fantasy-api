@@ -25,6 +25,9 @@ export class Season {
   @Field()
   isActive: boolean;
 
+  @Field()
+  isComplete: boolean;
+
   @Field(() => SeasonWeek, { nullable: true })
   currentSeasonWeek?: SeasonWeek;
 
