@@ -12,7 +12,9 @@
     "migrate:make": "ts-node-dev node_modules/.bin/knex migrate:make --knexfile db/knexfile.ts",
     "migrate:up": "ts-node-dev node_modules/.bin/knex migrate:latest --knexfile db/knexfile.ts",
     "migrate:down": "ts-node-dev node_modules/.bin/knex migrate:rollback --knexfile db/knexfile.ts",
-    "seed:run": "ts-node-dev node_modules/.bin/knex seed:run --knexfile db/knexfile.ts"
+    "seed:run": "ts-node-dev node_modules/.bin/knex seed:run --knexfile db/knexfile.ts",
+    "tunnel:open": "bash scripts/tunnel-open.sh",
+    "tunnel:close": "bash scripts/tunnel-close.sh"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.4.2",
