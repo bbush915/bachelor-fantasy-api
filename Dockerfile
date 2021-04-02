@@ -1,4 +1,4 @@
-FROM node:12-alpine as BASE
+FROM node:12-alpine as base
 
 RUN mkdir -p /app
 WORKDIR /app
@@ -6,8 +6,8 @@ ADD . /app
 
 RUN yarn install
 
-FROM BASE as BUILD
+FROM base as build
 RUN yarn build
 
-FROM BUILD as RELEASE
+FROM build as release
 CMD ["yarn", "start"]
