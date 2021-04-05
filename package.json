@@ -14,7 +14,9 @@
     "migrate:down": "ts-node-dev node_modules/.bin/knex migrate:rollback --knexfile db/knexfile.ts",
     "seed:run": "ts-node-dev node_modules/.bin/knex seed:run --knexfile db/knexfile.ts",
     "tunnel:open": "bash scripts/tunnel-open.sh",
-    "tunnel:close": "bash scripts/tunnel-close.sh"
+    "tunnel:close": "bash scripts/tunnel-close.sh",
+    "scores:export": "ts-node-dev scripts/scores-export.ts",
+    "scores:import": "ts-node-dev scripts/scores-import.ts"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.4.2",
@@ -37,9 +39,12 @@
     "@types/jsonwebtoken": "^8.5.1",
     "@types/koa": "^2.13.1",
     "@types/koa-cors": "^0.0.0",
+    "@types/minimist": "^1.2.1",
     "@types/terser-webpack-plugin": "^5.0.3",
     "@types/webpack": "^4.41.26",
     "@types/webpack-node-externals": "^2.5.0",
+    "dotenv": "^8.2.0",
+    "minimist": "^1.2.5",
     "terser-webpack-plugin": "^4.2.3",
     "ts-loader": "^8.0.18",
     "ts-node-dev": "^1.1.6",
