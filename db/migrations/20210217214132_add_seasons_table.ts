@@ -6,7 +6,7 @@ export function up(knex: Knex) {
 
     tableBuilder.timestamps(true, true);
 
-    tableBuilder.integer("current_week_number").nullable();
+    tableBuilder.integer("current_week_number").notNullable().defaultTo(1);
     tableBuilder.text("series_name").notNullable();
     tableBuilder.integer("season_number").notNullable();
     tableBuilder.boolean("is_active").notNullable().defaultTo(false);

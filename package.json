@@ -16,7 +16,8 @@
     "tunnel:open": "bash scripts/tunnel-open.sh",
     "tunnel:close": "bash scripts/tunnel-close.sh",
     "scores:export": "ts-node-dev scripts/scores-export.ts",
-    "scores:import": "ts-node-dev scripts/scores-import.ts"
+    "scores:import": "ts-node-dev scripts/scores-import.ts",
+    "week:advance": "ts-node-dev scripts/advance-current-week.ts"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.4.2",

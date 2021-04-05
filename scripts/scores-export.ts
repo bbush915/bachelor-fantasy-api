@@ -8,7 +8,11 @@ config({ path: resolve(__dirname, "../.env") });
 import knex, { camelCase } from "../src/lib/knex";
 
 async function main() {
-  const { weekNumber, o: outputFile } = minimist(process.argv, { alias: { w: ["weekNumber"] } });
+  const { w: weekNumber, o: outputFile } = minimist(process.argv);
+
+  if (!weekNumber) {
+    throw new Error("Missing required argument: [-w : Week number]");
+  }
 
   const { rows } = await knex.raw(
     `

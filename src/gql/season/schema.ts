@@ -13,8 +13,8 @@ export class Season {
   @Field()
   updatedAt: Date;
 
-  @Field(() => Int, { nullable: true })
-  currentWeekNumber?: number;
+  @Field(() => Int)
+  currentWeekNumber: number;
 
   @Field()
   seriesName: string;
@@ -28,7 +28,7 @@ export class Season {
   @Field()
   isComplete: boolean;
 
-  @Field(() => SeasonWeek, { nullable: true })
+  @Field(() => SeasonWeek)
   currentSeasonWeek?: SeasonWeek;
 
   @Field(() => SeasonWeek, { nullable: true })

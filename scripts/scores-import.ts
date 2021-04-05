@@ -8,25 +8,54 @@ config({ path: resolve(__dirname, "../.env") });
 import { SeasonWeekContestant } from "../src/gql/season-week-contestant";
 import knex from "../src/lib/knex";
 
-async function main() {
-  const { weekNumber, i: inputFile } = minimist(process.argv, { alias: { w: ["weekNumber"] } });
+const conversionMap: Record<string, (value: string) => boolean | null> = {
+  rose: parseBoolean,
+  specialRose: parseBoolean,
+  groupDate: parseBoolean,
+  oneOnOneDate: parseBoolean,
+  twoOnOneDate: parseBoolean,
+  sentHome: parseBoolean,
+};
 
-  const data = readFileSync(inputFile).toString().split("\n");
+async function main() {
+  const { w: weekNumber, i: inputFile } = minimist(process.argv);
+
+  if (!weekNumber) {
+    throw new Error("Missing required argument: [-w : Week number]");
+  }
+
+  if (!inputFile) {
+    throw new Error("Missing required argument: [-i : Input file]");
+  }
+
+  const data = readFileSync(inputFile)
+    .toString()
+    .split(/\r\n|\n/g);
 
   const fields = data[0].split(",");
 
   const rows = data
     .slice(1)
-    .map((x) => x.split(",").reduce((acc: any, cur, idx) => ((acc[fields[idx]] = cur), acc), {}));
+    .map((x) =>
+      x
+        .split(",")
+        .reduce(
+          (acc: any, cur, idx) => (
+            (acc[fields[idx]] = (conversionMap[fields[idx]] ?? ((value: string) => value))(cur)),
+            acc
+          ),
+          {}
+        )
+    );
 
   for (const row of rows) {
     row.score =
-      (parseBoolean(row.rose) ? weekNumber - 1 : 0) +
-      (parseBoolean(row.specialRose) ? 5 : 0) +
-      (parseBoolean(row.groupDate) ? 1 : 0) +
-      (parseBoolean(row.oneOnOneDate) ? 10 : 0) +
-      (parseBoolean(row.twoOnOneDate) ? -5 : 0) +
-      (parseBoolean(row.sentHome) ? -10 : 0);
+      (row.rose ? weekNumber : 0) +
+      (row.specialRose ? 5 : 0) +
+      (row.groupDate ? 1 : 0) +
+      (row.oneOnOneDate ? 10 : 0) +
+      (row.twoOnOneDate ? -5 : 0) +
+      (row.sentHome ? -10 : 0);
 
     const { id, contestantName, ...rest } = row;
 
@@ -35,7 +64,11 @@ async function main() {
 }
 
 function parseBoolean(value: string) {
-  return ["1", "t", "true"].includes(value.toLocaleLowerCase());
+  if (!value) {
+    return null;
+  }
+
+  return value.toLowerCase() === "true";
 }
 
 main()
