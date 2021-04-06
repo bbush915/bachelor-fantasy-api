@@ -6,6 +6,7 @@ import { Lineup } from "gql/lineup";
 import { Season } from "gql/season";
 import { SeasonWeek } from "gql/season-week";
 import { User } from "gql/user";
+import { OperationResponse } from "gql/utils";
 import knex from "lib/knex";
 import { authentication } from "middleware";
 import { JoinLeagueInput, LeagueMember, QuitLeagueInput, RemoveLeagueMemberInput } from "./schema";
@@ -199,29 +200,59 @@ class LeagueMemberResolver {
     @Arg("input") { leagueMemberId }: RemoveLeagueMemberInput,
     @Ctx() { identity }: IContext
   ): Promise<LeagueMember> {
-    // We only soft-delete league member to allow them to rejoin later without
-    // losing their previous data.
-
-    const existingLeagueMember = await knex
+    const leagueMember = await knex
       .select()
       .from<LeagueMember>("league_members")
       .where({ id: leagueMemberId })
       .first();
 
-    if (existingLeagueMember?.isActive) {
-      return (
-        await knex("league_members")
-          .update<LeagueMember>({ isActive: false })
-          .where({ id: leagueMemberId })
-          .returning("*")
-      )[0];
-    } else {
-      throw new Error(
-        `${
-          existingLeagueMember?.user?.displayName ?? "Selected user"
-        } is not a member of this league`
-      );
+    if (!leagueMember) {
+      throw new Error("League member does not exist");
     }
+
+    const comissioner = await knex
+      .select()
+      .from<LeagueMember>("league_members")
+      .where({ leagueId: leagueMember.leagueId, isCommissioner: true })
+      .first();
+
+    if (identity!.id !== comissioner?.userId) {
+      throw new Error("You are not authorized to delete this league member");
+    }
+
+    await knex.transaction(async (trx) => {
+      // Delete lineup contestants.
+      await trx.raw(
+        `
+          WITH src AS (
+            SELECT
+              LC.id
+            FROM
+              lineup_contestants LC
+              JOIN lineups L ON (L.id = LC.lineup_id)
+            WHERE
+              1 = 1
+              AND (L.league_member_id = ?)
+          )
+          DELETE FROM
+            lineup_contestants LC
+          USING
+            src
+          WHERE
+            1 = 1
+            AND (src.id = LC.id)
+        `,
+        [leagueMemberId]
+      );
+
+      // Delete lineups.
+      await trx<Lineup>("lineups").where({ leagueMemberId }).delete();
+
+      // Delete league member.
+      await trx<LeagueMember>("league_members").where({ id: leagueMemberId }).delete();
+    });
+
+    return leagueMember;
   }
 }
 

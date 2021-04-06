@@ -1,5 +1,6 @@
 import {
   Arg,
+  Args,
   Ctx,
   FieldResolver,
   ID,
@@ -10,13 +11,22 @@ import {
   UseMiddleware,
 } from "type-graphql";
 
+import configuration from "configuration";
 import { IContext } from "gql/context";
 import { LeagueMember } from "gql/league-member";
 import { Season } from "gql/season";
+import { OperationResponse } from "gql/utils";
+import { decode, encode } from "lib/jwt";
 import knex from "lib/knex";
 import { authentication } from "middleware";
-import { CreateLeagueInput, UpdateLeagueInput, DeleteLeagueInput, League } from "./schema";
-import { OperationResponse } from "gql/utils";
+import {
+  CreateLeagueInput,
+  DeleteLeagueInput,
+  League,
+  UpdateLeagueInput,
+  ValidateLeagueAccessibilityInput,
+  ValidateLeagueMembershipInput,
+} from "./schema";
 
 @Resolver(League)
 class LeagueResolver {
@@ -31,7 +41,8 @@ class LeagueResolver {
     return knex
       .select()
       .from<League>("leagues")
-      .where("seasonId", "=", activeSeason!.id)
+      .where("season_id", "=", activeSeason!.id)
+      .where("is_public", "=", true)
       .andWhereRaw(`lower(leagues.name) LIKE '%${query.toLowerCase()}%'`);
   }
 
@@ -44,6 +55,98 @@ class LeagueResolver {
     }
 
     return league;
+  }
+
+  @Query(() => OperationResponse)
+  @UseMiddleware(authentication)
+  async validateLeagueMembership(
+    @Args() { leagueId }: ValidateLeagueMembershipInput,
+    @Ctx() { identity }: IContext
+  ): Promise<OperationResponse> {
+    const myLeagueMember = await knex
+      .select()
+      .from<LeagueMember>("league_members")
+      .where({ leagueId, userId: identity!.id, isActive: true })
+      .first();
+
+    return {
+      success: !!myLeagueMember,
+    };
+  }
+
+  @Query(() => OperationResponse)
+  @UseMiddleware(authentication)
+  async validateLeagueAccessibility(
+    @Args() { leagueId, token }: ValidateLeagueAccessibilityInput,
+    @Ctx() { identity }: IContext
+  ): Promise<OperationResponse> {
+    // If the user is already a member of the league (active or not),
+    // then they have access to its details.
+
+    const myLeagueMember = await knex
+      .select()
+      .from<LeagueMember>("league_members")
+      .where({ leagueId, userId: identity!.id })
+      .first();
+
+    if (!!myLeagueMember) {
+      return {
+        success: true,
+      };
+    }
+
+    // If the user is not a member of the league, then they only have access to
+    // to its details in the following circumstances:
+    //
+    // 1. The league is public.
+    // 2. The league is shareable, and they have a token from a league member.
+    // 3. They have a token from the league commissioner.
+
+    const league = await knex.select().from<League>("leagues").where({ id: leagueId }).first();
+
+    if (!league) {
+      throw new Error("League does not exist");
+    }
+
+    // Rule 1
+
+    if (league?.isPublic) {
+      return {
+        success: true,
+      };
+    }
+
+    // Validate token.
+
+    if (!token) {
+      return {
+        success: false,
+      };
+    }
+
+    const { action, payload }: any = decode(token);
+
+    if (action !== "join-league") {
+      return {
+        success: false,
+      };
+    }
+
+    // Rules 2 & 3
+
+    const { referrer } = payload;
+
+    const leagueMember = await knex
+      .select()
+      .from<LeagueMember>("league_members")
+      .where({ leagueId, userId: referrer })
+      .first();
+
+    const canJoin = !!leagueMember && (leagueMember.isCommissioner || league.isShareable);
+
+    return {
+      success: canJoin,
+    };
   }
 
   @Query(() => [League])
@@ -91,98 +194,34 @@ class LeagueResolver {
       .first();
   }
 
-  @Mutation(() => OperationResponse)
+  @FieldResolver(() => String, { nullable: true })
   @UseMiddleware(authentication)
-  async deleteLeague(
-    @Arg("input")
-    { id }: DeleteLeagueInput
-  ): Promise<OperationResponse> {
-    // TODO: verify the user is the league commissioner
-    await knex.transaction(async (trx) => {
-      await knex.raw(
-        `
-          WITH src AS (
-            SELECT
-              LC.id
-            FROM
-              lineup_contestants LC
-              JOIN lineups L ON (L.id = LC.lineup_id)
-              JOIN league_members LM ON (LM.id = L.league_member_id)
-            WHERE
-              1 = 1
-              AND (LM.league_id = ?)
-          )
-          DELETE FROM
-            lineup_contestants LC
-          USING
-            src
-          WHERE
-            1 = 1
-            AND (src.id = LC.id)
-        `,
-        [id]
-      );
-
-      await knex.raw(
-        `
-          WITH src AS (
-            SELECT
-              L.id
-            FROM
-              lineups L
-              JOIN league_members LM ON (LM.id = L.league_member_id)
-            WHERE
-              1 = 1
-              AND (LM.league_id = ?)
-          )
-          DELETE FROM
-            lineups L
-          USING
-            src
-          WHERE
-            1 = 1
-            AND (src.id = L.id)
-        `,
-        [id]
-      );
-
-      await knex("league_members").where("league_id", "=", id).delete();
-
-      await knex("leagues").where("id", "=", id).delete();
-    });
-
-    return {
-      success: true,
-    };
-  }
-
-  @Mutation(() => League)
-  @UseMiddleware(authentication)
-  async updateLeague(
-    @Arg("input")
-    { id, name, description, logo, isPublic, isShareable }: UpdateLeagueInput,
+  async inviteLink(
+    @Root() { id, isShareable }: League,
     @Ctx() { identity }: IContext
-  ): Promise<League> {
-    const logoUrl = logo;
-    return (
-      await knex("leagues")
-        .update({
-          name,
-          description,
-          logoUrl,
-          isPublic,
-          isShareable,
-        })
-        .where({ id })
-        .returning("*")
-    )[0];
+  ): Promise<string> {
+    const leagueMember = await knex
+      .select()
+      .from<LeagueMember>("league_members")
+      .where({ leagueId: id, userId: identity!.id })
+      .first();
+
+    if (!leagueMember) {
+      throw new Error("You are not a member of this league");
+    }
+
+    if (!isShareable && !leagueMember.isCommissioner) {
+      throw new Error("You do not have permission to share this league");
+    }
+
+    const token = encode({ action: "join-league", payload: { referrer: identity!.id } });
+    return `${configuration.client.host}/leagues/${id}/details?token=${token}`;
   }
 
   @Mutation(() => League)
   @UseMiddleware(authentication)
   async createLeague(
-    @Arg("input")
-    { name, description, logo, isPublic, isShareable }: CreateLeagueInput,
+    @Arg("input") { name, description, logo, isPublic, isShareable }: CreateLeagueInput,
     @Ctx() { identity }: IContext
   ): Promise<League> {
     return knex.transaction(async (trx) => {
@@ -223,6 +262,116 @@ class LeagueResolver {
 
       return league;
     });
+  }
+
+  @Mutation(() => League)
+  @UseMiddleware(authentication)
+  async updateLeague(
+    @Arg("input") { id, name, description, logo, isPublic, isShareable }: UpdateLeagueInput,
+    @Ctx() { identity }: IContext
+  ): Promise<League> {
+    const comissioner = await knex
+      .select()
+      .from<LeagueMember>("league_members")
+      .where({ leagueId: id, isCommissioner: true })
+      .first();
+
+    if (identity!.id !== comissioner?.userId) {
+      throw new Error("You are not authorized to update this league");
+    }
+
+    const logoUrl = logo;
+
+    return (
+      await knex("leagues")
+        .update({
+          name,
+          description,
+          logoUrl,
+          isPublic,
+          isShareable,
+        })
+        .where({ id })
+        .returning("*")
+    )[0];
+  }
+
+  @Mutation(() => OperationResponse)
+  @UseMiddleware(authentication)
+  async deleteLeague(
+    @Arg("input") { id }: DeleteLeagueInput,
+    @Ctx() { identity }: IContext
+  ): Promise<OperationResponse> {
+    const comissioner = await knex
+      .select()
+      .from<LeagueMember>("league_members")
+      .where({ leagueId: id, isCommissioner: true })
+      .first();
+
+    if (identity!.id !== comissioner?.userId) {
+      throw new Error("You are not authorized to delete this league");
+    }
+
+    await knex.transaction(async (trx) => {
+      // Delete lineup contestants.
+      await trx.raw(
+        `
+          WITH src AS (
+            SELECT
+              LC.id
+            FROM
+              lineup_contestants LC
+              JOIN lineups L ON (L.id = LC.lineup_id)
+              JOIN league_members LM ON (LM.id = L.league_member_id)
+            WHERE
+              1 = 1
+              AND (LM.league_id = ?)
+          )
+          DELETE FROM
+            lineup_contestants LC
+          USING
+            src
+          WHERE
+            1 = 1
+            AND (src.id = LC.id)
+        `,
+        [id]
+      );
+
+      // Delete lineups.
+      await trx.raw(
+        `
+          WITH src AS (
+            SELECT
+              L.id
+            FROM
+              lineups L
+              JOIN league_members LM ON (LM.id = L.league_member_id)
+            WHERE
+              1 = 1
+              AND (LM.league_id = ?)
+          )
+          DELETE FROM
+            lineups L
+          USING
+            src
+          WHERE
+            1 = 1
+            AND (src.id = L.id)
+        `,
+        [id]
+      );
+
+      // Delete league members.
+      await trx<LeagueMember>("league_members").where({ leagueId: id }).delete();
+
+      // Delete league.
+      await trx<League>("leagues").where({ id }).delete();
+    });
+
+    return {
+      success: true,
+    };
   }
 }
 

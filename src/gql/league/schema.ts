@@ -1,4 +1,4 @@
-import { Field, ID, InputType, ObjectType } from "type-graphql";
+import { ArgsType, Field, ID, InputType, ObjectType } from "type-graphql";
 
 import { LeagueMember } from "gql/league-member";
 import { Season } from "gql/season";
@@ -43,12 +43,42 @@ export class League {
 
   @Field(() => LeagueMember, { nullable: true })
   myLeagueMember?: LeagueMember;
+
+  @Field({ nullable: true })
+  inviteLink?: string;
+}
+
+@ArgsType()
+export class ValidateLeagueMembershipInput {
+  @Field(() => ID)
+  leagueId: string;
+}
+
+@ArgsType()
+export class ValidateLeagueAccessibilityInput {
+  @Field(() => ID)
+  leagueId: string;
+
+  @Field({ nullable: true })
+  token?: string;
 }
 
 @InputType()
-export class DeleteLeagueInput {
-  @Field(() => ID)
-  id: string;
+export class CreateLeagueInput {
+  @Field()
+  name: string;
+
+  @Field()
+  description: string;
+
+  @Field()
+  logo: string;
+
+  @Field()
+  isPublic: boolean;
+
+  @Field()
+  isShareable: boolean;
 }
 
 @InputType()
@@ -73,19 +103,7 @@ export class UpdateLeagueInput {
 }
 
 @InputType()
-export class CreateLeagueInput {
-  @Field()
-  name: string;
-
-  @Field()
-  description: string;
-
-  @Field()
-  logo: string;
-
-  @Field()
-  isPublic: boolean;
-
-  @Field()
-  isShareable: boolean;
+export class DeleteLeagueInput {
+  @Field(() => ID)
+  id: string;
 }
