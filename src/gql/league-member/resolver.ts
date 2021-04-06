@@ -8,7 +8,7 @@ import { SeasonWeek } from "gql/season-week";
 import { User } from "gql/user";
 import knex from "lib/knex";
 import { authentication } from "middleware";
-import { JoinLeagueInput, LeagueMember, QuitLeagueInput } from "./schema";
+import { JoinLeagueInput, LeagueMember, QuitLeagueInput, RemoveLeagueMemberInput } from "./schema";
 
 @Resolver(LeagueMember)
 class LeagueMemberResolver {
@@ -190,6 +190,37 @@ class LeagueMemberResolver {
       )[0];
     } else {
       throw new Error("You are not a member of this league");
+    }
+  }
+
+  @Mutation(() => LeagueMember)
+  @UseMiddleware(authentication)
+  async removeLeagueMember(
+    @Arg("input") { leagueMemberId }: RemoveLeagueMemberInput,
+    @Ctx() { identity }: IContext
+  ): Promise<LeagueMember> {
+    // We only soft-delete league member to allow them to rejoin later without
+    // losing their previous data.
+
+    const existingLeagueMember = await knex
+      .select()
+      .from<LeagueMember>("league_members")
+      .where({ id: leagueMemberId })
+      .first();
+
+    if (existingLeagueMember?.isActive) {
+      return (
+        await knex("league_members")
+          .update<LeagueMember>({ isActive: false })
+          .where({ id: leagueMemberId })
+          .returning("*")
+      )[0];
+    } else {
+      throw new Error(
+        `${
+          existingLeagueMember?.user?.displayName ?? "Selected user"
+        } is not a member of this league`
+      );
     }
   }
 }

@@ -51,3 +51,9 @@ export class QuitLeagueInput {
   @Field(() => ID)
   leagueId: string;
 }
+
+@InputType()
+export class RemoveLeagueMemberInput {
+  @Field(() => ID)
+  leagueMemberId: string;
+}
