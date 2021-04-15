@@ -60,7 +60,10 @@ export class ValidateLeagueAccessibilityInput {
   leagueId: string;
 
   @Field({ nullable: true })
-  token?: string;
+  authenticationToken?: string;
+
+  @Field({ nullable: true })
+  accessToken?: string;
 }
 
 @InputType()

@@ -43,7 +43,8 @@ class LeagueResolver {
       .from<League>("leagues")
       .where("season_id", "=", activeSeason!.id)
       .where("is_public", "=", true)
-      .andWhereRaw(`lower(leagues.name) LIKE '%${query.toLowerCase()}%'`);
+      .andWhereRaw(`lower(leagues.name) LIKE '%${query.toLowerCase()}%'`)
+      .limit(10);
   }
 
   @Query(() => League)
@@ -75,28 +76,30 @@ class LeagueResolver {
   }
 
   @Query(() => OperationResponse)
-  @UseMiddleware(authentication)
   async validateLeagueAccessibility(
-    @Args() { leagueId, token }: ValidateLeagueAccessibilityInput,
-    @Ctx() { identity }: IContext
+    @Args() { leagueId, authenticationToken, accessToken }: ValidateLeagueAccessibilityInput
   ): Promise<OperationResponse> {
     // If the user is already a member of the league (active or not),
     // then they have access to its details.
 
-    const myLeagueMember = await knex
-      .select()
-      .from<LeagueMember>("league_members")
-      .where({ leagueId, userId: identity!.id })
-      .first();
+    if (authenticationToken) {
+      const { id: userId }: any = decode(authenticationToken);
 
-    if (!!myLeagueMember) {
-      return {
-        success: true,
-      };
+      const myLeagueMember = await knex
+        .select()
+        .from<LeagueMember>("league_members")
+        .where({ leagueId, userId })
+        .first();
+
+      if (!!myLeagueMember) {
+        return {
+          success: true,
+        };
+      }
     }
 
-    // If the user is not a member of the league, then they only have access to
-    // to its details in the following circumstances:
+    // In all other cases, a user will only have access to league details in
+    // the following circumstances:
     //
     // 1. The league is public.
     // 2. The league is shareable, and they have a token from a league member.
@@ -116,15 +119,15 @@ class LeagueResolver {
       };
     }
 
-    // Validate token.
+    // Validate access token.
 
-    if (!token) {
+    if (!accessToken) {
       return {
         success: false,
       };
     }
 
-    const { action, payload }: any = decode(token);
+    const { action, payload }: any = decode(accessToken);
 
     if (action !== "join-league") {
       return {
