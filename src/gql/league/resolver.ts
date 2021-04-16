@@ -1,3 +1,4 @@
+import { ApolloError } from "apollo-server-koa";
 import {
   Arg,
   Args,
@@ -227,13 +228,23 @@ class LeagueResolver {
     @Arg("input") { name, description, logo, isPublic, isShareable }: CreateLeagueInput,
     @Ctx() { identity }: IContext
   ): Promise<League> {
-    return knex.transaction(async (trx) => {
-      const activeSeason = await trx
-        .select()
-        .from<Season>("seasons")
-        .where({ isActive: true })
-        .first();
+    const activeSeason = await knex
+      .select()
+      .from<Season>("seasons")
+      .where({ isActive: true })
+      .first();
 
+    const existingLeague = await knex
+      .select()
+      .from<League>("leagues")
+      .where({ seasonId: activeSeason!.id, name })
+      .first();
+
+    if (existingLeague) {
+      throw new ApolloError(`A league with that name already exists.`, "LEAGUE_ALREADY_EXISTS");
+    }
+
+    return knex.transaction(async (trx) => {
       // TODO(Bryan) - Should store logo somewhere (S3 or local file system).
       // Currently keeping a data URL, which works, but ¯\_(ツ)_/¯
 
@@ -281,6 +292,23 @@ class LeagueResolver {
 
     if (identity!.id !== comissioner?.userId) {
       throw new Error("You are not authorized to update this league");
+    }
+
+    const activeSeason = await knex
+      .select()
+      .from<Season>("seasons")
+      .where({ isActive: true })
+      .first();
+
+    const existingLeague = await knex
+      .select()
+      .from<League>("leagues")
+      .where({ seasonId: activeSeason!.id, name })
+      .andWhere("id", "<>", id)
+      .first();
+
+    if (existingLeague) {
+      throw new ApolloError(`A league with that name already exists.`, "LEAGUE_ALREADY_EXISTS");
     }
 
     const logoUrl = logo;
