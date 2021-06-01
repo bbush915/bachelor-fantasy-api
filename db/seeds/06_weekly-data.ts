@@ -1,20 +1,20 @@
-import { Knex } from 'knex';
+import { Knex } from "knex";
 
-import { Season } from 'gql/season';
-import { SeasonWeek } from 'gql/season-week';
-import { SeasonWeekContestant } from 'gql/season-week-contestant';
+import { Season } from "gql/season";
+import { SeasonWeek } from "gql/season-week";
+import { SeasonWeekContestant } from "gql/season-week-contestant";
 // import { leagues } from './data/bachelor-season-25/leagues';
 import {
   seasonWeekContestants as initialSeasonWeekContestants,
   seasonWeeks as initialSeasonWeeks,
-} from './data/bachelorette-season-17/week-1';
-import { seedRandomLineups } from './utils';
+} from "./data/bachelorette-season-17/week-1";
+// import { seedRandomLineups } from './utils';
 
 export async function seed(knex: Knex) {
-  await knex.insert(initialSeasonWeeks).into<SeasonWeek>('season_weeks');
+  await knex.insert(initialSeasonWeeks).into<SeasonWeek>("season_weeks");
   await knex
     .insert(initialSeasonWeekContestants)
-    .into<SeasonWeekContestant>('season_week_contestants');
+    .into<SeasonWeekContestant>("season_week_contestants");
 
   const seedWeekNumber = Number(process.env.SEED_WEEK_NUMBER);
 
@@ -42,18 +42,18 @@ export async function seed(knex: Knex) {
 
       const { id, ...rest } = seasonWeekContestant;
 
-      await knex<SeasonWeekContestant>('season_week_contestants').update(rest).where({ id });
+      await knex<SeasonWeekContestant>("season_week_contestants").update(rest).where({ id });
     }
 
     if (weekNumber <= 10) {
       const { seasonWeeks, seasonWeekContestants } = require(`./data/week-${weekNumber}`);
 
-      await knex.insert(seasonWeeks).into<SeasonWeek>('season_weeks');
+      await knex.insert(seasonWeeks).into<SeasonWeek>("season_weeks");
       await knex
         .insert(seasonWeekContestants)
-        .into<SeasonWeekContestant>('season_week_contestants');
+        .into<SeasonWeekContestant>("season_week_contestants");
 
-      await knex<Season>('seasons').update({ currentWeekNumber: weekNumber });
+      await knex<Season>("seasons").update({ currentWeekNumber: weekNumber });
       // .where({ id: leagues[0].seasonId });
     }
   }
@@ -62,5 +62,5 @@ export async function seed(knex: Knex) {
     return;
   }
 
-  await knex<Season>('seasons').update({ isComplete: true }); // .where({ id: leagues[0].seasonId });
+  await knex<Season>("seasons").update({ isComplete: true }); // .where({ id: leagues[0].seasonId });
 }
