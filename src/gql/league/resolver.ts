@@ -219,7 +219,7 @@ class LeagueResolver {
     }
 
     const token = encode({ action: "join-league", payload: { referrer: identity!.id } });
-    return `${configuration.client.host}/leagues/${id}/details?token=${token}`;
+    return `${configuration.client.host}/leagues/${id}/info?token=${token}`;
   }
 
   @Mutation(() => League)
