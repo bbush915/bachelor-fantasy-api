@@ -1,9 +1,10 @@
 import { Field, ID, Int, ObjectType } from "type-graphql";
 
 import { Contestant } from "gql/contestant";
+import { DbLineupContestant } from "types";
 
 @ObjectType()
-export class LineupContestant {
+export class LineupContestant implements DbLineupContestant {
   @Field(() => ID)
   id: string;
 
@@ -19,8 +20,10 @@ export class LineupContestant {
   @Field(() => ID)
   contestantId: string;
 
+  // NOTE - Field Resolvers
+
   @Field(() => Contestant)
-  contestant?: Contestant;
+  contestant: Contestant;
 
   @Field(() => Int, { nullable: true })
   score?: number;

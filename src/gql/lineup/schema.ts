@@ -1,9 +1,10 @@
 import { ArgsType, Field, ID, InputType, ObjectType } from "type-graphql";
 
 import { LineupContestant } from "gql/lineup-contestant";
+import { DbLineup } from "types";
 
 @ObjectType()
-export class Lineup {
+export class Lineup implements DbLineup {
   @Field(() => ID)
   id: string;
 
@@ -19,8 +20,10 @@ export class Lineup {
   @Field(() => ID)
   seasonWeekId: string;
 
+  // NOTE - Field Resolvers
+
   @Field(() => [LineupContestant])
-  lineupContestants?: LineupContestant[];
+  lineupContestants: LineupContestant[];
 }
 
 @ArgsType()

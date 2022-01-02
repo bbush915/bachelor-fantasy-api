@@ -1,38 +1,39 @@
-import { Arg, Ctx, FieldResolver, ID, Query, Resolver, Root, UseMiddleware } from "type-graphql";
+import { Arg, ID, Query, Resolver } from "type-graphql";
 
-import { Season } from "gql/season";
 import knex from "lib/knex";
+import { DbContestant, DbSeason } from "types";
 import { Contestant } from "./schema";
-import { UserFavorite } from "gql/user-favorite";
-import { IContext } from "gql/context";
-import { authentication } from "middleware";
 
 @Resolver(Contestant)
 class ContestantResolver {
   @Query(() => [Contestant])
-  async allContestants(): Promise<Contestant[]> {
+  async allContestants(): Promise<DbContestant[]> {
     const activeSeason = await knex
       .select()
-      .from<Season>("seasons")
+      .from<DbSeason>("seasons")
       .where({ isActive: true })
       .first();
 
-    return knex.select().from<Contestant>("contestants").where({ seasonId: activeSeason!.id });
+    // ASSUMPTION - There will always be an active season.
+
+    return knex.select().from<DbContestant>("contestants").where({ seasonId: activeSeason!.id });
   }
 
   @Query(() => [Contestant])
   async weeklyContestants(
     @Arg("seasonWeekId", () => ID) seasonWeekId: string
-  ): Promise<Contestant[]> {
+  ): Promise<DbContestant[]> {
     const activeSeason = await knex
       .select()
-      .from<Season>("seasons")
+      .from<DbSeason>("seasons")
       .where({ isActive: true })
       .first();
 
+    // ASSUMPTION - There will always be an active season.
+
     return knex
       .select("contestants.*")
-      .from<Contestant>("contestants")
+      .from<DbContestant>("contestants")
       .join("season_week_contestants", (joinBuilder) =>
         joinBuilder
           .on("season_week_contestants.season_week_id", "=", knex.raw("?", [seasonWeekId]))

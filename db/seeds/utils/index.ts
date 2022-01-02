@@ -1,45 +1,41 @@
 import { Knex } from "knex";
 
-import { LeagueMember } from "gql/league-member";
-import { Lineup } from "gql/lineup";
-import { SeasonWeek } from "gql/season-week";
-import { SeasonWeekContestant } from "gql/season-week-contestant";
+import { DbLineup, DbLineupContestant, DbSeasonWeek, DbSeasonWeekContestant } from "types";
 
 export async function seedRandomLineups(knex: Knex, leagueId: string, weekNumber: number) {
   const seasonWeek = await knex
     .select()
-    .from<SeasonWeek>("season_weeks")
+    .from<DbSeasonWeek>("season_weeks")
     .where({ weekNumber })
     .first();
 
   const seasonWeekContestants = await knex
     .select()
-    .from<SeasonWeekContestant>("season_week_contestants")
+    .from<DbSeasonWeekContestant>("season_week_contestants")
     .where({
       seasonWeekId: seasonWeek!.id,
     });
 
   const leagueMembers = await knex
-    .select()
-    .from<LeagueMember>("league_members")
-    .where({ leagueId });
+    .select("league_members.*")
+    .from("league_members")
+    .join("users", "users.id", "=", "league_members.user_id")
+    .where("league_members.league_id", "=", leagueId)
+    .andWhere("users.set_random_lineup", "=", true);
 
   for (const leagueMember of leagueMembers) {
-    const lineups: Lineup[] = await knex
+    const lineups = await knex<DbLineup>("lineups")
       .insert({ leagueMemberId: leagueMember.id, seasonWeekId: seasonWeek!.id })
-      .into("lineups")
       .returning("*");
 
-    await knex
-      .insert(
-        shuffle(seasonWeekContestants)
-          .slice(0, seasonWeek!.lineupSpotsAvailable)
-          .map((seasonWeekContestant) => ({
-            lineupId: lineups[0].id,
-            contestantId: seasonWeekContestant.contestantId,
-          }))
-      )
-      .into("lineup_contestants");
+    await knex<DbLineupContestant>("lineup_contestants").insert(
+      shuffle(seasonWeekContestants)
+        .slice(0, seasonWeek!.lineupSpotsAvailable)
+        .map((seasonWeekContestant) => ({
+          lineupId: lineups[0].id,
+          contestantId: seasonWeekContestant.contestantId,
+        }))
+    );
   }
 }
 

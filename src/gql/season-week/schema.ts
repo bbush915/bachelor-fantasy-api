@@ -1,7 +1,9 @@
 import { Field, ID, Int, ObjectType } from "type-graphql";
 
+import { DbSeasonWeek } from "types";
+
 @ObjectType()
-export class SeasonWeek {
+export class SeasonWeek implements DbSeasonWeek {
   @Field(() => ID)
   id: string;
 

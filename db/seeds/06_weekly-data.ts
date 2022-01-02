@@ -1,20 +1,18 @@
 import { Knex } from "knex";
 
-import { Season } from "gql/season";
-import { SeasonWeek } from "gql/season-week";
-import { SeasonWeekContestant } from "gql/season-week-contestant";
+import { DbSeason, DbSeasonWeek, DbSeasonWeekContestant } from "types";
 import {
   seasonWeekContestants as initialSeasonWeekContestants,
   seasonWeeks as initialSeasonWeeks,
-} from "./data/bachelor-season-25/week-1";
+} from "./data/bachelor-season-26/week-1";
 import { leagues } from "./data/leagues";
 import { seedRandomLineups } from "./utils";
 
 export async function seed(knex: Knex) {
-  await knex.insert(initialSeasonWeeks).into<SeasonWeek>("season_weeks");
-  await knex
-    .insert(initialSeasonWeekContestants)
-    .into<SeasonWeekContestant>("season_week_contestants");
+  await knex<DbSeasonWeek>("season_weeks").insert(initialSeasonWeeks);
+  await knex<DbSeasonWeekContestant>("season_week_contestants").insert(
+    initialSeasonWeekContestants
+  );
 
   const seedWeekNumber = Number(process.env.SEED_WEEK_NUMBER);
 
@@ -27,9 +25,9 @@ export async function seed(knex: Knex) {
 
     const {
       scoredSeasonWeekContestants,
-    }: { scoredSeasonWeekContestants: SeasonWeekContestant[] } = require(`./data/week-${
-      weekNumber - 1
-    }`);
+    }: {
+      scoredSeasonWeekContestants: DbSeasonWeekContestant[];
+    } = require(`./data/bachelor-season-26/week-${weekNumber - 1}`);
 
     for (const seasonWeekContestant of scoredSeasonWeekContestants) {
       seasonWeekContestant.score =
@@ -42,18 +40,19 @@ export async function seed(knex: Knex) {
 
       const { id, ...rest } = seasonWeekContestant;
 
-      await knex<SeasonWeekContestant>("season_week_contestants").update(rest).where({ id });
+      await knex<DbSeasonWeekContestant>("season_week_contestants").update(rest).where({ id });
     }
 
     if (weekNumber <= 10) {
-      const { seasonWeeks, seasonWeekContestants } = require(`./data/week-${weekNumber}`);
+      const {
+        seasonWeeks,
+        seasonWeekContestants,
+      } = require(`./data/bachelor-season-26/week-${weekNumber}`);
 
-      await knex.insert(seasonWeeks).into<SeasonWeek>("season_weeks");
-      await knex
-        .insert(seasonWeekContestants)
-        .into<SeasonWeekContestant>("season_week_contestants");
+      await knex<DbSeasonWeek>("season_weeks").insert(seasonWeeks);
+      await knex<DbSeasonWeekContestant>("season_week_contestants").insert(seasonWeekContestants);
 
-      await knex<Season>("seasons")
+      await knex<DbSeason>("seasons")
         .update({ currentWeekNumber: weekNumber })
         .where({ id: leagues[0].seasonId });
     }
@@ -63,5 +62,5 @@ export async function seed(knex: Knex) {
     return;
   }
 
-  await knex<Season>("seasons").update({ isComplete: true }).where({ id: leagues[0].seasonId });
+  await knex<DbSeason>("seasons").update({ isComplete: true }).where({ id: leagues[0].seasonId });
 }

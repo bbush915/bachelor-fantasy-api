@@ -2,7 +2,7 @@ import { Context } from "koa";
 
 export interface IContext {
   auth?: string;
-  identity?: { id: string };
+  identity?: { id: string; role: string };
 }
 
 const getContext = ({ ctx }: any): IContext => {

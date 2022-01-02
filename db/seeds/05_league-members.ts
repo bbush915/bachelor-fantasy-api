@@ -1,8 +1,8 @@
 import { Knex } from "knex";
 
-import { LeagueMember } from "gql/league-member";
+import { DbLeagueMember } from "types";
 import { leagueMembers } from "./data/league-members";
 
 export async function seed(knex: Knex) {
-  await knex.insert(leagueMembers).into<LeagueMember>("league_members");
+  await knex<DbLeagueMember>("league_members").insert(leagueMembers);
 }

@@ -1,9 +1,10 @@
-import { Field, ID, Int, ObjectType } from "type-graphql";
+import { Field, ID, InputType, Int, ObjectType } from "type-graphql";
 
 import { Contestant } from "gql/contestant";
+import { DbSeasonWeekContestant } from "types";
 
 @ObjectType()
-export class SeasonWeekContestant {
+export class SeasonWeekContestant implements DbSeasonWeekContestant {
   @Field(() => ID)
   id: string;
 
@@ -40,6 +41,41 @@ export class SeasonWeekContestant {
   @Field(() => Int, { nullable: true })
   score?: number;
 
+  // NOTE - Field Resolvers.
+
   @Field(() => Contestant)
   contestant?: Contestant;
+}
+
+@InputType()
+export class ScoreSeasonWeekContestantsInput {
+  @Field(() => [SeasonWeekContestantScoreInput])
+  scores: SeasonWeekContestantScoreInput[];
+}
+
+@InputType()
+export class SeasonWeekContestantScoreInput {
+  @Field(() => ID)
+  id: string;
+
+  @Field(() => ID)
+  seasonWeekId: string;
+
+  @Field()
+  rose: boolean;
+
+  @Field()
+  specialRose: boolean;
+
+  @Field()
+  groupDate: boolean;
+
+  @Field()
+  oneOnOneDate: boolean;
+
+  @Field()
+  twoOnOneDate: boolean;
+
+  @Field()
+  sentHome: boolean;
 }

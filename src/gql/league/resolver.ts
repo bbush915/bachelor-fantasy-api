@@ -20,6 +20,7 @@ import { OperationResponse } from "gql/utils";
 import { decode, encode } from "lib/jwt";
 import knex from "lib/knex";
 import { authentication } from "middleware";
+import { DbLeague, DbLeagueMember, DbSeason } from "types";
 import {
   CreateLeagueInput,
   DeleteLeagueInput,
@@ -32,25 +33,28 @@ import {
 @Resolver(League)
 class LeagueResolver {
   @Query(() => [League])
-  async leagues(@Arg("query") query: string): Promise<League[]> {
+  async leagues(@Arg("query") query: string): Promise<DbLeague[]> {
     const activeSeason = await knex
       .select()
-      .from<Season>("seasons")
+      .from<DbSeason>("seasons")
       .where({ isActive: true })
       .first();
 
+    // ASSUMPTION - There will always be an active season.
+
     return knex
       .select()
-      .from<League>("leagues")
+      .from<DbLeague>("leagues")
       .where("season_id", "=", activeSeason!.id)
-      .where("is_public", "=", true)
+      .andWhere("is_public", "=", true)
       .andWhereRaw(`lower(leagues.name) LIKE '%${query.toLowerCase()}%'`)
+      .orderBy("name")
       .limit(10);
   }
 
   @Query(() => League)
-  async league(@Arg("id", () => ID) id: string): Promise<League> {
-    const league = await knex.select().from<League>("leagues").where({ id }).first();
+  async league(@Arg("id", () => ID) id: string): Promise<DbLeague> {
+    const league = await knex.select().from<DbLeague>("leagues").where({ id }).first();
 
     if (!league) {
       throw new Error("League does not exist");
@@ -65,14 +69,14 @@ class LeagueResolver {
     @Args() { leagueId }: ValidateLeagueMembershipInput,
     @Ctx() { identity }: IContext
   ): Promise<OperationResponse> {
-    const myLeagueMember = await knex
+    const leagueMember = await knex
       .select()
-      .from<LeagueMember>("league_members")
+      .from<DbLeagueMember>("league_members")
       .where({ leagueId, userId: identity!.id, isActive: true })
       .first();
 
     return {
-      success: !!myLeagueMember,
+      success: !!leagueMember,
     };
   }
 
@@ -80,47 +84,47 @@ class LeagueResolver {
   async validateLeagueAccessibility(
     @Args() { leagueId, authenticationToken, accessToken }: ValidateLeagueAccessibilityInput
   ): Promise<OperationResponse> {
-    // If the user is already a member of the league (active or not),
+    // NOTE - If the user is already a member of the league (active or not),
     // then they have access to its details.
 
     if (authenticationToken) {
       const { id: userId }: any = decode(authenticationToken);
 
-      const myLeagueMember = await knex
+      const leagueMember = await knex
         .select()
-        .from<LeagueMember>("league_members")
+        .from<DbLeagueMember>("league_members")
         .where({ leagueId, userId })
         .first();
 
-      if (!!myLeagueMember) {
+      if (!!leagueMember) {
         return {
           success: true,
         };
       }
     }
 
-    // In all other cases, a user will only have access to league details in
-    // the following circumstances:
+    // NOTE - In all other cases, a user will only have access to league
+    // details in the following circumstances:
     //
     // 1. The league is public.
     // 2. The league is shareable, and they have a token from a league member.
     // 3. They have a token from the league commissioner.
 
-    const league = await knex.select().from<League>("leagues").where({ id: leagueId }).first();
+    const league = await knex.select().from<DbLeague>("leagues").where({ id: leagueId }).first();
 
     if (!league) {
       throw new Error("League does not exist");
     }
 
-    // Rule 1
+    // NOTE - Rule 1
 
-    if (league?.isPublic) {
+    if (league.isPublic) {
       return {
         success: true,
       };
     }
 
-    // Validate access token.
+    // NOTE - Validate access token.
 
     if (!accessToken) {
       return {
@@ -136,49 +140,47 @@ class LeagueResolver {
       };
     }
 
-    // Rules 2 & 3
+    // NOTE - Rules 2 & 3
 
     const { referrer } = payload;
 
     const leagueMember = await knex
       .select()
-      .from<LeagueMember>("league_members")
+      .from<DbLeagueMember>("league_members")
       .where({ leagueId, userId: referrer })
       .first();
 
-    const canJoin = !!leagueMember && (leagueMember.isCommissioner || league.isShareable);
-
     return {
-      success: canJoin,
+      success: !!leagueMember && (leagueMember.isCommissioner || league.isShareable),
     };
   }
 
   @Query(() => [League])
   @UseMiddleware(authentication)
-  myLeagues(@Ctx() { identity }: IContext): Promise<League[]> {
+  myLeagues(@Ctx() { identity }: IContext): Promise<DbLeague[]> {
     return knex
       .select("leagues.*")
-      .from<League>("leagues")
+      .from<DbLeague>("leagues")
       .join("league_members", "league_members.league_id", "=", "leagues.id")
       .where("league_members.user_id", "=", identity!.id);
   }
 
   @FieldResolver(() => Season)
-  async season(@Root() { seasonId }: League): Promise<Season> {
-    const season = await knex.select().from<Season>("seasons").where({ id: seasonId }).first();
+  async season(@Root() { seasonId }: League): Promise<DbSeason> {
+    const season = await knex.select().from<DbSeason>("seasons").where({ id: seasonId }).first();
     return season!;
   }
 
   @FieldResolver(() => [LeagueMember])
-  leagueMembers(@Root() { id }: League): Promise<LeagueMember[]> {
-    return knex.select().from<LeagueMember>("league_members").where({ leagueId: id });
+  leagueMembers(@Root() { id }: League): Promise<DbLeagueMember[]> {
+    return knex.select().from<DbLeagueMember>("league_members").where({ leagueId: id });
   }
 
   @FieldResolver(() => LeagueMember)
-  async commissioner(@Root() { id }: League): Promise<LeagueMember> {
+  async commissioner(@Root() { id }: League): Promise<DbLeagueMember> {
     const commissioner = await knex
       .select()
-      .from<LeagueMember>("league_members")
+      .from<DbLeagueMember>("league_members")
       .where({ leagueId: id, isCommissioner: true })
       .first();
 
@@ -190,10 +192,10 @@ class LeagueResolver {
   myLeagueMember(
     @Root() { id }: League,
     @Ctx() { identity }: IContext
-  ): Promise<LeagueMember | undefined> {
+  ): Promise<DbLeagueMember | undefined> {
     return knex
       .select()
-      .from<LeagueMember>("league_members")
+      .from<DbLeagueMember>("league_members")
       .where({ leagueId: id, userId: identity!.id })
       .first();
   }
@@ -206,7 +208,7 @@ class LeagueResolver {
   ): Promise<string> {
     const leagueMember = await knex
       .select()
-      .from<LeagueMember>("league_members")
+      .from<DbLeagueMember>("league_members")
       .where({ leagueId: id, userId: identity!.id })
       .first();
 
@@ -227,16 +229,18 @@ class LeagueResolver {
   async createLeague(
     @Arg("input") { name, description, logo, isPublic, isShareable }: CreateLeagueInput,
     @Ctx() { identity }: IContext
-  ): Promise<League> {
+  ): Promise<DbLeague> {
     const activeSeason = await knex
       .select()
-      .from<Season>("seasons")
+      .from<DbSeason>("seasons")
       .where({ isActive: true })
       .first();
 
+    // ASSUMPTION - There will always be an active season.
+
     const existingLeague = await knex
       .select()
-      .from<League>("leagues")
+      .from<DbLeague>("leagues")
       .where({ seasonId: activeSeason!.id, name })
       .first();
 
@@ -250,8 +254,8 @@ class LeagueResolver {
 
       const logoUrl = logo;
 
-      const league: League = (
-        await trx
+      const league = (
+        await trx<DbLeague>("leagues")
           .insert({
             seasonId: activeSeason!.id,
             name,
@@ -260,19 +264,18 @@ class LeagueResolver {
             isPublic,
             isShareable,
           })
-          .into("leagues")
           .returning("*")
       )[0];
 
-      // The user who creates the league is the commissioner.
+      // NOTE - The user who creates the league is the commissioner.
 
-      const commissioner: Partial<LeagueMember> = {
+      const commissioner: Partial<DbLeagueMember> = {
         leagueId: league.id,
         userId: identity!.id,
         isCommissioner: true,
       };
 
-      await trx.insert(commissioner).into("league_members");
+      await trx<DbLeagueMember>("league_members").insert(commissioner);
 
       return league;
     });
@@ -283,10 +286,10 @@ class LeagueResolver {
   async updateLeague(
     @Arg("input") { id, name, description, logo, isPublic, isShareable }: UpdateLeagueInput,
     @Ctx() { identity }: IContext
-  ): Promise<League> {
+  ): Promise<DbLeague> {
     const comissioner = await knex
       .select()
-      .from<LeagueMember>("league_members")
+      .from<DbLeagueMember>("league_members")
       .where({ leagueId: id, isCommissioner: true })
       .first();
 
@@ -296,13 +299,15 @@ class LeagueResolver {
 
     const activeSeason = await knex
       .select()
-      .from<Season>("seasons")
+      .from<DbSeason>("seasons")
       .where({ isActive: true })
       .first();
 
+    // ASSUMPTION - There will always be an active season.
+
     const existingLeague = await knex
       .select()
-      .from<League>("leagues")
+      .from<DbLeague>("leagues")
       .where({ seasonId: activeSeason!.id, name })
       .andWhere("id", "<>", id)
       .first();
@@ -314,7 +319,7 @@ class LeagueResolver {
     const logoUrl = logo;
 
     return (
-      await knex("leagues")
+      await knex<DbLeague>("leagues")
         .update({
           name,
           description,
@@ -335,7 +340,7 @@ class LeagueResolver {
   ): Promise<OperationResponse> {
     const comissioner = await knex
       .select()
-      .from<LeagueMember>("league_members")
+      .from<DbLeagueMember>("league_members")
       .where({ leagueId: id, isCommissioner: true })
       .first();
 
@@ -344,7 +349,7 @@ class LeagueResolver {
     }
 
     await knex.transaction(async (trx) => {
-      // Delete lineup contestants.
+      // NOTE - Delete lineup contestants.
       await trx.raw(
         `
           WITH src AS (
@@ -369,7 +374,7 @@ class LeagueResolver {
         [id]
       );
 
-      // Delete lineups.
+      // NOTE-  Delete lineups.
       await trx.raw(
         `
           WITH src AS (
@@ -393,11 +398,11 @@ class LeagueResolver {
         [id]
       );
 
-      // Delete league members.
-      await trx<LeagueMember>("league_members").where({ leagueId: id }).delete();
+      // NOTE - Delete league members.
+      await trx<LeagueMember>("league_members").delete().where({ leagueId: id });
 
-      // Delete league.
-      await trx<League>("leagues").where({ id }).delete();
+      // NOTE - Delete league.
+      await trx<League>("leagues").delete().where({ id });
     });
 
     return {

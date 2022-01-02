@@ -1,17 +1,17 @@
 import { Arg, FieldResolver, ID, Int, Resolver, Root } from "type-graphql";
 
 import { Contestant } from "gql/contestant";
-import { SeasonWeekContestant } from "gql/season-week-contestant";
 import knex from "lib/knex";
+import { DbContestant, DbSeasonWeekContestant } from "types";
 import { LineupContestant } from "./schema";
 
 @Resolver(LineupContestant)
 class LineupContestantResolver {
   @FieldResolver(() => Contestant)
-  async contestant(@Root() { contestantId }: LineupContestant): Promise<Contestant> {
+  async contestant(@Root() { contestantId }: LineupContestant): Promise<DbContestant> {
     const contestant = await knex
       .select()
-      .from<Contestant>("contestants")
+      .from<DbContestant>("contestants")
       .where({ id: contestantId })
       .first();
 
@@ -25,7 +25,7 @@ class LineupContestantResolver {
   ): Promise<number | undefined> {
     const seasonWeekContestant = await knex
       .select()
-      .from<SeasonWeekContestant>("season_week_contestants")
+      .from<DbSeasonWeekContestant>("season_week_contestants")
       .where({ seasonWeekId, contestantId })
       .first();
 

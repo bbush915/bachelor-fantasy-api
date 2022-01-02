@@ -1,8 +1,8 @@
 import { Knex } from "knex";
 
-import { User } from "gql/user";
+import { DbUser } from "types";
 import { users } from "./data/users";
 
 export async function seed(knex: Knex) {
-  await knex.insert(users).into<User>("users");
+  await knex<DbUser>("users").insert(users);
 }

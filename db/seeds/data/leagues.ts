@@ -1,9 +1,9 @@
-import { League } from "gql/league";
+import { DbLeague } from "types";
 
-export const leagues: Partial<League>[] = [
+export const leagues: Partial<DbLeague>[] = [
   {
     id: "4266654e-0849-4774-8b20-a1a805b21fca",
-    seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",
+    seasonId: "1d593be0-9efc-4075-9b99-a93147570d63",
     name: "Dialexa",
     description: "Official Fantasy League of Dialexa in Dallas, TX",
     logoUrl:

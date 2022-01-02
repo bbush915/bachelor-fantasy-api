@@ -2,9 +2,10 @@ import { ArgsType, Field, ID, InputType, ObjectType } from "type-graphql";
 
 import { LeagueMember } from "gql/league-member";
 import { Season } from "gql/season";
+import { DbLeague } from "types";
 
 @ObjectType()
-export class League {
+export class League implements DbLeague {
   @Field(() => ID)
   id: string;
 
@@ -32,20 +33,22 @@ export class League {
   @Field()
   isShareable: boolean;
 
+  // NOTE - Field Resolvers
+
   @Field(() => Season)
-  season?: Season;
+  season: Season;
 
   @Field(() => [LeagueMember])
-  leagueMembers?: LeagueMember[];
+  leagueMembers: LeagueMember[];
 
   @Field(() => LeagueMember)
-  commissioner?: LeagueMember;
+  commissioner: LeagueMember;
 
   @Field(() => LeagueMember, { nullable: true })
-  myLeagueMember?: LeagueMember;
+  myLeagueMember: LeagueMember;
 
   @Field({ nullable: true })
-  inviteLink?: string;
+  inviteLink: string;
 }
 
 @ArgsType()

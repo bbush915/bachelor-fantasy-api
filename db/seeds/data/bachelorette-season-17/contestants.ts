@@ -1,6 +1,6 @@
-import { Contestant } from "gql/contestant";
+import { DbContestant } from "types";
 
-export const contestants: Partial<Contestant>[] = [
+export const contestants: Partial<DbContestant>[] = [
   {
     id: "7e4205a5-5446-4a62-9757-9f471ac56caa",
     seasonId: "c185a052-d2af-48e2-bba3-19ec9c378023",

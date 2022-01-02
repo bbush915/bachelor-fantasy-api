@@ -6,10 +6,14 @@ import configuration from "./configuration";
 import { getGqlServer } from "./gql";
 
 const main = async () => {
-  const app = new Koa();
+  // NOTE - Set up GraphQL server.
 
   const gqlServer = await getGqlServer();
   await gqlServer.start();
+
+  // NOTE - Set up Koa application.
+
+  const app = new Koa();
 
   const corsMiddleware = cors({ origin: configuration.client.host });
   app.use(corsMiddleware);
@@ -24,4 +28,4 @@ const main = async () => {
   });
 };
 
-main();
+main().catch((error) => console.error("Unhandled error: ", error));

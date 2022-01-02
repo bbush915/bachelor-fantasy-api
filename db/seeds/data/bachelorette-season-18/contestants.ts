@@ -1,12 +1,397 @@
-import { Contestant } from "gql/contestant";
+import { DbContestant } from "types";
 
-export const contestants: Partial<Contestant>[] = [
+export const contestants: Partial<DbContestant>[] = [
+  {
+    id: "74153d17-d66f-405b-a133-4fee328a4bb7",
+    seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
+    name: "Alec",
+    headshotUrl:
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3846808/d6e98dde117fae63922cd50a108e93ce/166x166-Q90_d6e98dde117fae63922cd50a108e93ce.jpg",
+    age: 29,
+    occupation: "Engineer",
+    hometown: "North Charleston, SC",
+    bio: "Alec lives to make the most out of every day. After his first marriage ended, Alec learned a lot about the value of commitment and what it takes to truly make love last, so he is not here to waste anyone's time. He is dependable, emotionally intelligent and values integrity above all else. Alec is hoping to find a woman who appreciates how much his career means to him but will also make him want to be sentimental and bring out the fun side of him. He is true a believer in that old-school, head-over-heels unconditional type of love and is ready to find that with the beautiful Michelle.",
+    trivia: JSON.stringify([
+      "Alec loves to read GQ Magazine.",
+      "Alec does not think bowling makes for a romantic night out.",
+      "Alec's favorite thing to eat for breakfast is cottage cheese.",
+    ]) as any,
+  },
+  {
+    id: "bfd0bb04-06cc-40a6-afef-dd17b8ef603d",
+    seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
+    name: "Brandon J.",
+    headshotUrl:
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3846845/df17b58fc7ebc198c92dc9c636ad8b05/166x166-Q90_df17b58fc7ebc198c92dc9c636ad8b05.jpg",
+    age: 26,
+    occupation: "Traveling Nurse Recruiter",
+    hometown: "Portland, OR",
+    bio: "Brandon J. may be young, but he knows exactly what he wants in life and is very serious about finding the one with whom to settle down. He is kind, confident and looking for a wife whose passionate personality can keep up with his. Brandon J. wants someone who has goals and the focus to achieve them. He doesn't want to be with someone who is still figuring herself out, and he hopes to find someone who can be his best friend and teammate for the rest of their lives. Speaking of teammates, not only is Brandon J. looking for love, but he's also looking for a little basketball! He is a self-proclaimed basketball fiend, and when given the opportunity, he doesn't plan on missing out on his shot with Michelle.",
+    trivia: JSON.stringify([
+      "Brandon J. once hopped on stage during a Lil Wayne and Drake concert.",
+      'Brandon J. loves "The Fresh Prince of Bel-Air."',
+      "Brandon J. has no interest in ever going bungee jumping.",
+    ]) as any,
+  },
+  {
+    id: "305071d0-607c-46b6-8c87-ca5fd0dc274d",
+    seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
+    name: "Brandon K.",
+    headshotUrl:
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3846846/103d15207e9623cb5dce2389969423e9/166x166-Q90_103d15207e9623cb5dce2389969423e9.jpg",
+    age: 29,
+    occupation: "Brand Manager",
+    hometown: "Austin, TX",
+    bio: "Brandon K. is a polished Southern gentleman who just hasn't found the right one yet. He is looking for love that is playful and feisty, and says that his dream woman will be able to make even the most mundane of moments special. For Brandon K., love should be simple but memorable. His ideal connection is effortless with an obvious chemistry but also fun and affectionate. He wants to make a real social impact within his community and hopes to find a partner who wants to make the world a better place alongside him. Brandon K. says he'll know he's found the one when being together makes him want the night to never end, so here's hoping to many sunrises together for him and Michelle.",
+    trivia: JSON.stringify([
+      "Brandon K. loves the Cha-Cha Slide.",
+      "Brandon K. dreams of delivering someone an oversized check for a life-changing amount of money.",
+      "Brandon K. always buys travel insurance.",
+    ]) as any,
+  },
+  {
+    id: "a668664c-6b00-430e-ae5e-a252db0edddf",
+    seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
+    name: "Bryan",
+    headshotUrl:
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3846938/3b971e5ea9586349626a845eeb91e51f/166x166-Q90_3b971e5ea9586349626a845eeb91e51f.jpg",
+    age: 31,
+    occupation: "NFL Player",
+    hometown: "Chicago, IL",
+    bio: "Bryan is not your stereotypical jock - he's a foodie, religious, family oriented, completely down to earth and all about finding himself a wife. He considers himself to be quite the romantic, and thanks to all of the romcoms his older sisters made him watch growing up, Bryan is all about making big moves to show his affection. He loves to travel and hopes to find a partner who will join him as he dines his way across the globe. Bryan is a big believer in fate and feels that his being here to meet Michelle is serendipitous and that it's a match truly meant to be!",
+    trivia: JSON.stringify([
+      "Bryan loves philosophy and would love to ask Socrates a few questions.",
+      "Bryan has been to every continent except Antarctica.",
+      "Bryan thinks orchids are majestic.",
+    ]) as any,
+  },
+  {
+    id: "3cd7191d-295d-4c79-95f7-057ec8112ec6",
+    seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
+    name: "Casey",
+    headshotUrl:
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3846941/b2c91f4881008942f8b2e03b0e5d26ec/166x166-Q90_b2c91f4881008942f8b2e03b0e5d26ec.jpg",
+    age: 36,
+    occupation: "Advertising Creative Director",
+    hometown: "Miami Beach, FL",
+    bio: "Casey is at the point in his life where he wants something serious and long-lasting. Though he loves life in Miami, he says he has outgrown the local dating scene where women care more about their Instagram stories than making meaningful connections. He is looking for a woman who is ready to be a mom because Casey is ready to start a family and give his mom all of the grandbabies she so badly craves! Casey also loves his job raising money for philanthropic ventures and hopes to find a wife who gets as much satisfaction in helping others as he does. Casey is excited to meet Michelle and focus on finding love without all of the outside world's distractions. He is all about the love and we can't wait to see what this journey has in store for him and the Bachelorette.",
+    trivia: JSON.stringify([
+      "Casey says he is secretly a hippie.",
+      "Casey likes camping, but he hates sleeping in tents.",
+      "Casey takes his eggs scrambled with salsa.",
+    ]) as any,
+  },
+  {
+    id: "1499d097-d178-4e54-8b22-039321fd73cd",
+    seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
+    name: "Chris G.",
+    headshotUrl:
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3846946/a9becddf8454a131c933bb76c61f205c/166x166-Q90_a9becddf8454a131c933bb76c61f205c.jpg",
+    age: 28,
+    occupation: "Motivational Speaker",
+    hometown: "Halifax, Nova Scotia, Canada",
+    bio: "For Chris G., commitment is the name of the game. As kindhearted as you would expect any Canadian man to be, Chris G. says he is looking for a genuine connection and for someone who is all in on him the way he is on her. His ideal woman is active, vulnerable and a good person on the inside. Chris is looking for his best friend, someone who he can bring home to his family, and someone that he just absolutely adores. When he says he's looking for love, he is looking for the right soul and someone his energy bonds to. Will there be that instant spark when Chris meets Michelle?",
+    trivia: JSON.stringify([
+      "Chris G. loves escape rooms.",
+      "Chris G. enjoys performing spoken word poetry.",
+      "Chris G. has two cats - one named Cat and one named Small Cat.",
+    ]) as any,
+  },
+  {
+    id: "4b0ecce3-c101-48d0-bb6e-0f4ecd601d0a",
+    seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
+    name: "Chris S.",
+    headshotUrl:
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3846949/669a277a14a2f5cb9b1bd0aa8449b44f/166x166-Q90_669a277a14a2f5cb9b1bd0aa8449b44f.jpg",
+    age: 28,
+    occupation: "Commodities Broker",
+    hometown: "West Hollywood, CA",
+    bio: "This Southern gentleman-turned-California beach boy is ready to find love! His friends describe him as goofy and easygoing, but when it comes to relationships, he isn't here to joke around. When Chris S. falls, he falls hard. He is looking for an adventurous woman who is confident, kind and selfless. He does not have a specific type and prides himself in falling in love with someone on the inside rather than the outside. In five years, Chris S. hopes to be married with kids and making a positive impact on the world. He is a firm believer that chivalry isn't dead, and when the time comes, he is ready to sweep Michelle off her feet!",
+    trivia: JSON.stringify([
+      "Chris S. gives a mean Blue Steel face.",
+      "Chris S. loves to travel.",
+      "Burnt pizza makes Chris S. mad.",
+    ]) as any,
+  },
+  {
+    id: "c401a43a-b85b-4fe8-b42d-d3651d158819",
+    seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
+    name: "Clayton",
+    headshotUrl:
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3846950/e83ded2d3a8bf0bf2df05d375a9cd577/166x166-Q90_e83ded2d3a8bf0bf2df05d375a9cd577.jpg",
+    age: 28,
+    occupation: "Medical Sales Rep",
+    hometown: "Columbia, MO",
+    bio: "Clayton is a Missouri thoroughbred who has it all - good looks, a great job and a wonderful family. The only thing missing is the perfect woman with whom to share his life. His dream woman is funny, independent, intelligent and athletic enough to join him at the gym for a workout. He wants to find something truly special and is willing to put in the hard work to find love that will last forever. Clayton is so excited to meet Michelle and loves that she has a passion for her career. His mom is a teacher just like Michelle, and he finds it impressive that she's made this journey work without having to take time away from her students. Clayton truly believes that Michelle could be the perfect match for him. Will they hit it off?",
+    trivia: JSON.stringify([
+      "Clayton had a mohawk in college.",
+      "Clayton's rapping alter ego is named Clay-Doh.",
+      "Clayton would love to own multiple gyms.",
+    ]) as any,
+  },
+  {
+    id: "1f406afe-6960-4885-93ab-62a87431551c",
+    seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
+    name: "Daniel",
+    headshotUrl:
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3846951/5e7d6513420b2310bbe09e6dc9c13ab8/166x166-Q90_5e7d6513420b2310bbe09e6dc9c13ab8.jpg",
+    age: 26,
+    occupation: "Firefighter",
+    hometown: "Austin, TX",
+    bio: "Daniel brings the heat in all aspects of his life! He's living out his childhood dream of being a firefighter and spends his free time playing sports, swimming, hiking and biking. His favorite thing in the world is being an uncle to his four nieces, and now he's ready to settle down and have a family of his own. Daniel's perfect woman is adventurous, fun, intelligent and, above all, kind. He values good energy, great conversation and loves a woman who constantly keeps him on his toes. Daniel loves that Michelle seems to have that same competitive spirit that he does, and with everything that he knows about her so far, he's optimistic he won't be going home a single man.",
+    trivia: JSON.stringify([
+      "Daniel really wants to know if aliens exist.",
+      "Daniel is a Connect Four champ.",
+      "Daniel loves Christmas music.",
+    ]) as any,
+  },
+  {
+    id: "16e893be-1165-42bf-bb2d-55f165e47907",
+    seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
+    name: "Edward",
+    headshotUrl:
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3846952/80b092bf0464778b82b6cbd7be45527a/166x166-Q90_80b092bf0464778b82b6cbd7be45527a.jpg",
+    age: 27,
+    occupation: "Wellness Coach",
+    hometown: "Los Angeles, CA",
+    bio: "Edward is outgoing, optimistic and a self-proclaimed amazing wingman, but now it's time to focus on finding happiness for himself! He spends most of his weekends exploring new places and needs a woman who isn't afraid of a little adventure. She should be emotionally articulate and have a healthy appetite for learning and personal growth. She also MUST love dogs because Edward's pup, Willow, is always by his side. Edward loves to express himself through words of affirmation and physical touch, so if Michelle is looking for someone who isn't going to hold back, she won't have to look any further!",
+    trivia: JSON.stringify([
+      "Edward dreams of visiting Disney World one day.",
+      "Edward enjoys listening to John Mayer's music, especially on road trips.",
+      "Edward is excited by a good obstacle course.",
+    ]) as any,
+  },
+  {
+    id: "e6cfa677-effa-42a5-96a2-d163aca8a17e",
+    seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
+    name: "Garrett",
+    headshotUrl:
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3846974/fbac3da70b4b7ccacdc68189344a75e8/166x166-Q90_fbac3da70b4b7ccacdc68189344a75e8.jpg",
+    age: 33,
+    occupation: "Tech CEO",
+    hometown: "Salt Lake City, UT",
+    bio: "Garrett is not afraid of a little risk. He dropped out of college to start what has become an incredibly successful tech company and spends his free time traveling the world, skydiving, paragliding and speed flying. He is always pushing himself to grow as a person and needs a woman who wants the same for herself. She should also be open-minded, authentic and not afraid of a little salsa dancing. Garrett is hoping for a family one day, and if a woman does not want kids, then he is not interested. Garrett is serious about finding the one and is ready to have a little fun finding her!",
+    trivia: JSON.stringify([
+      'Garrett loves plants and calls himself a "plant daddy."',
+      "Growing up, Garrett had a bowl cut.",
+      "Garrett LOVES pickles!",
+    ]) as any,
+  },
+  {
+    id: "9fe437b2-1f40-4f42-a41e-9200c87c07c5",
+    seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
+    name: "Jack",
+    headshotUrl:
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3846975/69038029f53be9f2f79dcf18e1076949/166x166-Q90_69038029f53be9f2f79dcf18e1076949.jpg",
+    age: 30,
+    occupation: "Former Army Officer",
+    hometown: "Philadelphia, PA",
+    bio: "Jack is a sweet and compassionate man who is ready to start the next chapter of his life. He is incredibly loyal, especially when it comes to his family, and he describes himself as genuine and driven. Jack is looking for a woman who is emotionally mature, compassionate, silly and up for joining him on a challenging hike. While he tends to be on the shyer side, he is attracted to women who are outgoing, strong and not afraid to push him outside of his comfort zone. When Jack is excited about someone, he gets very motivated to do things that make her feel loved and appreciated. Luckily, Jack is very excited to meet Michelle, so we can't wait to see what he has planned for her!",
+    trivia: JSON.stringify([
+      "Jack will throw up at the sight of an onion.",
+      "Jack is afraid of dancing",
+      "Jack loves to play kickball.",
+    ]) as any,
+  },
+  {
+    id: "112b9e8e-df8a-453b-9084-e88ed5102235",
+    seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
+    name: "Jamie",
+    headshotUrl:
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3846976/19eff370923905fa8d52f7a6d2adaedc/166x166-Q90_19eff370923905fa8d52f7a6d2adaedc.jpg",
+    age: 32,
+    occupation: "Biotech CEO",
+    hometown: "San Diego, CA",
+    bio: "Jamie is a catch. He is a world traveler with a taste for all things and is the type of guy who will show up at the airport and let the ticketing agent decide his destination. Yes, he actually did that and had an amazing week in Uruguay! He has a great job, is extremely smart and has a healthy idea of exactly what he needs in a wife. Jamie is looking for someone to be his partner in this never-ending adventure called life. She should be independent, driven and always ready to head out for dinner at the newest local hot spot. For Jamie, life is about valuing cultural experiences and making memories, so hopefully, Michelle is up for the ride!",
+    trivia: JSON.stringify([
+      "Jamie once traveled to Ecuador just to try their chocolate.",
+      "Jamie has never watched an episode of reality TV in his life.",
+      "Jamie's favorite game is chess.",
+    ]) as any,
+  },
+  {
+    id: "2a2e12b1-4205-4b17-8fa7-7fd5a1f0bd49",
+    seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
+    name: "Joe",
+    headshotUrl:
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3846980/251aec925174a070d36f88c32e1589f4/166x166-Q90_251aec925174a070d36f88c32e1589f4.jpg",
+    age: 28,
+    occupation: "Real Estate Developer",
+    hometown: "Minneapolis, MN",
+    bio: 'Joe is a Minnesota-born-and-raised city boy with a heart of gold. He played basketball at the University of Minnesota, and while he says that basketball was his first true love, he\'s now ready to build a life outside of sports and find a wife. Joe, who describes himself as introverted, is looking for a woman who is smart, caring, articulate and able to make him laugh. He wants someone with aligning values and hopes they are ready for a family because Joe hopes to have at least three or four kids! Overall, Joe wants to find a "real one" with whom he can build something solid that will stand the test of time.',
+    trivia: JSON.stringify([
+      "Joe is scared of spiders.",
+      "Joe loves snacks.",
+      "Joe wants to travel to the Galapagos Islands one day.",
+    ]) as any,
+  },
+  {
+    id: "b52e3a0c-944d-4d1c-99dc-2016e7c541b1",
+    seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
+    name: "JoMarri",
+    headshotUrl:
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3846981/58cd45de63949ce17c875dd26a792f01/166x166-Q90_58cd45de63949ce17c875dd26a792f01.jpg",
+    age: 26,
+    occupation: "Personal Trainer",
+    hometown: "Fresno, CA",
+    bio: "JoMarri says he is a sucker for love! He falls hard and fast, and says that a smile tells you everything you need to know about a person. He is a driven gentle giant, whose dream is to own a gym and have a woman by his side to grow old and with whom to enjoy life. His perfect woman is simple, athletic and goofy. Life is never boring when JoMarri is around and he plans to make the most out of every second he has with Michelle!",
+    trivia: JSON.stringify([
+      "JoMarri eats an entire watermelon every morning.",
+      "The light of JoMarri's life is his puppy, Buddy.",
+      "JoMarri would love to be a tour guide in Antarctica.",
+    ]) as any,
+  },
+  {
+    id: "e0f8236b-6321-4160-9254-6941a75a49f3",
+    seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
+    name: "Leroy",
+    headshotUrl:
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3846982/a6bf7179f51290e30292a8c41515c26e/166x166-Q90_a6bf7179f51290e30292a8c41515c26e.jpg",
+    age: 27,
+    occupation: "Biomedical Ph.D Student",
+    hometown: "Dallas, TX",
+    bio: "Leroy is a true academic who has a flair for fashion and a penchant for fun. He was born in Italy to parents who emigrated from Ghana and then moved with his family to the U.S. in pursuit of the American dream. He has worked incredibly hard in his educational pursuits, and now as that chapter of his life comes to a close, Leroy wants to find someone with whom he can share his beautiful world. He is incredibly proud of his strong Ghanaian roots and wants someone who will always support him being his most authentic self. Leroy loves brunch, but nothing makes him happier than holding hands with the woman he loves. He says that when he dates, he dates with intention. His intention here? Hopefully leave hand in hand with the love of his life!",
+    trivia: JSON.stringify([
+      "Leroy loves go-karting.",
+      "Leroy does not like to gamble.",
+      "Leroy is a big fan of breakfast in bed.",
+    ]) as any,
+  },
+  {
+    id: "32f66354-529a-442e-8f7b-dccc9cf6f20f",
+    seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
+    name: "LT",
+    headshotUrl:
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3846983/6de34fca5518fd1116181bd84cf26981/166x166-Q90_6de34fca5518fd1116181bd84cf26981.jpg",
+    age: 38,
+    occupation: "Yoga Guru",
+    hometown: "Bellevue, WA",
+    bio: "LT has never had to worry about much in his life. He is very much fulfilled professionally and in his family life - the only thing missing? Someone to share all his happiness with! LT says he doesn't have any real deal breakers and is more focused on finding a genuine connection in a partner. He wants to find someone who will appreciate his quirky sense of humor, join him on long walks and truly bring out the best in him. LT is a romantic at heart who, at his core, just wants to find someone with whom to watch old movies and exchange love letters.",
+    trivia: JSON.stringify([
+      "LT loves his two pet Savannah cats.",
+      "LT lives for a good spin class.",
+      "LT has one tattoo - his grandfather's initials over his heart.",
+    ]) as any,
+  },
+  {
+    id: "8cbf3833-f781-4c30-9c70-ac07c8ddabaf",
+    seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
+    name: "Martin",
+    headshotUrl:
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3847010/4cac962b1488eba6346b21291484c5ce/166x166-Q90_4cac962b1488eba6346b21291484c5ce.jpg",
+    age: 29,
+    occupation: "Personal Trainer",
+    hometown: "Miami, FL",
+    bio: "At any given time, Martin can be found working out on a beach in Miami. A passionate and disciplined man, he spends his days perfecting his physique and spending time with his loud, fun family who emigrated from Argentina when he was 10 years old. Martin says he gets his passion from his parents and credits them for teaching him how a husband should treat his wife. Martin is looking for a mature, health-conscious woman who wants to be loved. He is ready to make a big commitment and plans to be fearless in his pursuit of love.",
+    trivia: JSON.stringify([
+      "Martin can do a backflip.",
+      "Martin would love to get lost in a foreign country.",
+      "Martin can cook basics VERY WELL.",
+    ]) as any,
+  },
+  {
+    id: "dab8862b-5c99-46e0-9ceb-b9095db11297",
+    seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
+    name: "Mollique",
+    headshotUrl:
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3847014/9a5d23900eb08a4f87209868ca1d84c6/166x166-Q90_9a5d23900eb08a4f87209868ca1d84c6.jpg",
+    age: 36,
+    occupation: "Academic Administrator",
+    hometown: "San Diego, CA",
+    bio: "Mollique is a hopeless romantic who is SO ready to find his person. Raised by women all around him, he describes himself as a domesticated renaissance man who believes wholeheartedly in the power of love and family. He is looking for a woman of quality - someone with morals who is selfless, patient and well-mannered. Mollique has an 8-year-old son who is the best gift of love that he has ever received. From his son, he has learned what true unconditional love is and is ready to share that with the love of his life.",
+    trivia: JSON.stringify([
+      "Mollique does not like frogs.",
+      "Mollique has his motorcycle license.",
+      "Mollique's favorite author is Nicholas Sparks.",
+    ]) as any,
+  },
+  {
+    id: "af2c51b5-5bea-45e0-ba4c-29c177daef8c",
+    seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
+    name: "Nayte",
+    headshotUrl:
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3847015/4ba0bb1ffb835096dab87f2d5ea5a097/166x166-Q90_4ba0bb1ffb835096dab87f2d5ea5a097.jpg",
+    age: 27,
+    occupation: "Sales Executive",
+    hometown: "Austin, TX",
+    bio: "When you walk into a room, it's hard not to notice Nayte. He has a smile that sparkles like the stars, he is always the life of the party; and to boot, he is a 6-foot, eight-inch Adonis of a man. Nayte doesn't have trouble meeting women, but as he edges closer to 30, he's more focused on finding a long-lasting relationship that will go the distance. His dream woman is outgoing, spontaneous and has enough swagger of her own to keep up with him. He's looking for a connection filled with heat and for someone who will be just as passionate about him as he is about her. Nayte is looking for a teammate for life and is confident that Michelle may just be the one he's been waiting for.",
+    trivia: JSON.stringify([
+      "Nayte dreams of visiting the Taj Mahal.",
+      "Nayte can't dance to save his life.",
+      "Nayte likes Edible Arrangements.",
+    ]) as any,
+  },
+  {
+    id: "937a2acb-d692-4107-ad8b-ab8cd38938c0",
+    seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
+    name: "Olumide",
+    headshotUrl:
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3847016/edf53f9e5b61ffc99f22670c513c933f/166x166-Q90_edf53f9e5b61ffc99f22670c513c933f.jpg",
+    age: 27,
+    occupation: "IT Analyst",
+    hometown: "Newark, NJ",
+    bio: "A former D1 hooper at Rutgers University, Olumide knows how to compete at a high level and is coming here with one thing on his mind - Michelle! He thinks she is just absolutely beautiful, and as a strong believer in fate, he says that this journey is destined to be. He is not only confident but is also caring, attentive and more than willing to go above and beyond for the woman he loves. Olumide is ready to find his wife and he is coming in HOT!",
+    trivia: JSON.stringify([
+      "Olumide enjoys the theater.",
+      "Olumide's favorite flower is a cherry blossom.",
+      "Olumide hates tofu.",
+    ]) as any,
+  },
+  {
+    id: "ef91f468-3d86-4600-8740-4b79968e1a09",
+    seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
+    name: "Pardeep",
+    headshotUrl:
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3847017/ef5c735d020f17b7414b0d965b7e964d/166x166-Q90_ef5c735d020f17b7414b0d965b7e964d.jpg",
+    age: 30,
+    occupation: "Neuroscientist",
+    hometown: "Brooklyn, NY",
+    bio: "Pardeep is the perfect combo of looks and intelligence! For work, he studies the brain to find cures for diseases like Parkinson's and Alzheimer's; and though he spends his days buttoned up in a lab, when he has free time, he's anything but serious. This self-proclaimed nerd who loves Comic-Con, video games and reading also has an undeniable Brooklyn edge about him. Pardeep is truly a unique catch who wants to find someone family oriented, affectionate, and who cares about making the world a better place just as much as he does. And if she can occasionally nerd out with him, GREAT!",
+    trivia: JSON.stringify([
+      "Pardeep loves to sleep in on Saturdays.",
+      "Pardeep loves New Year's because he loves new beginnings.",
+      "Pardeep doesn't enjoy sitting on park benches.",
+    ]) as any,
+  },
+  {
+    id: "763360af-4c00-40a2-86bb-2ecfab50a731",
+    seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
+    name: "Peter",
+    headshotUrl:
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3847018/c839775a611a2e4403bd6aa989704efd/166x166-Q90_c839775a611a2e4403bd6aa989704efd.jpg",
+    age: 26,
+    occupation: "Pizzapreneur",
+    hometown: "Port St. Joe, FL",
+    bio: "Peter is a hopeless romantic who commits for the long haul. He is a man of passion, and when he decided to professionally pursue his love of food, he moved all the way to Italy to study the cuisine firsthand. Now that he's fulfilled his childhood dream of opening up his own - very successful - pizzeria, he's ready to find his person and build his culinary empire. Peter's dream woman is honest, committed, spontaneous and not interested in talking politics on a date. She's ready to support her man but also has ambitions of her own. She also must love food because, as ready as Peter is to find a wife, part of his heart will always belong to his first love, food.",
+    trivia: JSON.stringify([
+      "Peter loves deep house music.",
+      "Peter doesn't like libraries.",
+      'Peter loves red wine and calls himself a "vino head."',
+    ]) as any,
+  },
+  {
+    id: "5ab14653-314b-430d-baf3-0262ad6347e9",
+    seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
+    name: "PJ",
+    headshotUrl:
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3847022/993694c4f33c15339604424302dba759/166x166-Q90_993694c4f33c15339604424302dba759.jpg",
+    age: 30,
+    occupation: "Firefighter",
+    hometown: "Houston, TX",
+    bio: "PJ is a natural caretaker. He loves his job as a firefighter and is someone who wants to make sure that the people he loves are always happy, protected and healthy. He's very ready to get married and have a family of his own, but he just wants to make sure that when he does settle down, it's with the right woman. Nothing lights his fire more than a loyal woman with drive and beauty. He loves when he and his partner can enjoy working out together and hopes to find someone who has a thirst for travel just as much as he does. PJ says that he is the last single man standing out of all his friends and he's ready to change that for good!",
+    trivia: JSON.stringify([
+      "PJ loves to pass time by working on a Rubik's Cube.",
+      "PJ does not enjoy the opera.",
+      "PJ wants to visit Brazil and attend Carnival.",
+    ]) as any,
+  },
+  // added 10/26
   {
     id: "b74619fb-268a-4cad-8bd6-502e43f7e622",
     seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
     name: "Rick",
     headshotUrl:
-      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3847028/820130666929a551e43598b264e3a711/1600x640-Q90_820130666929a551e43598b264e3a711.jpg",
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3847028/820130666929a551e43598b264e3a711/166x166-Q90_820130666929a551e43598b264e3a711.jpg",
     age: 32,
     occupation: "Medical Sales Rep",
     hometown: "Los Angeles, CA",
@@ -22,11 +407,11 @@ export const contestants: Partial<Contestant>[] = [
     seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
     name: "Rodney",
     headshotUrl:
-      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3847039/448fd13c0b93bf6cbda2cf1d4efd68cb/1600x640-Q90_448fd13c0b93bf6cbda2cf1d4efd68cb.jpg",
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3847039/448fd13c0b93bf6cbda2cf1d4efd68cb/166x166-Q90_448fd13c0b93bf6cbda2cf1d4efd68cb.jpg",
     age: 29,
     occupation: "Sales Rep",
     hometown: "Rancho Cucamonga, CA",
-    bio: "Rodney is a glass-half-full kind of guy. After his dreams of playing in the NFL were shattered by a career-ending injury, Rodney picked himself up and redirected his ambition. He has a great job he enjoys, but he says life would be better if there was someone he loved waiting for him at home every night. Rodney is looking for someone who is honest, active and ideally a former student athlete like himself. He wants to find a deep mental connection with someone but also wants a woman who he can laugh with every day. Rodney knows exactly what he wants and he is looking for someone who has that clear vision too – he's done wasting time and is ready to be wifed-up!",
+    bio: "Rodney is a glass-half-full kind of guy. After his dreams of playing in the NFL were shattered by a career-ending injury, Rodney picked himself up and redirected his ambition. He has a great job he enjoys, but he says life would be better if there was someone he loved waiting for him at home every night. Rodney is looking for someone who is honest, active and ideally a former student athlete like himself. He wants to find a deep mental connection with someone but also wants a woman who he can laugh with every day. Rodney knows exactly what he wants and he is looking for someone who has that clear vision too - he's done wasting time and is ready to be wifed-up!",
     trivia: JSON.stringify([
       "Rodney is afraid of opossums.",
       "Rodney is terrified of being catfished.",
@@ -38,7 +423,7 @@ export const contestants: Partial<Contestant>[] = [
     seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
     name: "Romeo",
     headshotUrl:
-      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3847047/9944f39d3254bc23d28133eaa0a620a2/1600x640-Q90_9944f39d3254bc23d28133eaa0a620a2.jpg",
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3847047/9944f39d3254bc23d28133eaa0a620a2/166x166-Q90_9944f39d3254bc23d28133eaa0a620a2.jpg",
     age: 32,
     occupation: "Mathematician",
     hometown: "New York City, NY",
@@ -54,7 +439,7 @@ export const contestants: Partial<Contestant>[] = [
     seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
     name: "Ryan",
     headshotUrl:
-      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3847051/0c0d419bd9db813d4df275a9e091eaaf/1600x640-Q90_0c0d419bd9db813d4df275a9e091eaaf.jpg",
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3847051/0c0d419bd9db813d4df275a9e091eaaf/166x166-Q90_0c0d419bd9db813d4df275a9e091eaaf.jpg",
     age: 30,
     occupation: "Environmental Consultant",
     hometown: "San Jose, CA",
@@ -70,11 +455,11 @@ export const contestants: Partial<Contestant>[] = [
     seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
     name: "Spencer",
     headshotUrl:
-      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3847052/681ea7c70afb07c7f76fc76109be5a5c/1600x640-Q90_681ea7c70afb07c7f76fc76109be5a5c.jpg",
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3847052/681ea7c70afb07c7f76fc76109be5a5c/166x166-Q90_681ea7c70afb07c7f76fc76109be5a5c.jpg",
     age: 25,
     occupation: "Financial Crimes Analyst",
     hometown: "Cleveland, OH",
-    bio: "Spencer is an amazing catch – he is athletic, has a great job and is incredibly smart. According to the most important person in his life, he is also the world's best dad. Spencer's son is the inspiration that makes him want to be a better man every day; and while he hasn't dated much since his birth, he's here now to find a wife and hopefully expand his already wonderful family. For Spencer, physical attraction gets his attention, but personality is what keeps it. He needs a woman with an open mind who will be vulnerable with him and challenge him to be the best version of himself. What matters most to Spencer is what is in someone's heart, and when he meets Michelle, he certainly will not be disappointed.",
+    bio: "Spencer is an amazing catch - he is athletic, has a great job and is incredibly smart. According to the most important person in his life, he is also the world's best dad. Spencer's son is the inspiration that makes him want to be a better man every day; and while he hasn't dated much since his birth, he's here now to find a wife and hopefully expand his already wonderful family. For Spencer, physical attraction gets his attention, but personality is what keeps it. He needs a woman with an open mind who will be vulnerable with him and challenge him to be the best version of himself. What matters most to Spencer is what is in someone's heart, and when he meets Michelle, he certainly will not be disappointed.",
     trivia: JSON.stringify([
       "Spencer loves to spend time in the hot tub.",
       "Spencer hates movies that require all of his attention.",
@@ -86,7 +471,7 @@ export const contestants: Partial<Contestant>[] = [
     seasonId: "d07c867a-62d5-4166-9837-2bc79a94a36d",
     name: "Will",
     headshotUrl:
-      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3847053/180694055d76de0ee3c340e4ca73669e/1600x640-Q90_180694055d76de0ee3c340e4ca73669e.jpg",
+      "https://cdn1.edgedatg.com/aws/v2/abc/TheBachelorette/person/3847053/180694055d76de0ee3c340e4ca73669e/166x166-Q90_180694055d76de0ee3c340e4ca73669e.jpg",
     age: 28,
     occupation: "Academic Interventionist",
     hometown: "Grand Rapids, MI",

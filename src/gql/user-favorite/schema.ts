@@ -1,7 +1,9 @@
 import { Field, ID, InputType, ObjectType } from "type-graphql";
 
+import { DbUserFavorite } from "types";
+
 @ObjectType()
-export class UserFavorite {
+export class UserFavorite implements DbUserFavorite {
   @Field(() => ID)
   id: string;
 

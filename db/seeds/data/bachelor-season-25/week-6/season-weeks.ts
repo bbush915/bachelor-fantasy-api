@@ -1,6 +1,6 @@
-import { SeasonWeek } from "gql/season-week";
+import { DbSeasonWeek } from "types";
 
-export const seasonWeeks: Partial<SeasonWeek>[] = [
+export const seasonWeeks: Partial<DbSeasonWeek>[] = [
   {
     id: "b6142904-2a2c-4660-b805-3a5d4cc615d1",
     seasonId: "5506347a-ab6c-4860-9d98-117dcc8e5879",

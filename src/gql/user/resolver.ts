@@ -1,6 +1,6 @@
 import { ApolloError } from "apollo-server-errors";
 import { compare, hash } from "bcryptjs";
-import { Arg, Ctx, Mutation, Query, Resolver, UseMiddleware } from "type-graphql";
+import { Arg, Args, Ctx, Mutation, Query, Resolver, UseMiddleware } from "type-graphql";
 
 import configuration from "configuration";
 import { IContext } from "gql/context";
@@ -9,14 +9,16 @@ import { decode, encode } from "lib/jwt";
 import knex from "lib/knex";
 import { EmailTemplates, sendEmail } from "lib/send-grid";
 import { authentication } from "middleware";
+import { DbUser } from "types";
 import {
   ChangePasswordInput,
   LoginInput,
   RegisterInput,
   ResetPasswordInput,
   TokenResponse,
-  User,
   UpdateProfileInput,
+  User,
+  ValidateUserRoleInput,
   VerifyInput,
   VerifyResponse,
 } from "./schema";
@@ -25,14 +27,25 @@ import {
 class UserResolver {
   @Query(() => User)
   @UseMiddleware(authentication)
-  async me(@Ctx() { identity }: IContext): Promise<User> {
-    const user = await knex.select().from<User>("users").where({ id: identity!.id }).first();
+  async me(@Ctx() { identity }: IContext): Promise<DbUser> {
+    const user = await knex.select().from<DbUser>("users").where({ id: identity!.id }).first();
     return user!;
   }
 
+  @Query(() => OperationResponse)
+  @UseMiddleware(authentication)
+  validateUserRole(
+    @Args() { role }: ValidateUserRoleInput,
+    @Ctx() { identity }: IContext
+  ): OperationResponse {
+    return {
+      success: identity!.role === role,
+    };
+  }
+
   @Mutation(() => User)
-  async register(@Arg("input") { email, displayName, password }: RegisterInput): Promise<User> {
-    const existingUser = await knex.select().from<User>("users").where({ email }).first();
+  async register(@Arg("input") { email, displayName, password }: RegisterInput): Promise<DbUser> {
+    const existingUser = await knex.select().from<DbUser>("users").where({ email }).first();
 
     if (existingUser) {
       throw new ApolloError(
@@ -44,7 +57,7 @@ class UserResolver {
     const hashedPassword = await hash(password, 12);
 
     const user = (
-      await knex.insert({ email, displayName, hashedPassword }).into("users").returning("*")
+      await knex<DbUser>("users").insert({ email, displayName, hashedPassword }).returning("*")
     )[0];
 
     await this._sendVerificationEmail(user);
@@ -54,7 +67,7 @@ class UserResolver {
 
   @Mutation(() => OperationResponse)
   async sendVerificationEmail(@Arg("email") email: string): Promise<OperationResponse> {
-    const user = await knex.select().from<User>("users").where({ email }).first();
+    const user = await knex.select().from<DbUser>("users").where({ email }).first();
 
     await this._sendVerificationEmail(user!);
 
@@ -74,21 +87,21 @@ class UserResolver {
     const { userId } = payload;
 
     const user = (
-      await knex<User>("users")
+      await knex<DbUser>("users")
         .update({ isEmailVerified: true })
         .where({ id: userId })
         .returning("*")
     )[0];
 
     return {
-      token: encode({ id: userId }),
+      token: encode({ id: userId, role: user.role }),
       email: user.email,
     };
   }
 
   @Mutation(() => TokenResponse)
   async login(@Arg("input") { email, password }: LoginInput): Promise<TokenResponse> {
-    const user = await knex.select().from<User>("users").where({ email }).first();
+    const user = await knex.select().from<DbUser>("users").where({ email }).first();
 
     if (!user || !(await compare(password, user.hashedPassword))) {
       throw new ApolloError(
@@ -101,13 +114,13 @@ class UserResolver {
       throw new ApolloError("User has not verified their email address.", "UNVERIFIED_USER");
     }
 
-    const token = encode({ id: user.id });
+    const token = encode({ id: user.id, role: user.role });
     return { token };
   }
 
   @Mutation(() => OperationResponse)
   async sendPasswordResetEmail(@Arg("email") email: string): Promise<OperationResponse> {
-    const user = await knex.select().from<User>("users").where({ email }).first();
+    const user = await knex.select().from<DbUser>("users").where({ email }).first();
 
     if (user) {
       await this._sendPasswordResetEmail(user);
@@ -131,7 +144,7 @@ class UserResolver {
     const { userId } = payload;
 
     const hashedPassword = await hash(password, 12);
-    await knex<User>("users").update({ hashedPassword }).where({ id: userId });
+    await knex<DbUser>("users").update({ hashedPassword }).where({ id: userId });
 
     return {
       success: true,
@@ -144,7 +157,7 @@ class UserResolver {
     @Arg("input") { newPassword, currentPassword }: ChangePasswordInput,
     @Ctx() { identity }: IContext
   ): Promise<OperationResponse> {
-    const user = await knex.select().from<User>("users").where({ id: identity!.id }).first();
+    const user = await knex.select().from<DbUser>("users").where({ id: identity!.id }).first();
 
     if (!(await compare(currentPassword, user!.hashedPassword))) {
       throw new ApolloError(
@@ -154,7 +167,7 @@ class UserResolver {
     }
 
     const hashedPassword = await hash(newPassword, 12);
-    await knex<User>("users").update({ hashedPassword }).where({ id: user!.id });
+    await knex<DbUser>("users").update({ hashedPassword }).where({ id: user!.id });
 
     return {
       success: true,
@@ -165,12 +178,19 @@ class UserResolver {
   @UseMiddleware(authentication)
   async updateProfile(
     @Arg("input")
-    { email, displayName, avatarUrl, sendLineupReminders, sendScoringRecaps }: UpdateProfileInput,
+    {
+      email,
+      displayName,
+      avatarUrl,
+      sendLineupReminders,
+      sendScoringRecaps,
+      setRandomLineup,
+    }: UpdateProfileInput,
     @Ctx() { identity }: IContext
-  ): Promise<User> {
+  ): Promise<DbUser> {
     const existingUser = await knex
       .select()
-      .from<User>("users")
+      .from<DbUser>("users")
       .where({ email })
       .andWhereNot({ id: identity!.id })
       .first();
@@ -183,16 +203,23 @@ class UserResolver {
     }
 
     return (
-      await knex<User>("users")
-        .update({ email, displayName, avatarUrl, sendLineupReminders, sendScoringRecaps })
+      await knex<DbUser>("users")
+        .update({
+          email,
+          displayName,
+          avatarUrl,
+          sendLineupReminders,
+          sendScoringRecaps,
+          setRandomLineup,
+        })
         .where({ id: identity!.id })
         .returning("*")
     )[0];
   }
 
-  private async _sendVerificationEmail({ id, email }: User) {
+  private async _sendVerificationEmail({ id, email, role }: DbUser) {
     const token = encode(
-      { action: "verify-user", payload: { userId: id } },
+      { action: "verify-user", payload: { userId: id, role } },
       14 * 24 * 60 * 60 // Two weeks
     );
 
@@ -202,9 +229,9 @@ class UserResolver {
     });
   }
 
-  private async _sendPasswordResetEmail({ id, email }: User) {
+  private async _sendPasswordResetEmail({ id, email, role }: DbUser) {
     const token = encode(
-      { action: "reset-password", payload: { userId: id } },
+      { action: "reset-password", payload: { userId: id, role } },
       14 * 24 * 60 * 60 // Two weeks
     );
 

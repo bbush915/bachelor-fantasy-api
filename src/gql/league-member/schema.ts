@@ -3,9 +3,10 @@ import { Field, ID, InputType, ObjectType } from "type-graphql";
 import { LeagueMemberScore } from "gql/league-member-score";
 import { Lineup } from "gql/lineup";
 import { User } from "gql/user";
+import { DbLeagueMember } from "types";
 
 @ObjectType()
-export class LeagueMember {
+export class LeagueMember implements DbLeagueMember {
   @Field(() => ID)
   id: string;
 
@@ -27,17 +28,19 @@ export class LeagueMember {
   @Field()
   isCommissioner: boolean;
 
+  // NOTE - Field Resolvers
+
   @Field(() => User)
-  user?: User;
+  user: User;
 
   @Field(() => Lineup, { nullable: true })
   lineup?: Lineup;
 
   @Field()
-  isLineupSet?: boolean;
+  isLineupSet: boolean;
 
   @Field(() => LeagueMemberScore)
-  leagueMemberScore?: LeagueMemberScore;
+  leagueMemberScore: LeagueMemberScore;
 }
 
 @InputType()

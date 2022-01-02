@@ -1,7 +1,9 @@
 import { Field, ID, Int, ObjectType } from "type-graphql";
 
+import { DbContestant } from "types";
+
 @ObjectType()
-export class Contestant {
+export class Contestant implements DbContestant {
   @Field(() => ID)
   id: string;
 
