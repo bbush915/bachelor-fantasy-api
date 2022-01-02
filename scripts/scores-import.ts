@@ -1,9 +1,5 @@
-import { config } from "dotenv";
 import { readFileSync } from "fs";
 import minimist from "minimist";
-import { resolve } from "path";
-
-config({ path: resolve(__dirname, "../.env") });
 
 import { SeasonWeekContestant } from "../src/gql/season-week-contestant";
 import knex from "../src/lib/knex";

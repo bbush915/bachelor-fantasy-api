@@ -1,8 +1,8 @@
-import { send, setApiKey } from "@sendgrid/mail";
+import SendGrid from "@sendgrid/mail";
 
 import configuration from "configuration";
 
-setApiKey(configuration.sendGrid.apiKey!);
+SendGrid.setApiKey(configuration.sendGrid.apiKey!);
 
 export enum EmailTemplates {
   ResetPassword = "d-a706efd5305e4c84ac41b4d5e3b5f501",
@@ -14,7 +14,7 @@ export async function sendEmail(
   templateData: { to: string } & Record<string, string>
 ) {
   try {
-    return send({
+    return SendGrid.send({
       to: templateData.to,
       from: configuration.sendGrid.sender!,
       templateId: template,

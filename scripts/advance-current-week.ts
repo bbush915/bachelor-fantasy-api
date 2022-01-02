@@ -1,11 +1,7 @@
-import { config } from "dotenv";
-import { SeasonWeek } from "gql/season-week";
 import minimist from "minimist";
-import { resolve } from "path";
-
-config({ path: resolve(__dirname, "../.env") });
 
 import { Season } from "../src/gql/season";
+import { SeasonWeek } from "../src/gql/season-week";
 import { SeasonWeekContestant } from "../src/gql/season-week-contestant";
 import knex from "../src/lib/knex";
 

@@ -1,6 +1,7 @@
 import { Knex } from "knex";
 
 import { LeagueMember } from "gql/league-member";
+import { Lineup } from "gql/lineup";
 import { SeasonWeek } from "gql/season-week";
 import { SeasonWeekContestant } from "gql/season-week-contestant";
 
@@ -24,7 +25,7 @@ export async function seedRandomLineups(knex: Knex, leagueId: string, weekNumber
     .where({ leagueId });
 
   for (const leagueMember of leagueMembers) {
-    const lineups = await knex
+    const lineups: Lineup[] = await knex
       .insert({ leagueMemberId: leagueMember.id, seasonWeekId: seasonWeek!.id })
       .into("lineups")
       .returning("*");
@@ -52,7 +53,5 @@ function shuffle(values: any[]) {
 }
 
 function swap(values: any[], i: number, j: number) {
-  var temp = values[i];
-  values[i] = values[j];
-  values[j] = temp;
+  [values[i], values[j]] = [values[j], values[i]];
 }

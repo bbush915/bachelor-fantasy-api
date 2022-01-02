@@ -7,7 +7,7 @@ const authentication: MiddlewareFn<IContext> = async ({ context }, next) => {
   const token = context.auth?.split(" ")[1];
 
   if (!token) {
-    throw new Error("You are not authorized to perform this action");
+    throw new Error("Unauthenticated");
   }
 
   context.identity = decode(token) as any;

@@ -1,9 +1,5 @@
-import { config } from "dotenv";
 import { writeFileSync } from "fs";
 import minimist from "minimist";
-import { resolve } from "path";
-
-config({ path: resolve(__dirname, "../.env") });
 
 import knex, { camelCase } from "../src/lib/knex";
 

@@ -8,10 +8,14 @@ import { getGqlServer } from "./gql";
 const main = async () => {
   const app = new Koa();
 
-  app.use(cors({ origin: configuration.client.host }));
-
   const gqlServer = await getGqlServer();
-  app.use(gqlServer.getMiddleware());
+  await gqlServer.start();
+
+  const corsMiddleware = cors({ origin: configuration.client.host });
+  app.use(corsMiddleware);
+
+  const gqlMiddleware = gqlServer.getMiddleware();
+  app.use(gqlMiddleware);
 
   const { port } = configuration.server;
 

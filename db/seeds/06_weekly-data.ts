@@ -3,12 +3,12 @@ import { Knex } from "knex";
 import { Season } from "gql/season";
 import { SeasonWeek } from "gql/season-week";
 import { SeasonWeekContestant } from "gql/season-week-contestant";
-// import { leagues } from './data/bachelor-season-25/leagues';
 import {
   seasonWeekContestants as initialSeasonWeekContestants,
   seasonWeeks as initialSeasonWeeks,
-} from "./data/bachelorette-season-17/week-1";
-// import { seedRandomLineups } from './utils';
+} from "./data/bachelor-season-25/week-1";
+import { leagues } from "./data/leagues";
+import { seedRandomLineups } from "./utils";
 
 export async function seed(knex: Knex) {
   await knex.insert(initialSeasonWeeks).into<SeasonWeek>("season_weeks");
@@ -23,7 +23,7 @@ export async function seed(knex: Knex) {
   }
 
   for (let weekNumber = 2; weekNumber <= seedWeekNumber; weekNumber++) {
-    // await seedRandomLineups(knex, leagues[0].id!, weekNumber - 1);
+    await seedRandomLineups(knex, leagues[0].id!, weekNumber - 1);
 
     const {
       scoredSeasonWeekContestants,
@@ -53,8 +53,9 @@ export async function seed(knex: Knex) {
         .insert(seasonWeekContestants)
         .into<SeasonWeekContestant>("season_week_contestants");
 
-      await knex<Season>("seasons").update({ currentWeekNumber: weekNumber });
-      // .where({ id: leagues[0].seasonId });
+      await knex<Season>("seasons")
+        .update({ currentWeekNumber: weekNumber })
+        .where({ id: leagues[0].seasonId });
     }
   }
 
@@ -62,5 +63,5 @@ export async function seed(knex: Knex) {
     return;
   }
 
-  await knex<Season>("seasons").update({ isComplete: true }); // .where({ id: leagues[0].seasonId });
+  await knex<Season>("seasons").update({ isComplete: true }).where({ id: leagues[0].seasonId });
 }

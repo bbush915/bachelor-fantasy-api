@@ -1,5 +1,5 @@
 import TerserPlugin from "terser-webpack-plugin";
-import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
+import { TsconfigPathsPlugin as TsConfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
 import { Configuration } from "webpack";
 import nodeExternals from "webpack-node-externals";
 
@@ -24,7 +24,7 @@ const configuration: Configuration = {
 
   resolve: {
     extensions: [".ts", ".js"],
-    plugins: [new TsconfigPathsPlugin()],
+    plugins: [new TsConfigPathsPlugin()],
   },
 
   target: "node",

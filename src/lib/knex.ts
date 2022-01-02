@@ -1,9 +1,9 @@
 import Knex from "knex";
 
-import knexfile from "../../db/knexfile";
+import configuration from "../../db/knexfile";
 
 export function camelCase(rows: any) {
-  return require("knex-stringcase")().postProcessResponse(rows);
+  return configuration.postProcessResponse(rows);
 }
 
-export default Knex(knexfile);
+export default Knex(configuration);

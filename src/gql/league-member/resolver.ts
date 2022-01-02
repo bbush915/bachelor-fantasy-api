@@ -101,10 +101,12 @@ class LeagueMemberResolver {
               JOIN lineups LU ON (LU.league_member_id = LM.id)
               JOIN lineup_contestants LUC ON (LUC.lineup_id = LU.id)
               JOIN season_weeks SW ON (SW.id = LU.season_week_id)
+              JOIN seasons S ON (S.id = SW.season_id)
               JOIN season_week_contestants SWC ON (SWC.season_week_id = LU.season_week_id) AND (SWC.contestant_id = LUC.contestant_id)
             WHERE
               1 = 1
               AND (LM.league_id = :leagueId)
+              AND (S.is_active = TRUE)
             GROUP BY
               LM.id
           ) S ON (S.league_member_id = LM.id)
