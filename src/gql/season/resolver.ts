@@ -144,13 +144,14 @@ class SeasonResolver {
             JOIN season_weeks SW ON (SW.id = SWC.season_week_id)
           WHERE
             1 = 1
+            AND (SW.season_id = ?)
             AND (SW.week_number = ?)
             AND (
               ((SWC.rose IS NULL) OR (SWC.rose = TRUE)) OR
               ((SWC.special_rose IS NULL) OR (SWC.special_rose = TRUE))
             )
         `,
-        [activeSeason!.currentWeekNumber]
+        [activeSeason!.id, activeSeason!.currentWeekNumber]
       );
 
       const seasonWeekContestants = contestantIds.map((x: any) => ({
